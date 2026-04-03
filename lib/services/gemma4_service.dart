@@ -20,18 +20,22 @@ class Gemma4Service {
   final http.Client _client;
   final Duration _timeout;
 
+  /// Maximum number of retry attempts for transient failures.
+  static const int _maxRetries = 1;
+
   Gemma4Service({
     required String apiKey,
     http.Client? client,
-    Duration timeout = const Duration(seconds: 15),
+    Duration timeout = const Duration(seconds: 10),
   })  : _apiKey = apiKey,
         _client = client ?? http.Client(),
         _timeout = timeout;
 
   /// Send a [prompt] to Gemma 4 and return the generated text.
   ///
-  /// Throws a [Gemma4Exception] on failure so callers can decide whether to
-  /// fall back to the local knowledge base.
+  /// Retries once on transient failures (timeout/network). Throws a
+  /// [Gemma4Exception] on persistent failure so callers can fall back to the
+  /// local knowledge base.
   Future<String> generate(String prompt) async {
     final url =
         Uri.parse('$_baseUrl/$_model:generateContent?key=$_apiKey');
@@ -52,48 +56,70 @@ class Gemma4Service {
       },
     });
 
-    http.Response response;
-    try {
-      response = await _client
-          .post(
-            url,
-            headers: {'Content-Type': 'application/json'},
-            body: body,
-          )
-          .timeout(_timeout);
-    } on TimeoutException {
-      throw const Gemma4Exception(
-        'Request timed out. Check your internet connection.',
-        isTimeout: true,
-      );
-    } catch (e) {
+    Gemma4Exception? lastError;
+
+    for (int attempt = 0; attempt <= _maxRetries; attempt++) {
+      // Brief delay before retry
+      if (attempt > 0) {
+        await Future.delayed(Duration(seconds: attempt * 2));
+      }
+
+      http.Response response;
+      try {
+        response = await _client
+            .post(
+              url,
+              headers: {'Content-Type': 'application/json'},
+              body: body,
+            )
+            .timeout(_timeout);
+      } on TimeoutException {
+        lastError = const Gemma4Exception(
+          'Request timed out. Check your internet connection.',
+          isTimeout: true,
+        );
+        continue; // retry
+      } catch (e) {
+        lastError = Gemma4Exception(
+          'Could not reach the AI service: $e',
+          isNetwork: true,
+        );
+        continue; // retry
+      }
+
+      if (response.statusCode == 200) {
+        return _extractText(response.body);
+      }
+
+      // Auth and rate-limit errors are not retryable
+      if (response.statusCode == 401 || response.statusCode == 403) {
+        throw const Gemma4Exception(
+          'Invalid API key. Check your Gemma 4 API key in settings.',
+          isAuth: true,
+        );
+      }
+      if (response.statusCode == 429) {
+        throw const Gemma4Exception(
+          'Rate limit reached. Please wait a moment and try again.',
+          isRateLimit: true,
+        );
+      }
+
+      // Server errors (5xx) are retryable
+      if (response.statusCode >= 500) {
+        lastError = Gemma4Exception(
+          'API error (${response.statusCode}): ${response.reasonPhrase}',
+        );
+        continue;
+      }
+
+      // Other client errors are not retryable
       throw Gemma4Exception(
-        'Could not reach the AI service: $e',
-        isNetwork: true,
+        'API error (${response.statusCode}): ${response.reasonPhrase}',
       );
     }
 
-    if (response.statusCode == 200) {
-      return _extractText(response.body);
-    }
-
-    // Handle specific HTTP errors
-    if (response.statusCode == 401 || response.statusCode == 403) {
-      throw const Gemma4Exception(
-        'Invalid API key. Check your Gemma 4 API key in settings.',
-        isAuth: true,
-      );
-    }
-    if (response.statusCode == 429) {
-      throw const Gemma4Exception(
-        'Rate limit reached. Please wait a moment and try again.',
-        isRateLimit: true,
-      );
-    }
-
-    throw Gemma4Exception(
-      'API error (${response.statusCode}): ${response.reasonPhrase}',
-    );
+    throw lastError!;
   }
 
   /// Extract the generated text from the Gemini API JSON response.

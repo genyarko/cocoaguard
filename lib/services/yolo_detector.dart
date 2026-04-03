@@ -19,6 +19,7 @@ class YoloDetector {
 
   Future<void> loadModel() async {
     if (_isLoaded) return;
+    final sw = Stopwatch()..start();
     try {
       _interpreter = await Interpreter.fromAsset(AppConstants.yoloModelPath);
 
@@ -30,6 +31,7 @@ class YoloDetector {
       debugPrint('YOLO output shape: $_outputShape');
 
       _isLoaded = true;
+      debugPrint('[PERF] YOLO model loaded in ${sw.elapsedMilliseconds}ms');
     } catch (e, st) {
       debugPrint('Failed to load YOLO model: $e\n$st');
     }
@@ -49,12 +51,17 @@ class YoloDetector {
   }) async {
     if (!_isLoaded || _interpreter == null) return [];
 
+    final sw = Stopwatch()..start();
     final (input, letterbox) =
         YoloPreprocessor.process(image, nchw: _inputIsNchw);
+    final preprocessMs = sw.elapsedMilliseconds;
     final inputTensor = input.reshape(_inputShape);
     final output = _allocateOutput(_outputShape);
 
     _interpreter!.run(inputTensor, output);
+    debugPrint('[PERF] YOLO detect: preprocess=${preprocessMs}ms, '
+        'inference=${sw.elapsedMilliseconds - preprocessMs}ms, '
+        'total=${sw.elapsedMilliseconds}ms');
 
     final int channels;
     final int numPreds;
@@ -122,5 +129,7 @@ class YoloDetector {
 
   void dispose() {
     _interpreter?.close();
+    _interpreter = null;
+    _isLoaded = false;
   }
 }

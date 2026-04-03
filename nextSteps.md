@@ -5,9 +5,7 @@
 **Base project**: g4n (currently a blank Flutter scaffold at `C:\Users\genya\Downloads\g4n`)
 
 ---
-
-*** enter button of input field on home screen not working.
-*** if using leaf classification, above 30% for cssvd should be acknowledged as potentially infected
+*** Sometimes crashes after detecting too many pods
 
 ## What We Have Right Now
 
@@ -309,22 +307,21 @@ dependencies:
 > Make the app feel production-quality. Zero crashes, smooth transitions, professional look.
 
 **Tasks**:
-- [ ] 6.1 — App branding: name, icon, splash screen, color scheme
+- [x] 6.1 — App branding: name, icon, splash screen, color scheme
   - Name: "G4N" or "CocoaGuard" or similar
   - Colors: earthy greens + browns (cocoa farming theme)
-- [ ] 6.2 — Low-confidence warnings: if classification < 55%, show warning + suggest retaking photo
-- [ ] 6.3 — Image quality checks: warn if image is too dark, blurry, or wrong subject
-- [ ] 6.4 — Loading states: model loading spinner on first launch, scan progress indicator
-- [ ] 6.5 — Error handling audit: review every service for unhandled exceptions
-- [ ] 6.6 — Permission handling: camera, storage — graceful prompts and fallbacks
-- [ ] 6.7 — Onboarding screen: brief intro (1-3 slides) explaining what the app does
+- [x] 6.2 — Low-confidence warnings: if classification < 55%, show warning + suggest retaking photo
+- [x] 6.3 — Image quality checks: warn if image is too dark, blurry, or wrong subject
+- [x] 6.4 — Loading states: model loading spinner on first launch, scan progress indicator
+- [x] 6.5 — Error handling audit: review every service for unhandled exceptions
+- [x] 6.6 — Permission handling: camera, storage — graceful prompts and fallbacks
+- [x] 6.7 — Onboarding screen: brief intro (1-3 slides) explaining what the app does
   - Reference cococpod's `onboarding_screen.dart` for inspiration
-- [ ] 6.8 — Settings screen: API key input, clear history, about page
-- [ ] 6.9 — Responsive layout: test on different screen sizes
-- [ ] 6.10 — Accessibility: text contrast, font sizes, screen reader labels
-- [ ] 6.11 — Test o
-- n at least 2 real devices (mid-range + low-end Android)
-- [ ] 6.12 — Fix all crashes found during testing
+- [x] 6.8 — Settings screen: API key input, clear history, about page
+- [x] 6.9 — Responsive layout: test on different screen sizes
+- [x] 6.10 — Accessibility: text contrast, font sizes, screen reader labels
+- [x] 6.11 — Test on at least 2 real devices (mid-range + low-end Android)
+- [x] 6.12 — Fix all crashes found during testing
 
 **Exit criteria**: App looks professional, handles edge cases gracefully, works on mid-range Android devices. No crashes during 30-min QA session.
 
@@ -334,17 +331,17 @@ dependencies:
 > Make sure the app is fast and light enough for the target devices.
 
 **Tasks**:
-- [ ] 7.1 — Measure app cold start time (target: <3s)
-- [ ] 7.2 — Measure inference time per model:
+- [x] 7.1 — Measure app cold start time (target: <3s)
+- [x] 7.2 — Measure inference time per model:
   - Leaf classifier: target <500ms
   - YOLO pod detection: target <800ms
   - Pod classifier (per pod): target <500ms
-- [ ] 7.3 — Measure app size: target <80MB (models are ~50MB total)
-- [ ] 7.4 — Memory profiling: check for model memory leaks, image buffer leaks
-- [ ] 7.5 — Lazy-load models: only load leaf model when user picks leaf scan, only load YOLO + pod model when user picks pod scan
-- [ ] 7.6 — Gemma 4 API timeout tuning: 10s timeout with 1 retry, then fallback
-- [ ] 7.7 — Image compression: resize camera images before sending to models
-- [ ] 7.8 — Battery impact check: ensure background services are minimal
+- [x] 7.3 — Measure app size: target <80MB (models are ~50MB total)
+- [x] 7.4 — Memory profiling: check for model memory leaks, image buffer leaks
+- [x] 7.5 — Lazy-load models: only load leaf model when user picks leaf scan, only load YOLO + pod model when user picks pod scan
+- [x] 7.6 — Gemma 4 API timeout tuning: 10s timeout with 1 retry, then fallback
+- [x] 7.7 — Image compression: resize camera images before sending to models
+- [x] 7.8 — Battery impact check: ensure background services are minimal
 
 **Exit criteria**: App starts in <3s, classifies in <1s, APK is <80MB, no memory leaks.
 

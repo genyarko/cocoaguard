@@ -9,23 +9,16 @@ import 'services/pod_classifier_service.dart';
 import 'services/storage_service.dart';
 
 void main() async {
+  final startupTimer = Stopwatch()..start();
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: '.env');
   await StorageService.init();
 
+  // Both classifiers lazy-load their models on first scan to keep startup fast.
   final leafClassifier = LeafClassifierService();
-  String? initError;
-
-  try {
-    await leafClassifier.init();
-  } catch (e) {
-    initError = 'Failed to load leaf AI model: $e';
-  }
-
-  // Pod classifier loads its models lazily on first scan (YOLO + EfficientNet
-  // together are heavy; no need to block startup).
   final podClassifier = PodClassifierService();
+  String? initError;
 
   final storageService = StorageService();
 
@@ -44,6 +37,9 @@ void main() async {
   if (apiKey.isNotEmpty) {
     gemma4 = Gemma4Service(apiKey: apiKey);
   }
+
+  startupTimer.stop();
+  debugPrint('[PERF] App startup (pre-runApp): ${startupTimer.elapsedMilliseconds}ms');
 
   runApp(CocoaGuardApp(
     leafClassifierService: leafClassifier,

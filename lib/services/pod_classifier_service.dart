@@ -34,6 +34,7 @@ class PodClassifierService extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
+    final sw = Stopwatch()..start();
     try {
       _interpreter =
           await Interpreter.fromAsset(AppConstants.podModelPath);
@@ -47,7 +48,7 @@ class PodClassifierService extends ChangeNotifier {
       await _yoloDetector.loadModel();
 
       _isLoaded = true;
-      debugPrint('Pod classifier loaded: ${_classNames.length} classes');
+      debugPrint('[PERF] Pod models loaded in ${sw.elapsedMilliseconds}ms');
     } catch (e, st) {
       debugPrint('Failed to load pod models: $e\n$st');
     }
@@ -67,30 +68,37 @@ class PodClassifierService extends ChangeNotifier {
     try {
       // Use very lenient confidence threshold for pod detection
       // (default 0.20 was too strict - using 0.05 to catch more detections)
-      final boxes = await _yoloDetector.detectWithThreshold(image, confidenceThreshold: 0.05);
+      var boxes = await _yoloDetector.detectWithThreshold(image, confidenceThreshold: 0.05);
       debugPrint('YOLO detected ${boxes.length} pods (threshold: 0.05)');
-
-      // Log detection details for debugging
-      if (boxes.isNotEmpty) {
-        for (int i = 0; i < boxes.length; i++) {
-          debugPrint('  Pod $i: confidence=${boxes[i].confidence}, class=${boxes[i].classIndex}');
-        }
-      }
 
       if (boxes.isEmpty) return null;
 
+      // Cap at 10 pods to prevent OOM crashes on busy images.
+      // Sort by confidence descending and keep the top detections.
+      if (boxes.length > 10) {
+        boxes = List.from(boxes)
+          ..sort((a, b) => b.confidence.compareTo(a.confidence));
+        boxes = boxes.sublist(0, 10);
+        debugPrint('Capped to 10 highest-confidence pods');
+      }
+
       final pods = <DetectedPod>[];
-      for (final box in boxes) {
-        final crop = ImageCropper.crop(image, box);
-        final diagnosis = _classifyAndBlend(crop, box);
+      final podTimer = Stopwatch()..start();
+      for (int i = 0; i < boxes.length; i++) {
+        final crop = ImageCropper.crop(image, boxes[i]);
+        final diagnosis = _classifyAndBlend(crop, boxes[i]);
         if (diagnosis != null) {
+          // Encode crop as JPEG (much smaller than PNG) to reduce memory
           pods.add(DetectedPod(
-            box: box,
+            box: boxes[i],
             diagnosis: diagnosis,
-            cropBytes: Uint8List.fromList(img.encodePng(crop)),
+            cropBytes: Uint8List.fromList(img.encodeJpg(crop, quality: 80)),
           ));
         }
       }
+      debugPrint('[PERF] Classified ${pods.length} pods in '
+          '${podTimer.elapsedMilliseconds}ms '
+          '(${pods.isNotEmpty ? podTimer.elapsedMilliseconds ~/ pods.length : 0}ms/pod)');
 
       if (pods.isEmpty) return null;
 
@@ -244,6 +252,17 @@ class PodClassifierService extends ChangeNotifier {
     if (index < 0 || index >= _classNames.length) return 'Unknown';
     final cn = _classNames[index];
     return _displayNames[cn] ?? cn;
+  }
+
+  /// Release interpreters to free memory. Models will be reloaded on next
+  /// [detectAndClassify] call.
+  void unload() {
+    _interpreter?.close();
+    _interpreter = null;
+    _yoloDetector.dispose();
+    _isLoaded = false;
+    _classNames = [];
+    _displayNames = {};
   }
 
   @override

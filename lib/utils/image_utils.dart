@@ -3,14 +3,36 @@ import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 
 class ImageUtils {
+  /// Maximum dimension (width or height) for images entering the pipeline.
+  /// Camera photos can be 4000+ px; downscaling first saves memory and time.
+  static const int maxInputDimension = 1280;
+
   /// Decode an image file, center-crop to square, and resize to 300×300.
   static img.Image preprocessFile(File file) {
     final bytes = file.readAsBytesSync();
     final decoded = img.decodeImage(bytes);
     if (decoded == null) throw Exception('Could not decode image');
 
-    final cropped = _centerCropToSquare(decoded);
+    final downscaled = constrainSize(decoded);
+    final cropped = _centerCropToSquare(downscaled);
     return img.copyResize(cropped, width: 300, height: 300);
+  }
+
+  /// Downscale an image so its longest side is at most [maxInputDimension].
+  /// Returns the original if already within bounds.
+  static img.Image constrainSize(img.Image image,
+      {int maxDim = maxInputDimension}) {
+    final longest =
+        image.width > image.height ? image.width : image.height;
+    if (longest <= maxDim) return image;
+
+    final scale = maxDim / longest;
+    return img.copyResize(
+      image,
+      width: (image.width * scale).round(),
+      height: (image.height * scale).round(),
+      interpolation: img.Interpolation.linear,
+    );
   }
 
   /// Center-crop to the largest inscribed square.

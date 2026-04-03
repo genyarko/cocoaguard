@@ -6,7 +6,10 @@
       "Bash(flutter pub:*)",
       "Bash(flutter test:*)",
       "Bash(python -m json.tool \"C:/Users/genya/Downloads/g4n/assets/data/diseases_knowledge.json\")",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(grep -r \"Future\\\\|async\\\\|await\" /c/Users/genya/Downloads/g4n/lib/providers/*.dart)",
+      "Bash(flutter run:*)",
+      "Bash(flutter logs:*)"
     ]
   }
 }

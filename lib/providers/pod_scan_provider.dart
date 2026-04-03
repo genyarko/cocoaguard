@@ -11,6 +11,7 @@ import '../models/scan_record.dart';
 import '../services/pod_classifier_service.dart';
 import '../services/storage_service.dart';
 import '../utils/image_quality_checker.dart';
+import '../utils/image_utils.dart';
 
 class PodScanProvider extends ChangeNotifier {
   final PodClassifierService _service;
@@ -100,7 +101,10 @@ class PodScanProvider extends ChangeNotifier {
       final decoded = img.decodeImage(bytes);
       if (decoded == null) throw Exception('Could not decode image.');
 
-      final result = await _service.detectAndClassify(decoded, originalBytes: bytes);
+      // Downscale large camera images before detection to save memory/time
+      final constrained = ImageUtils.constrainSize(decoded);
+
+      final result = await _service.detectAndClassify(constrained, originalBytes: bytes);
 
       if (result == null || result.pods.isEmpty) {
         _error = 'No cocoa pods detected. Try a clearer photo with pods visible.';

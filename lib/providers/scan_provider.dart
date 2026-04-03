@@ -51,7 +51,7 @@ class ScanProvider extends ChangeNotifier {
     _currentResult = null;
 
     try {
-      final picked = await _picker.pickImage(source: source);
+      final picked = await _picker.pickImage(source: source, imageQuality: 85);
       if (picked == null) return; // User cancelled
 
       final file = File(picked.path);
@@ -91,6 +91,18 @@ class ScanProvider extends ChangeNotifier {
     _isLoading = true;
     _error = null;
     notifyListeners();
+
+    // Lazy-load model on first scan
+    if (!_classifier.isReady) {
+      try {
+        await _classifier.init();
+      } catch (e) {
+        _error = 'Failed to load leaf AI model: $e';
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+    }
 
     try {
       // Run inference on a background isolate to keep UI responsive

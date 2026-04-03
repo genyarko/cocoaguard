@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
@@ -26,21 +27,37 @@ class LeafClassificationResult {
 class LeafClassifierService {
   Interpreter? _interpreter;
   List<String> _classNames = [];
+  bool _isLoading = false;
 
   bool get isReady => _interpreter != null && _classNames.isNotEmpty;
+  bool get isLoading => _isLoading;
 
+  /// Load the model. Safe to call multiple times — returns immediately if
+  /// already loaded or currently loading.
   Future<void> init() async {
-    _interpreter = await Interpreter.fromAsset(AppConstants.leafModelPath);
+    if (isReady || _isLoading) return;
+    _isLoading = true;
+    final sw = Stopwatch()..start();
+    try {
+      _interpreter = await Interpreter.fromAsset(AppConstants.leafModelPath);
 
-    final labelsJson = await rootBundle.loadString(AppConstants.leafLabelsPath);
-    final labelsData = json.decode(labelsJson) as Map<String, dynamic>;
-    _classNames = List<String>.from(labelsData['class_names']);
+      final labelsJson =
+          await rootBundle.loadString(AppConstants.leafLabelsPath);
+      final labelsData = json.decode(labelsJson) as Map<String, dynamic>;
+      _classNames = List<String>.from(labelsData['class_names']);
+      debugPrint('[PERF] Leaf model loaded in ${sw.elapsedMilliseconds}ms');
+    } finally {
+      _isLoading = false;
+    }
   }
 
   LeafClassificationResult classify(File imageFile) {
     if (!isReady) throw StateError('Leaf classifier not initialized. Call init() first.');
 
+    final sw = Stopwatch()..start();
     final image = ImageUtils.preprocessFile(imageFile);
+    final preprocessMs = sw.elapsedMilliseconds;
+
     final input = ImageUtils.imageToFloat32Tensor(image);
 
     // Reshape input to [1, 300, 300, 3]
@@ -50,6 +67,8 @@ class LeafClassifierService {
     final output = List.filled(1 * _classNames.length, 0.0).reshape([1, _classNames.length]);
 
     _interpreter!.run(inputTensor, output);
+    debugPrint('[PERF] Leaf classify: preprocess=${preprocessMs}ms, '
+        'total=${sw.elapsedMilliseconds}ms');
 
     final scores = List<double>.from(output[0]);
 
@@ -86,8 +105,15 @@ class LeafClassifierService {
     );
   }
 
-  void dispose() {
+  /// Release the interpreter to free memory. The model will be reloaded on
+  /// the next call to [init].
+  void unload() {
     _interpreter?.close();
     _interpreter = null;
+    _classNames = [];
+  }
+
+  void dispose() {
+    unload();
   }
 }
