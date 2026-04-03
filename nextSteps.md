@@ -6,6 +6,9 @@
 
 ---
 
+*** enter button of input field on home screen not working.
+*** if using leaf classification, above 30% for cssvd should be acknowledged as potentially infected
+
 ## What We Have Right Now
 
 ### g4n (this repo)

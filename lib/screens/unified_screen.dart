@@ -40,6 +40,9 @@ class _UnifiedScreenState extends State<UnifiedScreen> with WidgetsBindingObserv
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _textController.addListener(() {
+      setState(() {});
+    });
     _initCamera();
   }
 
@@ -420,6 +423,7 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
         _handleAutoNavigation(leafProvider, podProvider);
 
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
               // Camera preview
@@ -756,8 +760,6 @@ class _NavButton extends StatelessWidget {
                 imageAsset!,
                 width: 24,
                 height: 24,
-                color: AppColors.chartreuse,
-                colorBlendMode: BlendMode.srcIn,
               )
             else
               Icon(icon, color: AppColors.chartreuse, size: 24),

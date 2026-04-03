@@ -50,6 +50,7 @@ class ResultsScreen extends StatelessWidget {
           showActions: true,
           scanType: 'leaf',
           qualityWarnings: scanProvider.qualityWarnings,
+          isPotentiallyInfected: result.isPotentiallyInfected,
         );
       },
     );
@@ -95,6 +96,7 @@ class ResultsScreen extends StatelessWidget {
     required bool showActions,
     required String scanType,
     List<String> qualityWarnings = const [],
+    bool isPotentiallyInfected = false,
   }) {
     final treatmentInfo = leafTreatments[diagnosis] ?? podTreatments[diagnosis];
     final diagColor = AppConstants.colorForDiagnosis(diagnosis);
@@ -151,6 +153,43 @@ class ResultsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   DiagnosisCard(diagnosis: diagnosis, confidence: confidence),
+
+                  // Potentially infected warning (CSSVD >= 30% threshold)
+                  if (isPotentiallyInfected) ...[
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.red.withValues(alpha: 0.4)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.health_and_safety, color: Colors.red, size: 28),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Potentially Infected',
+                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  'CSSVD detected at ${(confidence * 100).toStringAsFixed(1)}%. '
+                                  'Although not the highest-scoring class, this level warrants '
+                                  'further inspection by an expert.',
+                                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
 
                   // Low-confidence warning (Phase 6.2)
                   if (confidence < 0.55) ...[

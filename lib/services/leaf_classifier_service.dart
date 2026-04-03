@@ -11,12 +11,15 @@ class LeafClassificationResult {
   final double confidence;
   final List<double> allScores;
   final Map<String, double> scoreMap;
+  /// True when CSSVD was flagged based on the 30% threshold override
+  final bool isPotentiallyInfected;
 
   LeafClassificationResult({
     required this.diagnosis,
     required this.confidence,
     required this.allScores,
     required this.scoreMap,
+    this.isPotentiallyInfected = false,
   });
 }
 
@@ -61,11 +64,25 @@ class LeafClassifierService {
       scoreMap[_classNames[i]] = scores[i];
     }
 
+    // If CSSVD score is >= 30%, flag as potentially infected even if not top class
+    final cssvdIdx = _classNames.indexOf('cssvd');
+    String diagnosis = _classNames[maxIdx];
+    double confidence = scores[maxIdx];
+    bool potentiallyInfected = false;
+    if (cssvdIdx >= 0 &&
+        scores[cssvdIdx] >= 0.30 &&
+        _classNames[maxIdx] != 'cssvd') {
+      diagnosis = 'cssvd';
+      confidence = scores[cssvdIdx];
+      potentiallyInfected = true;
+    }
+
     return LeafClassificationResult(
-      diagnosis: _classNames[maxIdx],
-      confidence: scores[maxIdx],
+      diagnosis: diagnosis,
+      confidence: confidence,
       allScores: scores,
       scoreMap: scoreMap,
+      isPotentiallyInfected: potentiallyInfected,
     );
   }
 
