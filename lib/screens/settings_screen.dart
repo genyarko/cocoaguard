@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import '../providers/history_provider.dart';
 import '../providers/qa_provider.dart';
 import '../utils/app_colors.dart';
+import 'help_screen.dart';
+import 'privacy_policy_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -42,6 +44,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           const Divider(),
+          // Support Section
+          _buildSection(
+            'Support',
+            [
+              _buildSettingTile(
+                icon: Icons.help_outline,
+                title: 'Help & Guide',
+                subtitle: 'How to scan, tips, and FAQs',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const HelpScreen()),
+                ),
+              ),
+              _buildSettingTile(
+                icon: Icons.privacy_tip_outlined,
+                title: 'Privacy Policy',
+                subtitle: 'How your data is handled',
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicyScreen()),
+                ),
+              ),
+            ],
+          ),
+          const Divider(),
           // About Section
           _buildSection(
             'About',
@@ -61,9 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               _buildSettingTile(
                 icon: Icons.open_in_new,
                 title: 'View GitHub Repository',
-                subtitle: 'https://github.com/g4n/cocoaguard',
+                subtitle: 'https://github.com/genyarko/cocoaguard',
                 onTap: () {
-                  // In a real app, this would open the URL
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('GitHub link copied')),
                   );
