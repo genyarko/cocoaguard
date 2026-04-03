@@ -351,25 +351,25 @@ dependencies:
 > Prepare the public code repository that judges will inspect.
 
 **Tasks**:
-- [ ] 8.1 — Write `README.md`:
+- [x] 8.1 — Write `README.md`:
   - Project overview + problem statement
   - Architecture diagram (text or image)
   - Setup instructions (flutter pub get, API key setup)
   - How to build APK
   - Screenshots
   - Model details (what each TFLite model does, accuracy, size)
-- [ ] 8.2 — Write `ARCHITECTURE.md`:
+- [x] 8.2 — Write `ARCHITECTURE.md`:
   - System design diagram
   - Task router explanation
   - CV pipeline details
   - Gemma 4 integration details
   - Offline fallback strategy
   - Why each technical choice was made
-- [ ] 8.3 — Clean up code: remove dead code, TODOs, debug prints
-- [ ] 8.4 — Add code comments where logic is non-obvious (not everywhere — just tricky parts)
-- [ ] 8.5 — Verify `.gitignore` excludes: `.env`, API keys, `build/`, `.dart_tool/`
-- [ ] 8.6 — Push final code to public GitHub repo
-- [ ] 8.7 — Build release APK: `flutter build apk --release`
+- [x] 8.3 — Clean up code: remove dead code, TODOs, debug prints
+- [x] 8.4 — Add code comments where logic is non-obvious (not everywhere — just tricky parts)
+- [x] 8.5 — Verify `.gitignore` excludes: `.env`, API keys, `build/`, `.dart_tool/`
+- [x] 8.6 — Push final code to public GitHub repo
+- [x] 8.7 — Build release APK: `flutter build apk --release`
 - [ ] 8.8 — Test APK on a clean device (not your dev device)
 
 **Exit criteria**: Public GitHub repo is clean, well-documented, and builds successfully. APK runs on a fresh device.

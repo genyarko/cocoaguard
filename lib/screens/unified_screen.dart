@@ -132,7 +132,6 @@ Future<void> _captureAndClassify() async {
 
       if (!mounted) return;
 
-      debugPrint('Image captured, checking quality...');
 
       // Check image quality before running inference
       try {
@@ -151,7 +150,6 @@ Future<void> _captureAndClassify() async {
 
       if (!mounted) return;
 
-      debugPrint('Running pod inference...');
 
       // Use pod classifier for center camera (pod model includes leaves in training)
       final podProvider = context.read<PodScanProvider>();
@@ -166,7 +164,6 @@ Future<void> _captureAndClassify() async {
 
       if (!mounted) return;
 
-      debugPrint('Classification complete.');
 
       // Wait a moment for state to update
       await Future.delayed(const Duration(milliseconds: 500));
@@ -175,7 +172,6 @@ Future<void> _captureAndClassify() async {
 
       // Check if pod detection succeeded
       if (podProvider.error != null) {
-        debugPrint('Error: ${podProvider.error}');
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -190,7 +186,7 @@ Future<void> _captureAndClassify() async {
 
       // Route to pod results
       _lastScanMode = 'pod';
-      debugPrint('Routing to pod results');
+;
       if (mounted) {
         setState(() {}); // Trigger rebuild for auto-navigation
       }

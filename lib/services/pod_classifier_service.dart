@@ -69,7 +69,6 @@ class PodClassifierService extends ChangeNotifier {
       // Use very lenient confidence threshold for pod detection
       // (default 0.20 was too strict - using 0.05 to catch more detections)
       var boxes = await _yoloDetector.detectWithThreshold(image, confidenceThreshold: 0.05);
-      debugPrint('YOLO detected ${boxes.length} pods (threshold: 0.05)');
 
       if (boxes.isEmpty) return null;
 

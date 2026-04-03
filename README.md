@@ -67,9 +67,16 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 
 5. **Build APK (for distribution)**
    ```bash
+   # Universal APK (~140 MB, works on all devices)
    flutter build apk --release
-   # Output: build/app/outputs/flutter-app.apk
+
+   # Split APKs — smaller per-device (~91 MB for arm64)
+   flutter build apk --release --split-per-abi
+
+   # Output: build/app/outputs/flutter-apk/
    ```
+
+   > **Note on size**: The three TFLite models total ~66 MB. The per-architecture APK is ~91 MB for arm64 (most modern Android phones).
 
 ---
 
@@ -129,10 +136,25 @@ assets/
 ```
 
 ### ML Models
-- **Leaf Classifier** (`leaf_classifier.tflite`) — 3 classes (anthracnose, cssvd, healthy)
-- **Pod Detector** (`yolo_pod_detect.tflite`) — YOLO v5 for pod bounding boxes
-- **Pod Classifier** (`pod_classifier.tflite`) — 5 classes per detected pod
-- All models run at <1s per image on mid-range Android devices
+
+| Model | File | Size | Classes | Accuracy |
+|-------|------|------|---------|----------|
+| Leaf Classifier | `leaf_classifier.tflite` | 22 MB | 3 (anthracnose, cssvd, healthy) | 92.13% |
+| Pod Detector | `yolo_pod_detect.tflite` | 22 MB | Bounding boxes | — |
+| Pod Classifier | `pod_classifier.tflite` | 22 MB | 5 (carmenta, healthy, moniliasis, phytophthora, witches_broom) | — |
+
+**Total model size**: ~66 MB (EfficientNetB3 float16 + YOLOv8)
+
+### Performance (Samsung Galaxy Note 10, mid-range Android)
+
+| Metric | Target | Measured |
+|--------|--------|----------|
+| Cold start | < 3s | ~1.0s |
+| Leaf classify | < 500ms | prints at runtime |
+| YOLO detection | < 800ms | prints at runtime |
+| Pod classify/pod | < 500ms | prints at runtime |
+
+Performance timings print to debug logs (`[PERF]` prefix) for on-device measurement.
 
 ---
 
@@ -151,7 +173,7 @@ See [Privacy Policy](lib/screens/privacy_policy_screen.dart) for full details.
 
 - **Help & Guide** — In-app getting started, scanning tips, confidence levels, FAQs
 - **Privacy Policy** — Data handling, permissions, offline mode, deletion rights
-- **Phase Implementation Docs** — See `PHASE_6_IMPLEMENTATION.md` for feature completeness
+- **Architecture** — See [`ARCHITECTURE.md`](ARCHITECTURE.md) for system design and technical decisions
 
 ---
 
