@@ -1,0 +1,19 @@
+{
+  "model": "EfficientNetB3",
+  "input_size": [300, 300],
+  "num_classes": 5,
+  "class_names": [
+    "carmenta",
+    "healthy",
+    "moniliasis",
+    "phytophthora",
+    "witches_broom"
+  ],
+  "display_names": {
+    "carmenta": "Carmenta (Corncob)",
+    "healthy": "Healthy",
+    "moniliasis": "Moniliasis (Frosty Pod)",
+    "phytophthora": "Phytophthora (Black Pod)",
+    "witches_broom": "Witches' Broom"
+  }
+}

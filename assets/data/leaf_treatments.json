@@ -1,0 +1,67 @@
+{
+  "anthracnose": {
+    "disease": "Anthracnose (Black Pod)",
+    "severity": "moderate",
+    "overview": "A fungal disease caused by Colletotrichum gloeosporioides. Infected pods develop dark brown to black lesions that spread rapidly, especially during wet seasons. Can cause up to 30–40% crop loss if untreated.",
+    "symptoms": [
+      "Dark brown to black lesions on pod surface",
+      "Lesions spread rapidly during wet seasons",
+      "Pods may rot completely if untreated",
+      "Infected pods fall prematurely"
+    ],
+    "treatments": [
+      "Remove and destroy infected pods immediately",
+      "Apply copper-based fungicide (e.g., Bordeaux mixture)",
+      "Improve canopy aeration by pruning",
+      "Harvest ripe pods promptly to reduce spread"
+    ],
+    "prevention": [
+      "Prune trees regularly to improve air circulation",
+      "Remove diseased material from the farm",
+      "Avoid wounding pods during harvest",
+      "Apply preventive fungicide sprays before wet season"
+    ]
+  },
+  "cssvd": {
+    "disease": "Cocoa Swollen Shoot Virus Disease (CSSVD)",
+    "severity": "severe",
+    "overview": "A severe viral disease transmitted by mealybugs. Causes swelling of shoots, root tips, and pods. Infected trees show reduced yield and eventually die. There is no cure — infected trees must be removed.",
+    "symptoms": [
+      "Swelling of young shoots and stems",
+      "Red banding on young leaves",
+      "Pods show chlorotic patches and distortion",
+      "Severe yield reduction",
+      "Tree eventually dies"
+    ],
+    "treatments": [
+      "Remove infected trees and surrounding contact trees",
+      "Report to local COCOBOD extension officer immediately",
+      "Replant with CSSVD-tolerant varieties",
+      "Control mealybug vectors with approved insecticides"
+    ],
+    "prevention": [
+      "Plant CSSVD-tolerant or resistant cocoa varieties",
+      "Control mealybug populations regularly",
+      "Monitor farm weekly for early symptoms",
+      "Report suspected cases to COCOBOD promptly"
+    ]
+  },
+  "healthy": {
+    "disease": "Healthy Leaf",
+    "severity": "none",
+    "overview": "A healthy cocoa leaf with no visible signs of disease. Continue good agricultural practices to maintain plant health.",
+    "symptoms": [],
+    "treatments": [
+      "Continue regular maintenance and monitoring",
+      "Maintain shade tree management",
+      "Apply fertilizer per schedule"
+    ],
+    "prevention": [
+      "Maintain proper shade management (40–60% shade)",
+      "Prune regularly to improve air circulation",
+      "Apply balanced fertilization (N-P-K) based on soil tests",
+      "Remove dead or diseased plant material promptly",
+      "Harvest ripe pods within 2–3 weeks of ripening"
+    ]
+  }
+}

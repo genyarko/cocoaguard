@@ -1,0 +1,112 @@
+{
+  "carmenta": {
+    "disease": "Carmenta (Cocoa Pod Borer)",
+    "severity": "high",
+    "overview": "Carmenta is caused by the cocoa pod borer moth (Carmenta foraseminis). Larvae bore into pods, damaging beans internally.",
+    "symptoms": [
+      "Small entry holes on pod surface",
+      "Premature ripening or uneven coloring",
+      "Internal damage to beans with frass (insect waste)",
+      "Pods feel lighter than healthy ones"
+    ],
+    "treatments": [
+      "Remove and destroy all infested pods immediately",
+      "Harvest pods frequently (every 7–10 days) to reduce exposure time",
+      "Apply approved insecticides targeting adult moths during peak flight periods",
+      "Use pheromone traps to monitor and reduce moth populations"
+    ],
+    "prevention": [
+      "Maintain regular harvesting schedule",
+      "Remove all leftover pod husks from the plantation floor",
+      "Prune trees to improve air circulation",
+      "Monitor pods regularly for early signs of infestation"
+    ]
+  },
+  "healthy": {
+    "disease": "Healthy Pod",
+    "severity": "none",
+    "overview": "This pod appears healthy with no visible signs of disease or pest damage. Continue good agricultural practices to maintain plant health.",
+    "symptoms": [],
+    "treatments": [
+      "No treatment needed — continue regular maintenance"
+    ],
+    "prevention": [
+      "Maintain proper shade management (40–60% shade)",
+      "Prune regularly to improve air circulation",
+      "Apply balanced fertilization (N-P-K) based on soil tests",
+      "Remove dead or diseased plant material promptly",
+      "Harvest ripe pods within 2–3 weeks of ripening"
+    ]
+  },
+  "moniliasis": {
+    "disease": "Moniliasis (Frosty Pod Rot)",
+    "severity": "high",
+    "overview": "Moniliasis is caused by the fungus Moniliophthora roreri. It is one of the most destructive cocoa diseases in the Americas, causing up to 80% crop loss if untreated.",
+    "symptoms": [
+      "Irregular dark spots or lesions on pod surface",
+      "White or cream-colored powdery spore mass covering the pod",
+      "Internal rot — beans become watery and unusable",
+      "Premature pod drop"
+    ],
+    "treatments": [
+      "Remove and bury or burn all infected pods immediately — do not leave on ground",
+      "Harvest frequently (every 7 days) to remove pods before spore production",
+      "Apply copper-based fungicides as a preventive measure during wet seasons",
+      "Ensure infected material is disposed of far from the plantation"
+    ],
+    "prevention": [
+      "Prune canopy to reduce humidity and improve air flow",
+      "Maintain proper drainage in the plantation",
+      "Harvest pods at the right maturity — do not leave ripe pods on trees",
+      "Monitor weekly during rainy season when infection risk is highest"
+    ]
+  },
+  "phytophthora": {
+    "disease": "Phytophthora (Black Pod Rot)",
+    "severity": "high",
+    "overview": "Black pod rot is caused by Phytophthora species (mainly P. palmivora and P. megakarya). It is the most widespread cocoa disease globally, responsible for 20–30% annual crop loss worldwide.",
+    "symptoms": [
+      "Dark brown to black lesions starting at the tip or base of the pod",
+      "Lesions spread rapidly to cover the entire pod in 10–14 days",
+      "White sporangia (spore-bearing structures) may appear on lesion surface",
+      "Beans inside become blackened and unusable"
+    ],
+    "treatments": [
+      "Remove infected pods immediately and bury them away from the plantation",
+      "Apply copper-based fungicides (e.g., Bordeaux mixture) every 2–3 weeks during wet season",
+      "Spray protective fungicides before the rainy season begins",
+      "Treat soil around tree base if stem canker is also present"
+    ],
+    "prevention": [
+      "Improve drainage to reduce soil moisture around trees",
+      "Prune trees and shade canopy to increase air circulation",
+      "Avoid wounding pods during harvest (wounds allow entry of spores)",
+      "Remove all mummified pods left from previous seasons",
+      "Plant resistant cocoa varieties where available"
+    ]
+  },
+  "witches_broom": {
+    "disease": "Witches' Broom",
+    "severity": "high",
+    "overview": "Witches' broom is caused by the fungus Moniliophthora perniciosa. It produces abnormal broom-like vegetative growth and is a major disease in South American cocoa production.",
+    "symptoms": [
+      "Abnormal shoot growth resembling a broom (dense cluster of small branches)",
+      "Swollen, parthenocarpic (seedless) pods with abnormal shape",
+      "Green brooms eventually dry out and turn brown",
+      "Flower cushion brooms — clusters of malformed flowers"
+    ],
+    "treatments": [
+      "Prune and remove all brooms (vegetative, cushion, and pod brooms) during dry season",
+      "Cut brooms at least 15 cm below the swollen area into healthy wood",
+      "Burn or bury removed brooms far from the plantation",
+      "Apply copper-based fungicides to protect pruning wounds"
+    ],
+    "prevention": [
+      "Conduct phytosanitary pruning 2–3 times per year",
+      "Remove brooms before the rainy season to prevent spore release",
+      "Maintain proper shade and spacing between trees",
+      "Plant resistant or tolerant cocoa clones where available",
+      "Monitor for new broom formation monthly"
+    ]
+  }
+}

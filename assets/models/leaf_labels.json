@@ -1,0 +1,18 @@
+{
+  "model": "EfficientNetB3",
+  "input_size": [
+    300,
+    300
+  ],
+  "num_classes": 3,
+  "class_names": [
+    "anthracnose",
+    "cssvd",
+    "healthy"
+  ],
+  "class_index_map": {
+    "0": "anthracnose",
+    "1": "cssvd",
+    "2": "healthy"
+  }
+}

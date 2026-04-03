@@ -1,0 +1,346 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-04-02",
+  "diseases": [
+    {
+      "id": "anthracnose",
+      "name": "Anthracnose (Black Pod)",
+      "scan_type": "leaf",
+      "severity": "moderate",
+      "description": "A fungal disease caused by Colletotrichum gloeosporioides. Spreads rapidly in wet, humid conditions. Can cause 30–40% crop loss if untreated.",
+      "symptoms": [
+        "Dark brown to black lesions on pod or leaf surface",
+        "Lesions spread rapidly during wet seasons",
+        "Pods may rot completely if untreated",
+        "Infected pods fall prematurely"
+      ],
+      "causes": [
+        "Fungal pathogen Colletotrichum gloeosporioides",
+        "High humidity and rainfall favor spread",
+        "Wounds on pods provide entry points",
+        "Poor canopy ventilation increases risk"
+      ],
+      "treatments": [
+        "Remove and destroy infected pods immediately",
+        "Apply copper-based fungicide such as Bordeaux mixture",
+        "Improve canopy aeration by pruning",
+        "Harvest ripe pods promptly to reduce spread"
+      ],
+      "prevention": [
+        "Prune trees regularly to improve air circulation",
+        "Remove all diseased material from the farm",
+        "Avoid wounding pods during harvest",
+        "Apply preventive fungicide sprays before wet season"
+      ],
+      "faq": [
+        {
+          "question": "How does anthracnose spread?",
+          "answer": "Anthracnose spreads through fungal spores carried by rain splash, wind, and insects. It spreads fastest during the rainy season when humidity is high."
+        },
+        {
+          "question": "Can anthracnose kill my cocoa trees?",
+          "answer": "Anthracnose mainly affects pods and leaves, not the tree itself. However, repeated severe infections weaken the tree and reduce yield significantly over time."
+        },
+        {
+          "question": "What fungicide should I use for anthracnose?",
+          "answer": "Copper-based fungicides such as Bordeaux mixture or copper oxychloride are most effective. Apply every 2–3 weeks during the rainy season. Consult your COCOBOD extension officer for approved products."
+        }
+      ]
+    },
+    {
+      "id": "cssvd",
+      "name": "Cocoa Swollen Shoot Virus Disease (CSSVD)",
+      "scan_type": "leaf",
+      "severity": "severe",
+      "description": "A severe viral disease transmitted by mealybugs. Causes swelling of shoots, root tips, and pods. There is no cure — infected trees must be removed to protect neighboring trees.",
+      "symptoms": [
+        "Swelling of young shoots and stems",
+        "Red banding or reddening of young leaves",
+        "Pods show chlorotic (yellow) patches and distortion",
+        "Severe reduction in pod yield",
+        "Tree eventually dies over several years"
+      ],
+      "causes": [
+        "Cocoa Swollen Shoot Virus (CSSV)",
+        "Transmitted by mealybug insects feeding on infected trees",
+        "Spreads from infected to healthy trees when mealybugs migrate",
+        "No cure exists — management is by removal"
+      ],
+      "treatments": [
+        "Remove infected trees and immediate neighbor trees (contact trees)",
+        "Report to local COCOBOD extension officer immediately",
+        "Do not replant immediately — allow field to rest",
+        "Replant with CSSVD-tolerant or resistant cocoa varieties",
+        "Control mealybug vectors with approved insecticides in remaining trees"
+      ],
+      "prevention": [
+        "Plant CSSVD-tolerant or resistant cocoa varieties",
+        "Control mealybug populations regularly using approved insecticides",
+        "Monitor farm weekly for early symptoms of CSSVD",
+        "Report suspected cases to COCOBOD promptly for official confirmation",
+        "Maintain good farm hygiene and remove weeds that harbor mealybugs"
+      ],
+      "faq": [
+        {
+          "question": "Is CSSVD curable?",
+          "answer": "No. There is no cure for CSSVD. Once a tree is infected, it must be removed along with trees that were in direct contact with it. The goal is to stop the spread to healthy trees."
+        },
+        {
+          "question": "When should I report CSSVD to COCOBOD?",
+          "answer": "Report immediately when you see any trees showing swollen shoots, red leaf banding, or distorted pods. Early reporting allows COCOBOD to contain the outbreak before it spreads further on your farm."
+        },
+        {
+          "question": "Can I replant after removing CSSVD-infected trees?",
+          "answer": "Yes, but wait until the mealybug population is controlled and use CSSVD-tolerant varieties. Your COCOBOD extension officer can advise on approved planting material."
+        }
+      ]
+    },
+    {
+      "id": "phytophthora",
+      "name": "Phytophthora (Black Pod Rot)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Black pod rot caused by Phytophthora palmivora and P. megakarya. The most widespread cocoa disease globally, responsible for 20–30% annual crop loss worldwide. Spreads very rapidly in wet conditions.",
+      "symptoms": [
+        "Dark brown to black lesions starting at the tip or base of the pod",
+        "Lesions spread rapidly to cover the entire pod in 10–14 days",
+        "White sporangia (spore-bearing structures) may appear on lesion surface",
+        "Beans inside become blackened and unusable"
+      ],
+      "causes": [
+        "Oomycete pathogens Phytophthora palmivora and P. megakarya",
+        "Spreads via rain splash from infected pods and soil",
+        "High humidity and rainfall strongly favor spread",
+        "Infected pods left on the ground contaminate soil"
+      ],
+      "treatments": [
+        "Remove infected pods immediately and bury them away from the plantation",
+        "Apply copper-based fungicides such as Bordeaux mixture every 2–3 weeks during wet season",
+        "Spray protective fungicides before the rainy season begins",
+        "Treat soil around tree base if stem canker is also present"
+      ],
+      "prevention": [
+        "Improve drainage to reduce soil moisture around trees",
+        "Prune trees and shade canopy to increase air circulation",
+        "Avoid wounding pods during harvest (wounds allow entry of spores)",
+        "Remove all mummified pods left from previous seasons",
+        "Plant resistant cocoa varieties where available"
+      ],
+      "faq": [
+        {
+          "question": "How quickly does black pod rot spread?",
+          "answer": "Very quickly. In warm, wet conditions a single infected pod can spread the disease to neighboring pods within 3–5 days through rain splash. This is why immediate removal of infected pods is critical."
+        },
+        {
+          "question": "What is the difference between phytophthora and anthracnose?",
+          "answer": "Phytophthora (black pod rot) spreads much faster, starts as a water-soaked brown lesion usually at the pod tip or stalk, and can destroy an entire pod in 10–14 days. Anthracnose lesions are drier and darker from the start. Phytophthora is generally more severe."
+        }
+      ]
+    },
+    {
+      "id": "carmenta",
+      "name": "Carmenta (Cocoa Pod Borer)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Caused by the cocoa pod borer moth (Carmenta foraseminis). Larvae bore into pods and damage beans internally. A major pest in West Africa.",
+      "symptoms": [
+        "Small entry holes on pod surface",
+        "Premature ripening or uneven coloring of pod",
+        "Internal damage to beans with frass (insect waste) visible when pod opened",
+        "Pods feel lighter than healthy ones"
+      ],
+      "causes": [
+        "Larvae of the moth Carmenta foraseminis",
+        "Adult moths lay eggs on pod surface",
+        "Larvae bore inside and feed on beans",
+        "Irregular harvesting schedules allow more pods to become infested"
+      ],
+      "treatments": [
+        "Remove and destroy all infested pods immediately",
+        "Harvest pods frequently — every 7–10 days — to reduce exposure time",
+        "Apply approved insecticides targeting adult moths during peak flight periods",
+        "Use pheromone traps to monitor and reduce moth populations"
+      ],
+      "prevention": [
+        "Maintain regular harvesting schedule (every 7–10 days)",
+        "Remove all leftover pod husks from the plantation floor",
+        "Prune trees to improve air circulation and reduce sheltered spots",
+        "Monitor pods regularly for early signs of infestation"
+      ],
+      "faq": [
+        {
+          "question": "How can I tell if a pod has pod borers without cutting it open?",
+          "answer": "Look for small circular entry holes on the pod surface, approximately 2–3mm wide. Infested pods may also show premature color changes (yellowing or reddening) and feel lighter than they should. When you shake the pod, you may hear beans rattling loosely."
+        },
+        {
+          "question": "When is the peak season for cocoa pod borer moths?",
+          "answer": "Pod borer moth activity peaks during the main harvest season when mature pods are most abundant. In West Africa, this is typically October–December. Monitor traps and inspect pods more frequently during these months. Harvesting every 7–10 days during peak season significantly reduces infestation rates."
+        },
+        {
+          "question": "Can I use biological control against Carmenta pod borers?",
+          "answer": "Yes. Natural enemies such as parasitoid wasps (Trichogramma species) and predatory ants can help control pod borer populations. Maintaining biodiversity on the farm by preserving shade trees and avoiding broad-spectrum insecticides supports natural predator populations. Pheromone traps are also useful for monitoring and mass-trapping adult moths."
+        }
+      ]
+    },
+    {
+      "id": "moniliasis",
+      "name": "Moniliasis (Frosty Pod Rot)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Caused by the fungus Moniliophthora roreri. One of the most destructive cocoa diseases in the Americas, causing up to 80% crop loss if untreated. Not yet widespread in West Africa but a biosecurity concern.",
+      "symptoms": [
+        "Irregular dark spots or lesions on pod surface",
+        "White or cream-colored powdery spore mass covering the pod",
+        "Internal rot — beans become watery and unusable",
+        "Premature pod drop"
+      ],
+      "causes": [
+        "Fungal pathogen Moniliophthora roreri",
+        "Spreads through airborne and rain-splashed spores",
+        "High humidity and dense canopy favor infection",
+        "Infected pods left on trees or ground become spore sources"
+      ],
+      "treatments": [
+        "Remove and bury or burn all infected pods immediately — do not leave on ground",
+        "Harvest frequently (every 7 days) to remove pods before spore production",
+        "Apply copper-based fungicides as a preventive measure during wet seasons",
+        "Ensure infected material is disposed of far from the plantation"
+      ],
+      "prevention": [
+        "Prune canopy to reduce humidity and improve air flow",
+        "Maintain proper drainage in the plantation",
+        "Harvest pods at the right maturity — do not leave ripe pods on trees",
+        "Monitor weekly during rainy season when infection risk is highest"
+      ],
+      "faq": [
+        {
+          "question": "Is moniliasis present in Ghana?",
+          "answer": "Moniliasis (frosty pod rot) is primarily a concern in Central and South America. It is not currently established in Ghana or West Africa, but it is a biosecurity risk. If you see white powdery growth on pods, contact COCOBOD immediately as this may be an unusual fungal infection requiring expert assessment."
+        },
+        {
+          "question": "How does moniliasis differ from phytophthora black pod?",
+          "answer": "Moniliasis produces a distinctive white or cream-colored powdery spore mass on the pod surface, giving it a 'frosty' appearance — hence the name frosty pod rot. Phytophthora causes dark brown to black water-soaked lesions without the white powdery coating. Moniliasis also causes internal watery rot of beans rather than the dry blackening seen with phytophthora."
+        },
+        {
+          "question": "What should I do if I suspect moniliasis on my farm?",
+          "answer": "Do not move any plant material off the farm. Remove and burn all suspected pods immediately. Contact your COCOBOD extension officer right away for official diagnosis. Early containment is critical — moniliasis spores can spread rapidly through wind over several kilometers if not controlled. Quarantine the affected area until an expert can confirm the diagnosis."
+        }
+      ]
+    },
+    {
+      "id": "witches_broom",
+      "name": "Witches' Broom",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Caused by the fungus Moniliophthora perniciosa. Produces abnormal broom-like vegetative growth. A major disease in South American cocoa but a biosecurity concern for West African farmers.",
+      "symptoms": [
+        "Abnormal shoot growth resembling a broom — dense cluster of small branches",
+        "Swollen, parthenocarpic (seedless) pods with abnormal shape",
+        "Green brooms eventually dry out and turn brown",
+        "Flower cushion brooms — clusters of malformed flowers"
+      ],
+      "causes": [
+        "Fungal pathogen Moniliophthora perniciosa",
+        "Spreads through airborne basidiospores (produced by mushroom-like fruiting bodies)",
+        "Infects actively growing shoots, flowers, and young pods",
+        "Wet conditions and poor ventilation increase risk"
+      ],
+      "treatments": [
+        "Prune and remove all brooms — vegetative, cushion, and pod brooms — during dry season",
+        "Cut brooms at least 15 cm below the swollen area into healthy wood",
+        "Burn or bury removed brooms far from the plantation",
+        "Apply copper-based fungicides to protect pruning wounds"
+      ],
+      "prevention": [
+        "Conduct phytosanitary pruning 2–3 times per year",
+        "Remove brooms before the rainy season to prevent spore release",
+        "Maintain proper shade and spacing between trees",
+        "Plant resistant or tolerant cocoa clones where available",
+        "Monitor for new broom formation monthly"
+      ],
+      "faq": [
+        {
+          "question": "Is witches' broom present in Ghana?",
+          "answer": "Witches' broom is primarily found in South and Central America. It is not currently established in West Africa. If you see abnormal broom-like shoot growth, report it to COCOBOD immediately for expert identification."
+        },
+        {
+          "question": "How do I recognize the different types of brooms?",
+          "answer": "There are three types: (1) Vegetative brooms — dense clusters of small, pale-green shoots growing from branches, resembling a broom or bird's nest. (2) Cushion brooms — abnormal masses of small flowers on the trunk or branches that fail to produce normal pods. (3) Pod brooms — pods that are swollen, misshapen, and parthenocarpic (seedless). All three types eventually dry out and turn brown, and must be pruned and destroyed."
+        },
+        {
+          "question": "When is the best time to prune brooms?",
+          "answer": "Prune brooms during the dry season (December–February in West Africa) before the rains start. This is critical because the fungus produces spore-bearing mushroom-like structures on dead brooms during wet conditions. By removing brooms during dry season, you prevent the next cycle of spore release. Cut at least 15 cm below the swollen area into healthy wood, and burn or bury all removed material far from the farm."
+        }
+      ]
+    },
+    {
+      "id": "healthy",
+      "name": "Healthy",
+      "scan_type": "both",
+      "severity": "none",
+      "description": "No signs of disease detected. Continue good agricultural practices to maintain plant and pod health.",
+      "symptoms": [],
+      "causes": [],
+      "treatments": [
+        "No treatment needed — continue regular maintenance"
+      ],
+      "prevention": [
+        "Maintain proper shade management (40–60% shade)",
+        "Prune regularly to improve air circulation",
+        "Apply balanced fertilization based on soil tests",
+        "Remove dead or diseased plant material promptly",
+        "Harvest ripe pods within 2–3 weeks of ripening",
+        "Keep farm clean — remove fallen pods and debris"
+      ],
+      "faq": [
+        {
+          "question": "How often should I inspect my cocoa farm for diseases?",
+          "answer": "Inspect your entire farm at least once per week during the rainy season when disease pressure is highest. During the dry season, bi-weekly inspections are usually sufficient. Early detection is the most effective disease management strategy."
+        },
+        {
+          "question": "What are the signs of a healthy cocoa farm?",
+          "answer": "Healthy cocoa trees have uniform green leaves without spots or lesions, firm pods with no discoloration, good pod set on main stems and branches, and no abnormal growth patterns. Healthy pods feel heavy for their size."
+        }
+      ]
+    }
+  ],
+  "general_farming": [
+    {
+      "topic": "Best time to harvest cocoa pods",
+      "answer": "Harvest cocoa pods when they change color — typically from green to yellow or orange depending on the variety. Do not leave ripe pods on the tree for more than 2–3 weeks as they become susceptible to disease and their quality declines. Harvest every 7–14 days during peak season."
+    },
+    {
+      "topic": "How to properly prune cocoa trees",
+      "answer": "Prune cocoa trees 2–3 times per year. Remove dead, diseased, and crossing branches. Maintain a canopy height of 4–5 meters for easy management. Good pruning improves air circulation and reduces disease pressure. Prune after harvest when trees are least stressed."
+    },
+    {
+      "topic": "Fertilizer recommendations for cocoa",
+      "answer": "Apply NPK fertilizer (e.g., 15-15-15 or 12-12-17) twice per year — at the start of the rainy season and 4–6 months later. Apply 250–500g per tree per application depending on tree size and soil test results. Place fertilizer 30–60cm from the base of the tree, not directly touching the trunk. Consult COCOBOD extension officers for soil-specific recommendations."
+    },
+    {
+      "topic": "Managing shade trees on cocoa farms",
+      "answer": "Maintain 40–60% shade cover on cocoa farms. Too much shade reduces yield and increases disease; too little increases heat stress. Thin shade trees gradually over multiple seasons rather than removing all at once. Plantain and banana are good temporary shade trees during the establishment phase."
+    },
+    {
+      "topic": "Cocoa bean fermentation and drying",
+      "answer": "Ferment freshly harvested cocoa beans for 5–7 days in wooden boxes or banana leaf heaps, turning every 48 hours. After fermentation, dry beans on raised platforms under the sun for 7–14 days until moisture content reaches 7–8%. Properly fermented and dried beans command better prices at COCOBOD buying centers."
+    }
+  ],
+  "cocobod_resources": {
+    "description": "COCOBOD (Ghana Cocoa Board) is the government body responsible for regulating Ghana's cocoa industry.",
+    "when_to_contact": [
+      "When you suspect CSSVD infection on any tree",
+      "When you see unusual symptoms not recognized by this app",
+      "When you need access to improved seedlings or inputs",
+      "When disease is spreading rapidly across your farm",
+      "To access free extension advisory services"
+    ],
+    "services": [
+      "Free farm visits from extension officers",
+      "Subsidized inputs including fertilizers and fungicides",
+      "CSSVD testing and compensation for tree removal",
+      "Access to certified planting material",
+      "Market price guarantees for properly dried and fermented beans"
+    ]
+  }
+}

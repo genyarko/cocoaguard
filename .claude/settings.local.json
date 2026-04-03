@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dart analyze:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter pub:*)",
+      "Bash(flutter test:*)",
+      "Bash(python -m json.tool \"C:/Users/genya/Downloads/g4n/assets/data/diseases_knowledge.json\")"
+    ]
+  }
+}

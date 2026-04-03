@@ -1,0 +1,110 @@
+{
+  "version": "1.0",
+  "keywords": ["help", "emergency", "urgent", "dying", "spreading", "fast", "all", "entire", "losing", "lost", "disaster", "severe", "bad", "serious"],
+  "protocols": [
+    {
+      "id": "disease_outbreak",
+      "title": "Rapid Disease Outbreak",
+      "description": "Disease spreading quickly across multiple trees or a large portion of your farm",
+      "trigger_keywords": ["spreading fast", "entire farm", "all trees", "losing everything", "outbreak"],
+      "severity": "critical",
+      "immediate_actions": [
+        "STOP harvesting from visibly infected trees immediately",
+        "Do not move harvested pods from infected areas to healthy areas",
+        "Take photos of affected trees/pods for documentation",
+        "Contact your local COCOBOD extension officer today"
+      ],
+      "short_term_actions": [
+        "Remove and destroy all visibly infected pods and plant material",
+        "Create a buffer zone — avoid working from infected areas to healthy areas without changing clothes",
+        "Do not share tools between infected and healthy sections without cleaning",
+        "Apply copper-based fungicide to healthy trees bordering the infected area as protection"
+      ],
+      "contact": {
+        "who": "COCOBOD Extension Officer",
+        "when": "Same day — this is an emergency",
+        "what_to_say": "Tell them: the disease name (if known), how many trees are affected, how fast it is spreading, and your farm location"
+      }
+    },
+    {
+      "id": "cssvd_suspected",
+      "title": "Suspected CSSVD Infection",
+      "description": "Signs of Cocoa Swollen Shoot Virus Disease — there is no cure, but rapid response limits spread",
+      "trigger_keywords": ["swollen shoot", "cssvd", "mealybug", "virus", "swollen stems"],
+      "severity": "critical",
+      "immediate_actions": [
+        "Do NOT remove any trees yourself — wait for COCOBOD confirmation",
+        "Isolate the suspected area — do not allow people or equipment in and out",
+        "Document all affected trees with photos and a sketch of their location",
+        "Report to COCOBOD extension officer within 24 hours"
+      ],
+      "short_term_actions": [
+        "COCOBOD will confirm diagnosis and authorize tree removal",
+        "You may be eligible for compensation under the CSSVD eradication program",
+        "Do not sell planting material from affected areas",
+        "Plan for replanting with CSSVD-tolerant varieties after official guidance"
+      ],
+      "contact": {
+        "who": "COCOBOD Extension Officer — CSSVD is a notifiable disease",
+        "when": "Within 24 hours of suspecting CSSVD",
+        "what_to_say": "Describe the symptoms — swollen shoots, red leaf banding, distorted pods — and your exact farm location"
+      }
+    },
+    {
+      "id": "chemical_exposure",
+      "title": "Pesticide / Chemical Exposure",
+      "description": "Accidental exposure to agricultural chemicals — pesticides, fungicides, herbicides",
+      "trigger_keywords": ["chemical", "pesticide", "spray", "poisoning", "skin burn", "eyes", "inhaled", "swallowed"],
+      "severity": "medical",
+      "immediate_actions": [
+        "Move away from the source of exposure immediately",
+        "If skin/eyes exposed: flush with large amounts of clean water for 15–20 minutes",
+        "If inhaled: move to fresh air, loosen tight clothing",
+        "If swallowed: do NOT induce vomiting — call for medical help immediately",
+        "Remove contaminated clothing while flushing skin"
+      ],
+      "short_term_actions": [
+        "Seek medical attention at the nearest health facility",
+        "Bring the pesticide container or label to the health facility so doctors know what chemical was involved",
+        "If symptoms are severe (difficulty breathing, seizures, loss of consciousness) — treat as a medical emergency"
+      ],
+      "contact": {
+        "who": "Nearest health center or hospital",
+        "when": "Immediately",
+        "what_to_say": "State the chemical involved if known, route of exposure (skin, eyes, ingestion, inhalation), and symptoms"
+      }
+    },
+    {
+      "id": "crop_failure_risk",
+      "title": "Risk of Total Crop Failure",
+      "description": "Situation where large proportion of current season's harvest is at risk",
+      "trigger_keywords": ["entire harvest", "losing harvest", "everything dying", "total loss", "nothing left"],
+      "severity": "high",
+      "immediate_actions": [
+        "Prioritize harvesting any pods that are still healthy and close to ripe",
+        "Begin aggressive removal of all infected material immediately",
+        "Document the extent of damage (photos, count of affected trees)",
+        "Contact COCOBOD extension officer for emergency farm visit"
+      ],
+      "short_term_actions": [
+        "Apply fungicide spray to all remaining healthy trees as protection",
+        "Increase harvest frequency to every 5–7 days to catch pods before disease spreads",
+        "Ask COCOBOD about emergency input support programs",
+        "Avoid replanting in severely affected soil without consultation"
+      ],
+      "contact": {
+        "who": "COCOBOD Extension Officer + District Agricultural Officer",
+        "when": "This week",
+        "what_to_say": "Report the scale of loss, disease type, and request emergency farm visit and input support"
+      }
+    }
+  ],
+  "general_emergency_contacts": {
+    "note": "Contact your local COCOBOD District Office for the correct phone numbers in your area. Numbers vary by district.",
+    "resources": [
+      "COCOBOD main website: www.cocobod.gh",
+      "Your local COCOBOD District Office (ask at the nearest buying center for contact)",
+      "Ministry of Food and Agriculture (MoFA) local office"
+    ]
+  }
+}
