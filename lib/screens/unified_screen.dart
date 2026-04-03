@@ -186,7 +186,6 @@ Future<void> _captureAndClassify() async {
 
       // Route to pod results
       _lastScanMode = 'pod';
-;
       if (mounted) {
         setState(() {}); // Trigger rebuild for auto-navigation
       }

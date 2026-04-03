@@ -11,6 +11,7 @@ import '../models/detected_pod.dart';
 import '../models/diagnosis_result.dart';
 import '../utils/constants.dart';
 import '../utils/image_cropper.dart';
+import '../utils/interpreter_options_builder.dart';
 import 'score_blender.dart';
 import 'yolo_detector.dart';
 
@@ -36,8 +37,9 @@ class PodClassifierService extends ChangeNotifier {
 
     final sw = Stopwatch()..start();
     try {
-      _interpreter =
-          await Interpreter.fromAsset(AppConstants.podModelPath);
+      final options = InterpreterOptionsBuilder.build(label: 'pod');
+      _interpreter = await Interpreter.fromAsset(
+          AppConstants.podModelPath, options: options);
 
       final labelsJson =
           await rootBundle.loadString(AppConstants.podLabelsPath);

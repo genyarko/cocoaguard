@@ -6,6 +6,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../utils/constants.dart';
 import '../utils/image_utils.dart';
+import '../utils/interpreter_options_builder.dart';
 
 class LeafClassificationResult {
   final String diagnosis;
@@ -39,7 +40,9 @@ class LeafClassifierService {
     _isLoading = true;
     final sw = Stopwatch()..start();
     try {
-      _interpreter = await Interpreter.fromAsset(AppConstants.leafModelPath);
+      final options = InterpreterOptionsBuilder.build(label: 'leaf');
+      _interpreter = await Interpreter.fromAsset(
+          AppConstants.leafModelPath, options: options);
 
       final labelsJson =
           await rootBundle.loadString(AppConstants.leafLabelsPath);

@@ -4,6 +4,7 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../models/bounding_box.dart';
 import '../utils/constants.dart';
+import '../utils/interpreter_options_builder.dart';
 import 'yolo_preprocessor.dart';
 import 'yolo_postprocessor.dart';
 
@@ -21,7 +22,9 @@ class YoloDetector {
     if (_isLoaded) return;
     final sw = Stopwatch()..start();
     try {
-      _interpreter = await Interpreter.fromAsset(AppConstants.yoloModelPath);
+      final options = InterpreterOptionsBuilder.build(label: 'yolo');
+      _interpreter = await Interpreter.fromAsset(
+          AppConstants.yoloModelPath, options: options);
 
       _inputShape = _interpreter!.getInputTensor(0).shape;
       _outputShape = _interpreter!.getOutputTensor(0).shape;
