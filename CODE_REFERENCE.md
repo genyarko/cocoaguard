@@ -1,8 +1,9 @@
 # CocoaGuard — Complete Code Reference
 
-**Last Updated**: April 2026  
-**Codebase**: 51 Dart files, ~5,500 lines (excluding comments)  
-**Platform**: Flutter 3.11+ (iOS 12+, Android 21+)
+**Last Updated**: April 5, 2026  
+**Codebase**: 52 Dart files, ~6,200 lines (excluding comments)  
+**Platform**: Flutter 3.11+ (iOS 12+, Android 21+)  
+**Languages Supported**: English, French, Spanish, Twi (with translation bridge for Twi Q&A)
 
 ---
 
@@ -158,16 +159,19 @@ Uint8List? currentImageBytes              // keep for replay
 DetectionResult? currentResult            // list of DetectedPod
 ```
 
-### `QaProvider` (Q&A State)
-**Manages**: Conversation history, Gemma 4 caching, offline fallback
+### `QaProvider` (Q&A State + Translation Bridge)
+**Manages**: Conversation history, Gemma 4 caching, offline fallback, Twi↔English translation
 
 ```dart
 // Usage
 final qaProv = context.read<QaProvider>();
 
 // Send a question (with optional scan context)
+// If user language is Twi: question auto-translated to English, response translated back
 await qaProv.ask("How do I treat CSSVD?");
-// → tries Gemma 4 → caches if successful
+// → translates Twi→English (if needed)
+// → tries Gemma 4 → translates English→Twi (if needed)
+// → caches translated response with language-tagged key ('tw:how_do_i_treat_cssvd')
 // → falls back to knowledge base if offline
 // → stores ChatMessage in Hive
 
@@ -181,9 +185,20 @@ qaProv.setScanContext(
 // State properties
 List<ChatMessage> messages
 bool isLoading
+bool isTranslating              // true while translating question/response
 String? error
 ScanContext? scanContext
 ```
+
+**Translation Bridge (Twi only)**:
+- When `currentLanguage == AppLanguage.twi && gemma4Available`: 
+  - Translates user question to English before sending to Gemma 4
+  - Translates response back to Twi before caching/displaying
+  - Uses Gemini 2.5 Flash API (same key as Gemma 4)
+  - 5s timeout, 1 retry on transient failures
+  - Graceful fallback: if translation fails, sends original text or returns English
+- Cache keys include language code to prevent cross-language cache pollution
+- French and Spanish: handled by Gemma 4 natively (no translation needed)
 
 ### `HistoryProvider` (Scan History)
 **Manages**: All saved scans (Hive persistence)
@@ -302,8 +317,45 @@ class Gemma4Service {
 
 **Response caching:**
 - On success: store in Hive `response_cache` box
-- Key: normalized question (lowercased, punctuation stripped)
+- Key: language-tagged normalized question (e.g., `tw:how_do_i_treat_cssvd`)
 - Reuse cache for identical/similar questions offline
+- Language tag prevents serving stale English answers when switching to Twi
+
+### Translation Bridge (Twi↔English)
+
+**`translation_service.dart`**
+
+```dart
+class TranslationService {
+  Future<String?> translate({
+    required String text,
+    required String from,  // language code (e.g., 'tw', 'en')
+    required String to,
+  })
+}
+```
+
+**Behavior (Twi only)**:
+- Endpoint: `generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash` (Gemini API)
+- Uses same API key as Gemma 4
+- Purpose: Bridge the gap between Twi user input and Gemma 4 (which doesn't understand Twi)
+- Timeout: 5 seconds
+- Retry: 1× on timeout/network/5xx errors (1s backoff)
+- No retry: 401/403 (auth) or 429 (rate limit)
+- Returns `null` on failure (caller falls back gracefully)
+
+**Temperature & Constraints**:
+- Temperature: 0.2 (low) for faithful, consistent translations
+- Max tokens: 512 (sufficient for translated Q&A)
+- Always returns translation, never refusals
+
+**Usage Pattern**:
+1. User asks question in Twi
+2. `TranslationService.translate(text: "...", from: 'tw', to: 'en')` → English question
+3. Send English question to Gemma 4
+4. Receive English response
+5. `TranslationService.translate(response, from: 'en', to: 'tw')` → Twi response
+6. Cache: store in Hive with language-tagged key (`tw:question_normalized`)
 
 ### Offline Knowledge Base & Multilingual Support
 

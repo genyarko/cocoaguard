@@ -21,12 +21,15 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 - ✅ **Offline Knowledge Base** — Browse disease info, treatments, and prevention tips anytime
 - ✅ **Cached Q&A** — Previous answers available offline; new questions use Gemma 4 when connected
 - ✅ **Multilingual** — Available in English, French, Spanish, and Twi
+  - Scan results (disease names, treatments, UI text) translated into your language
+  - Twi Q&A powered by transparent translation bridge (Twi→English→Twi via Gemini)
 
 ### Smart Features
 - **Image Quality Checks** — Warns if photo is blurry, too dark, or overexposed
 - **Low-Confidence Alerts** — Recommends retaking photos when results are uncertain (< 55%)
 - **Scan History** — Save and revisit past scans with confidence scores
 - **Context-Aware Q&A** — Ask about detected diseases; Gemma 4 provides tailored advice
+- **Translation Bridge** — Seamless Twi support for Q&A (auto-translates Twi ↔ English behind the scenes)
 - **Emergency Protocols** — Quick access to COCOBOD contact info for critical diseases like CSSVD
 
 ---
@@ -112,7 +115,16 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 - Tap **Settings** → **Language**
 - Choose from **English**, **Français** (French), **Español** (Spanish), or **Twi** (Asante Twi)
 - App saves your preference and restarts with the new language
-- All offline content, farming tips, and help text translate instantly
+- **What translates**:
+  - ✅ All scan results (disease names, treatments, severity labels)
+  - ✅ All UI text (buttons, section headers, error messages)
+  - ✅ Offline knowledge base (disease library, farming tips)
+  - ✅ Q&A answers (from knowledge base or cached)
+- **Twi Q&A Special**: When using Twi language and asking new questions online:
+  - Your question is automatically translated to English
+  - Gemma 4's response is translated back to Twi
+  - This "translation bridge" is transparent — you see Twi in, Twi out
+  - Translations are cached so repeated questions are instant, even offline
 
 ---
 
@@ -123,22 +135,36 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 - **ML Inference** — TensorFlow Lite (on-device)
 - **State Management** — Provider
 - **Local Storage** — Hive
-- **Cloud API** — Gemma 4 (text-only, optional)
+- **Cloud APIs**:
+  - **Gemma 4** — Text-only Q&A (optional, requires API key)
+  - **Gemini 2.5 Flash** — Translation bridge for Twi↔English (same key as Gemma 4)
 
 ### Key Directories
 ```
 lib/
 ├── screens/              # UI screens (home, scan results, settings, help, privacy)
-├── providers/            # State management (ScanProvider, PodScanProvider, QaProvider)
-├── services/             # ML services (leaf/pod classifiers, YOLO detection, Gemma4 API)
+├── providers/            # State management (ScanProvider, PodScanProvider, QaProvider, LanguageProvider)
+├── services/             # ML services, APIs, storage
+│   ├── leaf_classifier_service.dart
+│   ├── pod_classifier_service.dart
+│   ├── yolo_detector.dart
+│   ├── gemma4_service.dart         # Gemma 4 Q&A API
+│   ├── translation_service.dart    # Twi↔English translation bridge
+│   ├── knowledge_service.dart      # Offline Q&A + multilingual support
+│   └── storage_service.dart        # Hive persistence
 ├── models/               # Data models (ScanRecord, DetectedPod, Diagnosis)
-├── utils/                # Helpers (colors, image quality checker, constants)
+├── utils/                # Helpers (colors, image quality checker, constants, treatment data)
 ├── widgets/              # Reusable UI components
 └── main.dart             # App entry point
 
 assets/
 ├── models/               # TF Lite models & labels
-├── data/                 # Knowledge base JSON, treatment data
+├── data/                 # Knowledge base JSON (English, French, Spanish, Twi)
+│   ├── diseases_knowledge.json
+│   ├── diseases_knowledge_fr.json
+│   ├── diseases_knowledge_es.json
+│   ├── diseases_knowledge_tw.json
+│   └── emergency_protocols.json
 └── images/               # UI icons & logos
 ```
 

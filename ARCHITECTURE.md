@@ -156,38 +156,59 @@ ScoreBlender: weighted average of YOLO class scores + classifier scores
 
 ---
 
-## Gemma 4 Integration
+## Gemma 4 Integration + Translation Bridge
 
 ```
-User question
+User question (any language)
       │
       ▼
 QaProvider.ask()
       │
+      ├─ [If Twi & online] TranslationService.translate(Twi → English)
+      │   - Uses Gemini 2.5 Flash API (same key as Gemma 4)
+      │   - Timeout: 5s, 1 retry on failure
+      │   - If translation fails → send original Twi text as fallback
+      │
       ├─ Build prompt (PromptTemplates):
       │   - System: "You are an expert agricultural advisor for Ghanaian cocoa farmers..."
       │   - Context: last scan result if available (disease, confidence, scan type)
-      │   - User question
+      │   - User question (translated to English if needed)
       │
       ├─ [Online] Gemma4Service.generate()
       │   - POST generativelanguage.googleapis.com/v1beta/models/gemma-3-4b-it:generateContent
       │   - Timeout: 10s
       │   - Retry: 1× on timeout/network/5xx (2s delay)
       │   - No retry on 401/403/429
-      │   → Cache response in Hive (key = normalized question)
+      │   → Cache response in Hive (key = language + normalized question)
+      │
+      ├─ [If Twi & response] TranslationService.translate(English → Twi)
+      │   - Translate Gemma 4 response back to Twi
+      │   - If translation fails → use English response as fallback
       │
       ├─ [Offline / error] Check Hive response cache
-      │   → Return cached answer tagged "Cached answer"
+      │   → Return cached answer (already in correct language) tagged "Cached answer"
       │
       └─ [No cache] KnowledgeService.search()
-          - Keyword match against diseases_knowledge.json
+          - Keyword match against diseases_knowledge_<lang>.json
           - Scores: disease id/name match (+5), token overlap (+1), FAQ match (+2)
-          → Return best match tagged "Offline answer"
+          - Multilingual intent detection (treatment/prevention/cause/symptom in any language)
+          → Return best match (in user's language) tagged "Offline answer"
 ```
+
+**Translation Bridge (Twi only)**:
+- Gemma 4 doesn't natively understand Twi, so questions are translated to English before sending
+- Responses are translated back to Twi before displaying to the user
+- Cache keys are language-tagged (`tw:what_is_anthracnose`) to prevent serving stale English answers when switching back to Twi
+- If translation fails at any step, falls back gracefully (sends original or returns English)
+
+**Multilingual Scan Results**:
+- Disease display names, severity labels, treatment recommendations all available in 4 languages
+- UI text on results screens (buttons, warnings, section headers) reads from language-aware labels in `KnowledgeService._allLabels`
+- Treatment lookup uses `getLeafTreatment()` / `getPodTreatment()` helpers that return translations
 
 **Why Gemma 4 for Q&A only (not disease detection)?**  Gemma 4 is a language model — it cannot process images natively. The TFLite models are purpose-trained for cocoa disease visual classification. Using Gemma 4 for detection would require image captioning + text inference, adding latency and reducing accuracy. The clean split: TFLite sees the image, Gemma 4 answers text questions about the result.
 
-**Why cache responses in Hive?**  Farmers in rural Ghana frequently ask the same questions. After the first online answer, the app serves it instantly offline. The cache key is a normalized (lowercased, stripped) question string.
+**Why cache responses in Hive?**  Farmers in rural Ghana frequently ask the same questions. After the first online answer, the app serves it instantly offline. The cache key includes the language code to prevent serving stale answers in the wrong language when users switch.
 
 ---
 
