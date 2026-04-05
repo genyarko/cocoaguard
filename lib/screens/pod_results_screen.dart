@@ -476,6 +476,9 @@ class _PodDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final diag = pod.diagnosis;
     final color = AppConstants.colorForDiagnosis(diag.className);
+    final isDiseased = diag.className != 'healthy';
+    // Disease names always red for visibility; healthy stays green
+    final nameColor = isDiseased ? Colors.red[700]! : color;
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -538,8 +541,8 @@ class _PodDetailCard extends StatelessWidget {
                         diag.displayName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: color,
+                          fontSize: 16,
+                          color: nameColor,
                         ),
                       ),
                       Text(

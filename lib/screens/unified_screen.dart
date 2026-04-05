@@ -32,17 +32,19 @@ class _UnifiedScreenState extends State<UnifiedScreen> with WidgetsBindingObserv
   bool _isInitialized = false;
   bool _isProcessing = false;
   bool _permissionDenied = false;
-  final TextEditingController _textController = TextEditingController();
   bool _navigatedToResult = false;
   String? _lastScanMode;
+
+  // Zoom state
+  double _currentZoom = 1.0;
+  double _minZoom = 1.0;
+  double _maxZoom = 1.0;
+  double _zoomOnPinchStart = 1.0;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _textController.addListener(() {
-      setState(() {});
-    });
     _initCamera();
   }
 
@@ -50,7 +52,6 @@ class _UnifiedScreenState extends State<UnifiedScreen> with WidgetsBindingObserv
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
-    _textController.dispose();
     super.dispose();
   }
 
@@ -89,9 +90,13 @@ class _UnifiedScreenState extends State<UnifiedScreen> with WidgetsBindingObserv
 
       try {
         await _controller!.setFocusMode(FocusMode.auto);
-      } catch (_) {
-        // Some devices don't support focus mode control
-      }
+      } catch (_) {}
+
+      try {
+        _minZoom = await _controller!.getMinZoomLevel();
+        _maxZoom = await _controller!.getMaxZoomLevel();
+        _currentZoom = _minZoom;
+      } catch (_) {}
 
       setState(() => _isInitialized = true);
     } catch (e) {
@@ -421,9 +426,23 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
           resizeToAvoidBottomInset: false,
           body: Stack(
             children: [
-              // Camera preview
+              // Camera preview with pinch-to-zoom
               if (_isInitialized && _controller != null)
-                CameraPreview(_controller!)
+                GestureDetector(
+                  onScaleStart: (_) {
+                    _zoomOnPinchStart = _currentZoom;
+                  },
+                  onScaleUpdate: (details) async {
+                    final newZoom = (_zoomOnPinchStart * details.scale)
+                        .clamp(_minZoom, _maxZoom);
+                    if (newZoom != _currentZoom) {
+                      _currentZoom = newZoom;
+                      await _controller!.setZoomLevel(_currentZoom);
+                      setState(() {});
+                    }
+                  },
+                  child: CameraPreview(_controller!),
+                )
               else if (_permissionDenied)
                 Container(
                   color: Colors.black,
@@ -454,6 +473,60 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
                     child: CircularProgressIndicator(),
                   ),
                 ),
+
+              // Zoom level indicator (shown when zoomed in)
+              if (_currentZoom > _minZoom + 0.05)
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: SafeArea(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppColors.onyxTransparent(0.6),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Text(
+                        '${_currentZoom.toStringAsFixed(1)}x',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+              // Tip: gallery scans give better results
+              Positioned(
+                bottom: 8,
+                left: 16,
+                right: 16,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.onyxTransparent(0.7),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Row(
+                    children: [
+                      Icon(Icons.lightbulb_outline,
+                          color: Colors.amber, size: 16),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          'Tip: Uploading a saved photo from gallery gives more accurate results than a live capture.',
+                          style: TextStyle(
+                              color: Colors.white70, fontSize: 11),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
 
               // Top dropdown menu
               Positioned(
@@ -590,66 +663,52 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
                 ),
             ],
           ),
-          // Text input above bottom nav
-          bottomSheet: Container(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
-            color: AppColors.onyx,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      hintText: 'Ask a question or describe...',
-                      hintStyle: const TextStyle(color: AppColors.mediumGray),
-                      filled: true,
-                      fillColor: AppColors.darkGray,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
+          // Text input above bottom nav — tapping navigates to QaScreen
+          // rather than opening the keyboard here (which would split the
+          // camera view with a white gap behind the keyboard).
+          bottomSheet: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const QaScreen(),
+                ),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+              color: AppColors.onyx,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
                       ),
+                      decoration: BoxDecoration(
+                        color: AppColors.darkGray,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        'Ask a question or describe...',
+                        style: TextStyle(color: AppColors.mediumGray),
+                      ),
                     ),
-                    style: const TextStyle(color: AppColors.white),
-                    minLines: 1,
-                    maxLines: 3,
                   ),
-                ),
-                const SizedBox(width: 8),
-                GestureDetector(
-                  onTap: _textController.text.isNotEmpty
-                      ? () {
-                          final question = _textController.text.trim();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => QaScreen(
-                                initialQuestion: question,
-                              ),
-                            ),
-                          );
-                          _textController.clear();
-                        }
-                      : null,
-                  child: Container(
+                  const SizedBox(width: 8),
+                  Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: _textController.text.isNotEmpty
-                          ? AppColors.chartreuse
-                          : AppColors.darkGray,
+                      color: AppColors.darkGray,
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.send,
-                      color: _textController.text.isNotEmpty
-                          ? AppColors.onyx
-                          : AppColors.mediumGray,
+                      color: AppColors.mediumGray,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           bottomNavigationBar: Container(

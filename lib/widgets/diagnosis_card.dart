@@ -15,6 +15,9 @@ class DiagnosisCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = AppConstants.colorForDiagnosis(diagnosis);
+    final isDiseased = diagnosis != 'healthy';
+    // Disease names always red for visibility; healthy stays green
+    final nameColor = isDiseased ? Colors.red[700]! : color;
     final isLowConfidence = confidence < AppConstants.confidenceThreshold;
 
     return Card(
@@ -27,7 +30,7 @@ class DiagnosisCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Icon(_iconForDiagnosis(diagnosis), size: 48, color: color),
+            Icon(_iconForDiagnosis(diagnosis), size: 48, color: nameColor),
             const SizedBox(height: 12),
             Text(
               displayNameForDiagnosis(diagnosis),
@@ -35,7 +38,7 @@ class DiagnosisCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: color,
+                color: nameColor,
               ),
             ),
             const SizedBox(height: 4),

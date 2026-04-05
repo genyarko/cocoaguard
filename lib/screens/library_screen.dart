@@ -102,12 +102,15 @@ class _SectionHeader extends StatelessWidget {
         children: [
           Icon(icon, color: Colors.brown[700], size: 22),
           const SizedBox(width: 8),
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(fontWeight: FontWeight.bold),
+          Flexible(
+            child: Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           const SizedBox(width: 8),
           Container(
@@ -119,6 +122,7 @@ class _SectionHeader extends StatelessWidget {
             child: Text(
               subtitle,
               style: TextStyle(fontSize: 11, color: Colors.brown[600]),
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
