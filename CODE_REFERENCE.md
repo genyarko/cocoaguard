@@ -64,6 +64,21 @@ CocoaGuard is an **offline-first**, **modular Flutter app** with clear separatio
 - Auto-routes to results screens on scan completion
 - Shows loading spinner + progress message during inference
 
+### Onboarding Screen
+
+**`onboarding_screen.dart`** (First launch only)
+- Shown once on first app launch (`onboarding_complete` flag check in `main.dart`)
+- **Slide 1**: Language picker (4 tappable language cards)
+  - User selection triggers `LanguageProvider.setLanguage()` immediately
+  - Persists choice to Hive and reloads knowledge base
+- **Slides 2–4**: Feature introduction (Scan & Diagnose, Ask Questions, Works Offline)
+  - All text fetched from `KnowledgeService.sectionTitle()` (no hardcoded English)
+  - Renders in user's selected language dynamically
+- **Navigation**: Back/Next buttons, "Get Started" on final slide
+- **Design**: Dark onyx background, chartreuse accents, large readable icons
+
+---
+
 ### Scan Result Screens
 
 **`results_screen.dart`** (Leaf results)
@@ -215,24 +230,37 @@ List<ScanRecord> records  // all saved scans
 ```
 
 ### `LanguageProvider` (Multilingual Support)
-**Manages**: App language preference, persistence, and knowledge base reloading
+**Manages**: App language preference, persistence, knowledge base reloading, onboarding language selection
 
 ```dart
 // Usage
 final langProv = context.read<LanguageProvider>();
+
+// Set language (typically on first launch via onboarding)
 await langProv.setLanguage(AppLanguage.french);
-// → reloads knowledge base in French
-// → notifies listeners (LibraryScreen rebuilds)
-// → persists choice in Hive
+// → reloads knowledge base (diseases, tips, COCOBOD resources) in French
+// → reloads all UI label translations (_allLabels from KnowledgeService)
+// → notifies listeners (screens rebuild with new language)
+// → persists choice to Hive for next launch
 
 // State properties
-AppLanguage language           // current language
+AppLanguage language           // current language (english, french, spanish, twi)
+KnowledgeService knowledgeService  // access to translated content
 ```
 
-**Persistence:**
-- Language preference saved in Hive `app_settings` box under key `'app_language'`
-- Restored on app startup in `main.dart`
-- Passed to `KnowledgeService.init(language: savedLanguage)` during initialization
+**Persistence Strategy**:
+- Language preference saved in Hive `app_settings` box under key `'app_language'` (ISO 639-1 code: 'en', 'fr', 'es', 'tw')
+- Restored on app startup in `main.dart` before any UI renders
+- Passed to `KnowledgeService.init(language: savedLanguage)` to load correct knowledge base JSON
+- On first launch: `onboarding_complete` check bypasses onboarding if language already persisted (shouldn't happen, but safe)
+
+**First-Launch Flow**:
+1. App starts, checks `onboarding_complete` flag in Hive
+2. If not set: show `OnboardingScreen`
+3. User picks language → `LanguageProvider.setLanguage(language)` → persists
+4. Remaining onboarding slides fetch text from persisted language
+5. On "Get Started": set `onboarding_complete = true`
+6. Next launch: skip onboarding, boot with saved language
 
 ---
 

@@ -86,6 +86,24 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 
 ## 📱 Usage
 
+### First Launch: Onboarding (Language Selection)
+
+When you open CocoaGuard for the first time:
+1. **Language Picker Screen** — Select your preferred language
+   - **English** 🇺🇸
+   - **Français** 🇫🇷
+   - **Español** 🇪🇸
+   - **Twi (Asante Twi)** 🇬🇭
+2. **Feature Overview** (3 slides in your chosen language)
+   - Scan & Diagnose
+   - Ask Questions
+   - Works Offline
+3. **Get Started** — Jump to the home screen
+
+Your language choice is saved automatically. On the next launch, the app skips onboarding and starts in your selected language.
+
+---
+
 ### Scanning a Leaf
 1. Tap **Leaf** in the bottom navigation
 2. Choose "Take Photo" (camera) or "Pick from Gallery"

@@ -40,6 +40,49 @@ CocoaGuard is an offline-first Flutter app that routes user input to the right A
 
 ---
 
+## Onboarding Flow (First Launch)
+
+```
+App startup (main.dart)
+      │
+      ▼
+Check: onboarding_complete flag in Hive?
+      │
+      ├─ [YES] → proceed to home screen
+      │
+      └─ [NO] → show OnboardingScreen
+           │
+           ▼
+         Slide 1: Language Picker
+         ┌─────────────────────────────┐
+         │ [English] [Français]        │
+         │ [Español] [Twi]             │
+         └─────────────────────────────┘
+         User taps language → LanguageProvider.setLanguage()
+         (persists choice, reloads knowledge base)
+           │
+           ▼
+         Slide 2: Scan & Diagnose (in chosen language)
+         Slide 3: Ask Questions (in chosen language)
+         Slide 4: Works Offline (in chosen language)
+           │
+           ▼
+         [Get Started] button
+           │
+           ▼
+         Set onboarding_complete = true
+         Route to home screen
+```
+
+**Key Design**:
+- Language picker is **first**, before any other content
+- All 3 feature slides render dynamically from `KnowledgeService._allLabels`
+- No hardcoded English text in onboarding — all keys fetched at runtime
+- Language choice persists via Hive `app_settings` box
+- On subsequent launches: skips onboarding entirely, jumps to home in saved language
+
+---
+
 ## Component Map
 
 ```
