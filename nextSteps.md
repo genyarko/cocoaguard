@@ -7,6 +7,10 @@
 ---
 
 ## What We Have Right Now
+*** Create an Onboarding for first start of the app. first enable users to select their preferred language.-
+onboarding should be in their selected preferred language.
+
+*** if gemma cannot speak twi, translate input from twi to english, and output from gemma to english.
 
 ### g4n (this repo)
 - Blank Flutter template (`lib/main.dart` is the default counter app)
@@ -307,22 +311,37 @@ dependencies:
 
 **Tasks**:
 - [x] 6.1 — App branding: name, icon, splash screen, color scheme
-  - Name: "G4N" or "CocoaGuard" or similar
-  - Colors: earthy greens + browns (cocoa farming theme)
+  - Name: "CocoaGuard" ✅
+  - Colors: earthy greens + browns (cocoa farming theme) ✅
 - [x] 6.2 — Low-confidence warnings: if classification < 55%, show warning + suggest retaking photo
 - [x] 6.3 — Image quality checks: warn if image is too dark, blurry, or wrong subject
 - [x] 6.4 — Loading states: model loading spinner on first launch, scan progress indicator
 - [x] 6.5 — Error handling audit: review every service for unhandled exceptions
 - [x] 6.6 — Permission handling: camera, storage — graceful prompts and fallbacks
 - [x] 6.7 — Onboarding screen: brief intro (1-3 slides) explaining what the app does
-  - Reference cococpod's `onboarding_screen.dart` for inspiration
 - [x] 6.8 — Settings screen: API key input, clear history, about page
 - [x] 6.9 — Responsive layout: test on different screen sizes
 - [x] 6.10 — Accessibility: text contrast, font sizes, screen reader labels
 - [x] 6.11 — Test on at least 2 real devices (mid-range + low-end Android)
 - [x] 6.12 — Fix all crashes found during testing
 
-**Exit criteria**: App looks professional, handles edge cases gracefully, works on mid-range Android devices. No crashes during 30-min QA session.
+**Phase 6B: Onboarding Revamp + Twi Q&A Bridge (April 3-5)**:
+- [x] 6B.1 — Language-first onboarding (pick language before any content)
+  - Language picker on first launch ✅
+  - All onboarding text in 4 languages ✅
+  - Persistence of language choice ✅
+- [x] 6B.2 — Twi-to-English translation bridge for Gemma 4
+  - TranslationService (Gemini 2.5 Flash) ✅
+  - QaProvider translation integration ✅
+  - Language-tagged cache keys ✅
+  - "Translating..." indicator in UI ✅
+  - **Bonus: Translated all scan results (leaf & pod)**
+    - Disease display names in all 4 languages ✅
+    - Treatment recommendations translated ✅
+    - All result screen UI labels translated ✅
+    - History cards show translated disease names ✅
+
+**Exit criteria**: App looks professional, handles edge cases gracefully, works on mid-range Android devices. All scan results display in user's selected language. No crashes during 30-min QA session.
 
 ---
 

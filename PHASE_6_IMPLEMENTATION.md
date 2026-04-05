@@ -226,7 +226,7 @@ Dark Purple (Mauve Shadow): #4c2b36
 
 ---
 
-### 6B.2 — Twi-to-English Translation Bridge for Gemma 4
+`### 6B.2 — Twi-to-English Translation Bridge for Gemma 4
 
 **Problem**: Gemma 4 doesn't understand Twi. When a user asks a Twi question, Gemma returns garbage or English-only answers.
 
@@ -273,7 +273,7 @@ Dark Purple (Mauve Shadow): #4c2b36
 
 **Files to modify**:
 - `lib/providers/qa_provider.dart` — add translation step before/after Gemma calls
-- `lib/main.dart` — instantiate `TranslationService` if API key is present, pass to `QaProvider`
+- `lib/main.dart` — instantiate `TranslationService` if API key is present, pass to `QaProvider``
 
 ---
 
@@ -290,6 +290,101 @@ Dark Purple (Mauve Shadow): #4c2b36
 
 ---
 
+---
+
+## Phase 6B: Onboarding Revamp + Twi Q&A Bridge (April 5, 2026)
+
+**Status**: ✅ COMPLETE
+
+### 6B.1 — Language-First Onboarding ✅
+
+**Completed** (April 3-4):
+- Language picker screen on first launch
+- 4-slide introduction with translated content (English, French, Spanish, Twi)
+- Persistence of language choice across app restarts
+- All onboarding text keys added to `KnowledgeService._allLabels`
+
+### 6B.2 — Twi-to-English Translation Bridge for Gemma 4 ✅
+
+**Completed** (April 5):
+
+1. **Created `lib/services/translation_service.dart`**:
+   - Uses Gemini 2.5 Flash API (same key as Gemma 4)
+   - Translates between any language pair (Twi ↔ English)
+   - 5s timeout, 1 retry on transient failures
+   - Returns `null` on permanent failure (graceful fallback)
+   - Low temperature (0.2) ensures faithful translations
+
+2. **Integrated Translation Bridge into `QaProvider`** (`lib/providers/qa_provider.dart`):
+   - New `_translation` dependency and `isTranslating` state
+   - Auto-detects when translation needed: `currentLanguage == AppLanguage.twi && gemma4 != null`
+   - Flow: Twi question → translate to English → send to Gemma → translate response back to Twi
+   - Language-tagged cache keys (`'tw:normalized_question'`) prevent stale cached answers when switching languages
+   - Falls back gracefully: if translation fails, sends original text to Gemma as best-effort
+
+3. **QaScreen Indicator** (`lib/screens/qa_screen.dart`):
+   - `_TypingIndicator` now shows "Translating..." vs "Thinking..." based on `isTranslating` state
+   - Clear UX feedback during translation step
+
+4. **Translated All Scan Results** (leaf and pod):
+   - Added 50+ translation keys to `KnowledgeService._allLabels` for all 4 languages:
+     - Disease display names: `diseaseAnthracnose`, `diseaseCssvd`, etc.
+     - UI labels: `classScores`, `scanAnother`, `saveResult`, `treatmentTitle`, etc.
+   - `treatment_data.dart`: added French, Spanish, and Twi treatment maps with `getLeafTreatment()` and `getPodTreatment()` helpers
+   - `DiagnosisCard`: new `translatedDiagnosisName()` method using KnowledgeService labels
+   - `results_screen.dart` & `pod_results_screen.dart`: all hardcoded English strings now use `ks.sectionTitle()`
+   - `scan_card.dart` (history): disease names and confidence labels now translated
+
+### 6B Technical Details
+
+**Translation Flow**:
+```
+User (Twi) → "Dɛn nti ɔgoro no?" 
+          ↓ [TranslationService.translate]
+         English → "Why is the disease here?"
+          ↓ [Gemma 4]
+         English ← "Fungal spores travel by wind..."
+          ↓ [TranslationService.translate]
+User (Twi) ← "Mogya asɔrɛ..."
+```
+
+**Cache Key Strategy**:
+- Old: `'what is anthracnose'` — served regardless of language
+- New: `'en:what is anthracnose'` — language-tagged, prevents cross-language pollution
+
+**Fallback Chain**:
+1. Translate question to English (if needed)
+2. Try Gemma 4 API with translated question
+3. If API fails: try cached response → try knowledge base
+4. Translate response back to original language (if needed)
+5. If translation step fails: send original text or return fallback answer
+
+### Files Modified (Phase 6B)
+
+**New Files**:
+- `lib/services/translation_service.dart` — Gemini translation wrapper
+
+**Modified Files**:
+- `lib/main.dart` — instantiate TranslationService
+- `lib/app.dart` — pass TranslationService to QaProvider
+- `lib/providers/qa_provider.dart` — integrate translation bridge, language-tagged cache
+- `lib/screens/qa_screen.dart` — show "Translating..." indicator
+- `lib/services/knowledge_service.dart` — added 50+ translation keys
+- `lib/utils/treatment_data.dart` — French, Spanish, Twi treatment maps
+- `lib/widgets/diagnosis_card.dart` — translatedDiagnosisName() method
+- `lib/screens/results_screen.dart` — all UI text uses translations
+- `lib/screens/pod_results_screen.dart` — all UI text uses translations
+- `lib/widgets/scan_card.dart` — disease names and confidence label translated
+
+### Test Results
+
+All 67 tests pass (4 committed):
+- 53 Gemma4Service tests
+- 14 QaProvider tests (including fallback chain, cache behavior)
+- Test fix: cache keys updated to match new language-tagged format (`en:...`)
+
+---
+
 **Phase 6 Status**: ✅ COMPLETE  
-**Phase 6B Status**: 🔜 PLANNED  
+**Phase 6B Status**: ✅ COMPLETE  
 **Ready for**: Phase 7 (Performance Optimization)
