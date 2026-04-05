@@ -19,21 +19,22 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        backgroundColor: AppColors.onyx,
-        foregroundColor: AppColors.chartreuse,
-      ),
-      body: ListView(
-        children: [
-          // Language Section
-          _buildSection(
-            'Language',
-            [
-              Consumer<LanguageProvider>(
-                builder: (context, langProvider, _) {
-                  return Card(
+    return Consumer<LanguageProvider>(
+      builder: (context, langProvider, _) {
+        final ks = langProvider.knowledgeService;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(ks.sectionTitle('settings')),
+            backgroundColor: AppColors.onyx,
+            foregroundColor: AppColors.chartreuse,
+          ),
+          body: ListView(
+            children: [
+              // Language Section
+              _buildSection(
+                ks.sectionTitle('language'),
+                [
+                  Card(
                     margin: const EdgeInsets.only(bottom: 8),
                     elevation: 0,
                     color: AppColors.lightGray,
@@ -48,9 +49,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               const Icon(Icons.language,
                                   color: AppColors.chartreuse),
                               const SizedBox(width: 12),
-                              const Text(
-                                'Offline Library Language',
-                                style: TextStyle(
+                              Text(
+                                ks.sectionTitle('offlineLibLang'),
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14),
                               ),
@@ -71,11 +72,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     }
                                   },
                                   selectedColor:
-                                      AppColors.chartreuse.withValues(
-                                          alpha: 0.3),
+                                      AppColors.chartreuse,
                                   labelStyle: TextStyle(
                                     color: langProvider.language == lang
-                                        ? AppColors.chartreuse
+                                        ? AppColors.onyx
                                         : Colors.grey[700],
                                     fontWeight:
                                         langProvider.language == lang
@@ -88,87 +88,87 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ],
                       ),
                     ),
-                  );
-                },
+                  ),
+                ],
+              ),
+              const Divider(),
+              // Data Management Section
+              _buildSection(
+                ks.sectionTitle('dataManagement'),
+                [
+                  _buildSettingTile(
+                    icon: Icons.history,
+                    title: ks.sectionTitle('clearScanHistory'),
+                    subtitle: ks.sectionTitle('clearScanHistorySub'),
+                    onTap: () => _showClearHistoryDialog(context),
+                  ),
+                  _buildSettingTile(
+                    icon: Icons.delete_outline,
+                    title: ks.sectionTitle('clearChatHistory'),
+                    subtitle: ks.sectionTitle('clearChatHistorySub'),
+                    onTap: () => _showClearChatDialog(context),
+                  ),
+                ],
+              ),
+              const Divider(),
+              // Support Section
+              _buildSection(
+                ks.sectionTitle('support'),
+                [
+                  _buildSettingTile(
+                    icon: Icons.help_outline,
+                    title: ks.sectionTitle('helpGuide'),
+                    subtitle: ks.sectionTitle('helpGuideSub'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const HelpScreen()),
+                    ),
+                  ),
+                  _buildSettingTile(
+                    icon: Icons.privacy_tip_outlined,
+                    title: ks.sectionTitle('privacyPolicy'),
+                    subtitle: ks.sectionTitle('privacyPolicySub'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const PrivacyPolicyScreen()),
+                    ),
+                  ),
+                ],
+              ),
+              const Divider(),
+              // About Section
+              _buildSection(
+                ks.sectionTitle('about'),
+                [
+                  _buildSettingTile(
+                    icon: Icons.info_outline,
+                    title: 'App Version',
+                    subtitle: 'CocoaGuard v1.0.0',
+                    onTap: null,
+                  ),
+                  _buildSettingTile(
+                    icon: Icons.code,
+                    title: 'Built with Gemma 4',
+                    subtitle: 'AI-powered disease detection',
+                    onTap: null,
+                  ),
+                  _buildSettingTile(
+                    icon: Icons.open_in_new,
+                    title: 'View GitHub Repository',
+                    subtitle: 'https://github.com/genyarko/cocoaguard',
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('GitHub link copied')),
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
-          const Divider(),
-          // Data Management Section
-          _buildSection(
-            'Data Management',
-            [
-              _buildSettingTile(
-                icon: Icons.history,
-                title: 'Clear Scan History',
-                subtitle: 'Remove all saved scans',
-                onTap: () => _showClearHistoryDialog(context),
-              ),
-              _buildSettingTile(
-                icon: Icons.delete_outline,
-                title: 'Clear Chat History',
-                subtitle: 'Remove all Q&A conversations',
-                onTap: () => _showClearChatDialog(context),
-              ),
-            ],
-          ),
-          const Divider(),
-          // Support Section
-          _buildSection(
-            'Support',
-            [
-              _buildSettingTile(
-                icon: Icons.help_outline,
-                title: 'Help & Guide',
-                subtitle: 'How to scan, tips, and FAQs',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const HelpScreen()),
-                ),
-              ),
-              _buildSettingTile(
-                icon: Icons.privacy_tip_outlined,
-                title: 'Privacy Policy',
-                subtitle: 'How your data is handled',
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => const PrivacyPolicyScreen()),
-                ),
-              ),
-            ],
-          ),
-          const Divider(),
-          // About Section
-          _buildSection(
-            'About',
-            [
-              _buildSettingTile(
-                icon: Icons.info_outline,
-                title: 'App Version',
-                subtitle: 'CocoaGuard v1.0.0',
-                onTap: null,
-              ),
-              _buildSettingTile(
-                icon: Icons.code,
-                title: 'Built with Gemma 4',
-                subtitle: 'AI-powered disease detection',
-                onTap: null,
-              ),
-              _buildSettingTile(
-                icon: Icons.open_in_new,
-                title: 'View GitHub Repository',
-                subtitle: 'https://github.com/genyarko/cocoaguard',
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('GitHub link copied')),
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -220,28 +220,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showClearHistoryDialog(BuildContext context) {
+    final ks = context.read<LanguageProvider>().knowledgeService;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Clear Scan History?'),
-        content: const Text(
-          'This will permanently delete all saved scans. This action cannot be undone.',
-        ),
+        title: Text(ks.sectionTitle('clearScanConfirm')),
+        content: Text(ks.sectionTitle('clearScanConfirmBody')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(ks.sectionTitle('cancel')),
           ),
           TextButton(
             onPressed: () {
               context.read<HistoryProvider>().clearHistory();
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Scan history cleared')),
+                SnackBar(content: Text(ks.sectionTitle('scanHistoryCleared'))),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Clear'),
+            child: Text(ks.sectionTitle('clear')),
           ),
         ],
       ),
@@ -249,28 +248,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _showClearChatDialog(BuildContext context) {
+    final ks = context.read<LanguageProvider>().knowledgeService;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Clear Chat History?'),
-        content: const Text(
-          'This will permanently delete all Q&A conversations. This action cannot be undone.',
-        ),
+        title: Text(ks.sectionTitle('clearChatConfirm')),
+        content: Text(ks.sectionTitle('clearChatConfirmBody')),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
+            child: Text(ks.sectionTitle('cancel')),
           ),
           TextButton(
             onPressed: () {
               context.read<QaProvider>().clearHistory();
               Navigator.pop(ctx);
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Chat history cleared')),
+                SnackBar(content: Text(ks.sectionTitle('chatHistoryCleared'))),
               );
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Clear'),
+            child: Text(ks.sectionTitle('clear')),
           ),
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/history_provider.dart';
+import '../providers/language_provider.dart';
 import '../providers/pod_scan_provider.dart';
 import '../providers/scan_provider.dart';
 import '../utils/app_colors.dart';
@@ -561,48 +562,51 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
                         );
                       }
                     },
-                    itemBuilder: (BuildContext context) => [
-                      const PopupMenuItem(
-                        value: 'qa',
-                        child: Row(
-                          children: [
-                            Icon(Icons.chat_outlined),
-                            SizedBox(width: 8),
-                            Text('Ask AI'),
-                          ],
+                    itemBuilder: (BuildContext ctx) {
+                      final ks = ctx.read<LanguageProvider>().knowledgeService;
+                      return [
+                        PopupMenuItem(
+                          value: 'qa',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.chat_outlined),
+                              const SizedBox(width: 8),
+                              Text(ks.sectionTitle('askAI')),
+                            ],
+                          ),
                         ),
-                      ),
-                      const PopupMenuItem(
-                        value: 'history',
-                        child: Row(
-                          children: [
-                            Icon(Icons.history),
-                            SizedBox(width: 8),
-                            Text('History'),
-                          ],
+                        PopupMenuItem(
+                          value: 'history',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.history),
+                              const SizedBox(width: 8),
+                              Text(ks.sectionTitle('navHistory')),
+                            ],
+                          ),
                         ),
-                      ),
-                      const PopupMenuItem(
-                        value: 'library',
-                        child: Row(
-                          children: [
-                            Icon(Icons.local_library),
-                            SizedBox(width: 8),
-                            Text('Library'),
-                          ],
+                        PopupMenuItem(
+                          value: 'library',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.local_library),
+                              const SizedBox(width: 8),
+                              Text(ks.sectionTitle('navLibrary')),
+                            ],
+                          ),
                         ),
-                      ),
-                      const PopupMenuItem(
-                        value: 'settings',
-                        child: Row(
-                          children: [
-                            Icon(Icons.settings),
-                            SizedBox(width: 8),
-                            Text('Settings'),
-                          ],
+                        PopupMenuItem(
+                          value: 'settings',
+                          child: Row(
+                            children: [
+                              const Icon(Icons.settings),
+                              const SizedBox(width: 8),
+                              Text(ks.sectionTitle('settings')),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ];
+                    },
                   ),
                 ),
               ),
@@ -727,13 +731,13 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
                     // Leaf button
                     _NavButton(
                       icon: Icons.eco,
-                      label: 'Leaf',
+                      label: context.watch<LanguageProvider>().knowledgeService.sectionTitle('navLeaf'),
                       onPressed: _showLeafScanOptions,
                     ),
                     // Pod button
                     _NavButton(
                       imageAsset: 'assets/images/pod_icon.png',
-                      label: 'Pod',
+                      label: context.watch<LanguageProvider>().knowledgeService.sectionTitle('navPod'),
                       onPressed: _showPodScanOptions,
                     ),
                     // Camera button (center, larger)
@@ -766,13 +770,13 @@ void _handleAutoNavigation(ScanProvider leafProvider, PodScanProvider podProvide
                     // History button
                     _NavButton(
                       icon: Icons.history,
-                      label: 'History',
+                      label: context.watch<LanguageProvider>().knowledgeService.sectionTitle('navHistory'),
                       onPressed: () => widget.onNavigate(1),
                     ),
                     // Library button
                     _NavButton(
                       icon: Icons.local_library,
-                      label: 'Library',
+                      label: context.watch<LanguageProvider>().knowledgeService.sectionTitle('navLibrary'),
                       onPressed: () => widget.onNavigate(2),
                     ),
                   ],

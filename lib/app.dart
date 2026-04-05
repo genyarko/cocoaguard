@@ -181,21 +181,21 @@ class _AppShellState extends State<_AppShell> {
                 }
                 setState(() => _currentIndex = index);
               },
-              destinations: const [
+              destinations: [
                 NavigationDestination(
-                  icon: Icon(Icons.home_outlined),
-                  selectedIcon: Icon(Icons.home),
-                  label: 'Home',
+                  icon: const Icon(Icons.home_outlined),
+                  selectedIcon: const Icon(Icons.home),
+                  label: widget.knowledgeService.sectionTitle('navHome'),
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.history_outlined),
-                  selectedIcon: Icon(Icons.history),
-                  label: 'History',
+                  icon: const Icon(Icons.history_outlined),
+                  selectedIcon: const Icon(Icons.history),
+                  label: widget.knowledgeService.sectionTitle('navHistory'),
                 ),
                 NavigationDestination(
-                  icon: Icon(Icons.local_library_outlined),
-                  selectedIcon: Icon(Icons.local_library),
-                  label: 'Library',
+                  icon: const Icon(Icons.local_library_outlined),
+                  selectedIcon: const Icon(Icons.local_library),
+                  label: widget.knowledgeService.sectionTitle('navLibrary'),
                 ),
               ],
             ),

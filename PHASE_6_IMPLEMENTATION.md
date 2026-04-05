@@ -185,5 +185,111 @@ Dark Purple (Mauve Shadow): #4c2b36
 
 ---
 
+## Phase 6B: Onboarding Revamp + Twi Q&A Bridge (Planned)
+
+**Status**: 🔜 Planned  
+**Goal**: First-launch language selection + seamless Twi support for Gemma 4 Q&A
+
+---
+
+### 6B.1 — Language-First Onboarding
+
+**Problem**: Current onboarding is English-only. Users should pick their language before seeing any content.
+
+**Approach**:
+
+1. **Replace slide 1** of the existing onboarding (`onboarding_screen.dart`) with a **language picker screen**:
+   - Show the CocoaGuard logo at top
+   - Four large tappable language cards: English, Français, Español, Twi
+   - Each card shows the language name in its own script (e.g. "Twi" not "Twi (Asante)")
+   - On tap: call `LanguageProvider.setLanguage()` immediately — this persists to Hive and reloads the knowledge base
+
+2. **Remaining slides (2–4) render in the selected language**:
+   - Add onboarding text keys to `_allLabels` in `knowledge_service.dart`:
+     - `onboardingScan`: "Scan & Diagnose" / "Scanner et Diagnostiquer" / "Escanear y Diagnosticar" / "Hwɛ na Hu Nyarewa"
+     - `onboardingAsk`: "Ask Questions" / "Poser des Questions" / ...
+     - `onboardingOffline`: "Works Offline" / "Fonctionne Hors Ligne" / ...
+     - `onboardingGetStarted`: "Get Started" / "Commencer" / "Empezar" / "Hyɛ Ase"
+     - Plus subtitle text for each slide
+   - Slides read from `knowledgeService.sectionTitle()` just like the rest of the app
+
+3. **First-launch detection**:
+   - On startup in `main.dart`, check `storageService.settingsBox.get('onboarding_complete')`
+   - If `null` → show onboarding; on "Get Started" tap → `settingsBox.put('onboarding_complete', true)`
+   - If `true` → skip straight to home screen
+   - Language preference is already persisted separately, so restart always uses the saved language
+
+**Files to modify**:
+- `lib/screens/onboarding_screen.dart` — replace slide 1, make slides 2–4 dynamic
+- `lib/services/knowledge_service.dart` — add onboarding label keys to all 4 languages
+- `lib/main.dart` or `lib/app.dart` — add first-launch check to route to onboarding or home
+
+---
+
+### 6B.2 — Twi-to-English Translation Bridge for Gemma 4
+
+**Problem**: Gemma 4 doesn't understand Twi. When a user asks a Twi question, Gemma returns garbage or English-only answers.
+
+**Approach**: Translate Twi ↔ English transparently using the Google Translation API (already have the API key for Gemma).
+
+1. **Create `lib/services/translation_service.dart`**:
+   ```dart
+   class TranslationService {
+     final String apiKey;  // reuse GEMMA4_API_KEY or separate key
+     
+     /// Translate text between languages using Google Cloud Translation API.
+     /// Returns original text unchanged if source == target.
+     Future<String> translate({
+       required String text,
+       required String from,  // e.g. 'tw'
+       required String to,    // e.g. 'en'
+     });
+   }
+   ```
+   - Endpoint: `translation.googleapis.com/language/translate/v2`
+   - Timeout: 5s, 1 retry on failure
+   - If translation fails → fall back to sending original text to Gemma (best-effort)
+
+2. **Integrate into `QaProvider`**:
+   - `QaProvider` already knows the current language via `KnowledgeService.currentLanguage`
+   - When `currentLanguage != english` AND Gemma is available:
+     - **Before sending to Gemma**: translate user question → English
+     - **After receiving Gemma response**: translate English answer → user's language
+   - When offline (knowledge base fallback): no translation needed — knowledge base is already in the user's language
+   - Store the **translated answer** in the chat box so cached answers are in the right language
+
+3. **Scope — which languages need the bridge**:
+   - **Twi**: Always needs translation (Gemma doesn't speak Twi)
+   - **French/Spanish**: Optional — Gemma handles these reasonably well. Could add a quality check later, but skip for now
+   - Logic: `if (currentLanguage == AppLanguage.twi && gemma4 != null)` → use bridge
+
+4. **UX considerations**:
+   - Show a subtle indicator while translating: "Translating..." before the "Thinking..." Gemma spinner
+   - If translation API is unreachable but Gemma is available, send the Twi text directly (Gemma may partially understand)
+   - Cache translated responses with a language-tagged key so switching languages doesn't serve stale cached answers
+
+**Files to create**:
+- `lib/services/translation_service.dart` — new, Google Translate API wrapper
+
+**Files to modify**:
+- `lib/providers/qa_provider.dart` — add translation step before/after Gemma calls
+- `lib/main.dart` — instantiate `TranslationService` if API key is present, pass to `QaProvider`
+
+---
+
+### Implementation Order
+
+| Step | Task | Estimate |
+|------|------|----------|
+| 1 | Add onboarding label keys to `_allLabels` (all 4 languages) | Small |
+| 2 | Rewrite onboarding screen: language picker → translated slides | Medium |
+| 3 | Add first-launch check + routing logic | Small |
+| 4 | Create `TranslationService` with Google Translate API | Medium |
+| 5 | Wire translation bridge into `QaProvider` for Twi | Medium |
+| 6 | Test full flow: fresh install → pick Twi → onboarding in Twi → ask question → get Twi answer | QA |
+
+---
+
 **Phase 6 Status**: ✅ COMPLETE  
+**Phase 6B Status**: 🔜 PLANNED  
 **Ready for**: Phase 7 (Performance Optimization)
