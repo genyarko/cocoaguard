@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/history_provider.dart';
+import 'providers/language_provider.dart';
 import 'providers/pod_scan_provider.dart';
 import 'providers/qa_provider.dart';
 import 'providers/scan_provider.dart';
@@ -37,6 +38,11 @@ class CocoaGuardApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (_) => LanguageProvider(
+            knowledgeService: knowledgeService,
+          ),
+        ),
         ChangeNotifierProvider(
           create: (_) => ScanProvider(
             classifier: leafClassifierService,

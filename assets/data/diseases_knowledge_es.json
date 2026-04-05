@@ -1,0 +1,346 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-04-02",
+  "diseases": [
+    {
+      "id": "anthracnose",
+      "name": "Antracnosis (Podredumbre Negra)",
+      "scan_type": "leaf",
+      "severity": "moderate",
+      "description": "Una enfermedad fúngica causada por Colletotrichum gloeosporioides. Se propaga rápidamente en condiciones húmedas. Puede causar una pérdida de cosecha del 30-40% si no se trata.",
+      "symptoms": [
+        "Lesiones marrón oscuro a negras en la superficie de la vaina o la hoja",
+        "Las lesiones se propagan rápidamente durante las estaciones lluviosas",
+        "Las vainas pueden pudrirse completamente si no se tratan",
+        "Las vainas infectadas caen prematuramente"
+      ],
+      "causes": [
+        "Patógeno fúngico Colletotrichum gloeosporioides",
+        "La alta humedad y las precipitaciones favorecen la propagación",
+        "Las heridas en las vainas proporcionan puntos de entrada",
+        "La mala ventilación del dosel aumenta el riesgo"
+      ],
+      "treatments": [
+        "Extirpar y destruir inmediatamente las vainas infectadas",
+        "Aplicar un fungicida a base de cobre como la mezcla de Burdeos",
+        "Mejorar la aireación del dosel mediante la poda",
+        "Cosechar las vainas maduras rápidamente para reducir la propagación"
+      ],
+      "prevention": [
+        "Podar los árboles regularmente para mejorar la circulación del aire",
+        "Extirpar todo el material enfermo de la granja",
+        "Evitar herir las vainas durante la cosecha",
+        "Aplicar pulverizaciones de fungicida preventivo antes de la estación lluviosa"
+      ],
+      "faq": [
+        {
+          "question": "¿Cómo se propaga la antracnosis?",
+          "answer": "La antracnosis se propaga a través de esporas fúngicas transportadas por salpicaduras de lluvia, viento e insectos. Se propaga más rápidamente durante la estación lluviosa cuando la humedad es alta."
+        },
+        {
+          "question": "¿Puede la antracnosis matar mis árboles de cacao?",
+          "answer": "La antracnosis afecta principalmente a las vainas y hojas, no al árbol en sí. Sin embargo, las infecciones graves repetidas debilitan el árbol y reducen significativamente el rendimiento con el tiempo."
+        },
+        {
+          "question": "¿Qué fungicida debo usar para la antracnosis?",
+          "answer": "Los fungicidas a base de cobre como la mezcla de Burdeos u oxicloruro de cobre son más efectivos. Aplicar cada 2-3 semanas durante la estación lluviosa. Consulte a su oficial de extensión de COCOBOD para conocer los productos aprobados."
+        }
+      ]
+    },
+    {
+      "id": "cssvd",
+      "name": "Enfermedad del Hinchamiento de Brotes de Cacao (CSSVD)",
+      "scan_type": "leaf",
+      "severity": "severe",
+      "description": "Una enfermedad viral grave transmitida por cochinillas harinosas. Causa hinchazón de brotes, puntas de raíces y vainas. No hay cura - los árboles infectados deben ser extirpados para proteger a los árboles vecinos.",
+      "symptoms": [
+        "Hinchazón de brotes jóvenes y tallos",
+        "Bandas rojas o enrojecimiento de hojas jóvenes",
+        "Las vainas muestran manchas cloróticas (amarillas) y distorsión",
+        "Reducción severa del rendimiento de vainas",
+        "El árbol eventualmente muere en varios años"
+      ],
+      "causes": [
+        "Virus del Hinchamiento de Brotes de Cacao (CSSV)",
+        "Transmitido por insectos cochinilla alimentándose de árboles infectados",
+        "Se propaga de árboles infectados a árboles sanos cuando las cochinillas migran",
+        "No existe cura - la gestión es por extirpación"
+      ],
+      "treatments": [
+        "Extirpar árboles infectados y árboles vecinos inmediatos (árboles de contacto)",
+        "Informar inmediatamente al oficial de extensión local de COCOBOD",
+        "No replante inmediatamente - permita que el campo descanse",
+        "Replante con variedades de cacao tolerantes o resistentes a CSSVD",
+        "Controlar poblaciones de cochinilla vector con insecticidas aprobados en árboles restantes"
+      ],
+      "prevention": [
+        "Plantar variedades de cacao tolerantes o resistentes a CSSVD",
+        "Controlar regularmente las poblaciones de cochinilla usando insecticidas aprobados",
+        "Monitorear la granja semanalmente para detectar síntomas tempranos de CSSVD",
+        "Reportar casos sospechosos a COCOBOD rápidamente para confirmación oficial",
+        "Mantener buena higiene de la granja y extirpar malezas que alberguen cochinillas"
+      ],
+      "faq": [
+        {
+          "question": "¿Es curable el CSSVD?",
+          "answer": "No. No hay cura para CSSVD. Una vez que un árbol está infectado, debe ser extirpado junto con árboles que estuvieron en contacto directo con él. El objetivo es detener la propagación a árboles sanos."
+        },
+        {
+          "question": "¿Cuándo debo reportar CSSVD a COCOBOD?",
+          "answer": "Reporte inmediatamente cuando vea árboles mostrando brotes hinchados, bandas rojas en hojas o vainas distorsionadas. El reporte temprano permite a COCOBOD contener el brote antes de que se propague más en su granja."
+        },
+        {
+          "question": "¿Puedo replantear después de extirpar árboles infectados con CSSVD?",
+          "answer": "Sí, pero espere hasta que la población de cochinilla sea controlada y use variedades tolerantes a CSSVD. Su oficial de extensión de COCOBOD puede aconsejar sobre material de plantación aprobado."
+        }
+      ]
+    },
+    {
+      "id": "phytophthora",
+      "name": "Phytophthora (Podredumbre Negra de Vaina)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Podredumbre negra de vaina causada por Phytophthora palmivora y P. megakarya. La enfermedad del cacao más extendida globalmente, responsable del 20-30% de pérdida anual de cosecha en todo el mundo. Se propaga muy rápidamente en condiciones húmedas.",
+      "symptoms": [
+        "Lesiones marrón oscuro a negras comenzando en la punta o base de la vaina",
+        "Las lesiones se propagan rápidamente para cubrir toda la vaina en 10-14 días",
+        "Los esporangios blancos (estructuras portadoras de esporas) pueden aparecer en la superficie de la lesión",
+        "Las habas interiores se ennegrecen y se vuelven inutilizables"
+      ],
+      "causes": [
+        "Patógenos oomicetos Phytophthora palmivora y P. megakarya",
+        "Se propaga a través de salpicaduras de lluvia de vainas infectadas y suelo",
+        "La alta humedad y las precipitaciones favorecen fuertemente la propagación",
+        "Las vainas infectadas dejadas en el suelo contaminan el suelo"
+      ],
+      "treatments": [
+        "Extirpar vainas infectadas inmediatamente y enterrarlas lejos de la plantación",
+        "Aplicar fungicidas a base de cobre como la mezcla de Burdeos cada 2-3 semanas durante la estación lluviosa",
+        "Pulverizar fungicidas protectores antes del inicio de la estación lluviosa",
+        "Tratar el suelo alrededor de la base del árbol si el chancro del tallo también está presente"
+      ],
+      "prevention": [
+        "Mejorar el drenaje para reducir la humedad del suelo alrededor de los árboles",
+        "Podar árboles y dosel de sombra para aumentar la circulación del aire",
+        "Evitar herir vainas durante la cosecha (las heridas permiten la entrada de esporas)",
+        "Extirpar todas las vainas momificadas restantes de temporadas anteriores",
+        "Plantar variedades de cacao resistentes donde estén disponibles"
+      ],
+      "faq": [
+        {
+          "question": "¿Qué tan rápido se propaga la podredumbre negra de la vaina?",
+          "answer": "Muy rápidamente. En condiciones cálidas y húmedas, una sola vaina infectada puede propagar la enfermedad a vainas vecinas dentro de 3-5 días a través de salpicaduras de lluvia. Por eso la extirpación inmediata de vainas infectadas es crítica."
+        },
+        {
+          "question": "¿Cuál es la diferencia entre phytophthora y antracnosis?",
+          "answer": "Phytophthora (podredumbre negra de vaina) se propaga mucho más rápido, comienza como una lesión marrón empapada de agua generalmente en la punta o el tallo de la vaina, y puede destruir una vaina completa en 10-14 días. Las lesiones de antracnosis son más secas y más oscuras desde el principio. Phytophthora es generalmente más grave."
+        }
+      ]
+    },
+    {
+      "id": "carmenta",
+      "name": "Carmenta (Taladrador de Vaina de Cacao)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causado por la polilla taladrador de vaina de cacao (Carmenta foraseminis). Las larvas perforan las vainas y dañan las habas internamente. Una plaga importante en África Occidental.",
+      "symptoms": [
+        "Pequeños orificios de entrada en la superficie de la vaina",
+        "Maduración prematura o coloración desigual de la vaina",
+        "Daño interno a las habas con heces (desechos de insectos) visibles cuando se abre la vaina",
+        "Las vainas se sienten más ligeras que las sanas"
+      ],
+      "causes": [
+        "Larvas de la polilla Carmenta foraseminis",
+        "Las polillas adultas ponen huevos en la superficie de la vaina",
+        "Las larvas perforan adentro y se alimentan de las habas",
+        "Los calendarios irregulares de cosecha permiten que más vainas se infecten"
+      ],
+      "treatments": [
+        "Extirpar y destruir inmediatamente todas las vainas infestadas",
+        "Cosechar vainas frecuentemente - cada 7-10 días - para reducir el tiempo de exposición",
+        "Aplicar insecticidas aprobados dirigidos a polillas adultas durante los períodos de vuelo máximo",
+        "Usar trampas de feromonas para monitorear y reducir poblaciones de polillas"
+      ],
+      "prevention": [
+        "Mantener un cronograma regular de cosecha (cada 7-10 días)",
+        "Extirpar todas las vainas restantes de la paja del piso de la plantación",
+        "Podar árboles para mejorar la circulación del aire y reducir los lugares protegidos",
+        "Monitorear vainas regularmente para detectar signos tempranos de infestación"
+      ],
+      "faq": [
+        {
+          "question": "¿Cómo puedo saber si una vaina tiene taladrador sin abrirla?",
+          "answer": "Busque pequeños orificios circulares en la superficie de la vaina, de aproximadamente 2-3 mm de ancho. Las vainas infestadas también pueden mostrar cambios de color prematuros (amarillamiento o enrojecimiento) y sentirse más ligeras de lo que deberían. Cuando sacude la vaina, puede oír habas sonando sueltas."
+        },
+        {
+          "question": "¿Cuándo es la temporada de actividad máxima para las polillas taladrador de vaina de cacao?",
+          "answer": "La actividad de polillas taladrador de vaina alcanza su máximo durante la estación de cosecha principal cuando las vainas maduras son más abundantes. En África Occidental, esto es típicamente octubre-diciembre. Monitoree trampas e inspeccione vainas más frecuentemente durante estos meses. Cosechar cada 7-10 días durante la estación de máximo reduce significativamente las tasas de infestación."
+        },
+        {
+          "question": "¿Puedo usar control biológico contra los taladrador de vaina Carmenta?",
+          "answer": "Sí. Los enemigos naturales como avispas parasitoides (especies de Trichogramma) y hormigas depredadoras pueden ayudar a controlar poblaciones de taladrador de vaina. Mantener biodiversidad en la granja preservando árboles de sombra y evitando insecticidas de amplio espectro apoya poblaciones de depredadores naturales. Las trampas de feromonas también son útiles para monitorear y capturar masivamente polillas adultas."
+        }
+      ]
+    },
+    {
+      "id": "moniliasis",
+      "name": "Moniliasis (Podredumbre por Escarcha)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causado por el hongo Moniliophthora roreri. Una de las enfermedades del cacao más destructivas en las Américas, causando hasta 80% de pérdida de cosecha si no se trata. Aún no es generalizada en África Occidental pero es una preocupación de bioseguridad.",
+      "symptoms": [
+        "Manchas irregulares oscuras o lesiones en la superficie de la vaina",
+        "Masa de esporas blanca o de color crema cubriendo la vaina",
+        "Podredumbre interna - las habas se vuelven acuosas e inutilizables",
+        "Caída prematura de la vaina"
+      ],
+      "causes": [
+        "Patógeno fúngico Moniliophthora roreri",
+        "Se propaga a través de esporas aéreas y salpicaduras de lluvia",
+        "La alta humedad y el dosel denso favorecen la infección",
+        "Las vainas infectadas dejadas en árboles o suelo se convierten en fuentes de esporas"
+      ],
+      "treatments": [
+        "Extirpar e inmediatamente enterrar o quemar todas las vainas infectadas - no dejar en el suelo",
+        "Cosechar frecuentemente (cada 7 días) para extirpar vainas antes de la producción de esporas",
+        "Aplicar fungicidas a base de cobre como medida preventiva durante estaciones lluviosas",
+        "Asegurar que el material infectado se elimine lejos de la plantación"
+      ],
+      "prevention": [
+        "Podar dosel para reducir humedad y mejorar el flujo de aire",
+        "Mantener drenaje apropiado en la plantación",
+        "Cosechar vainas en la madurez correcta - no dejar vainas maduras en los árboles",
+        "Monitorear semanalmente durante la estación lluviosa cuando el riesgo de infección es más alto"
+      ],
+      "faq": [
+        {
+          "question": "¿Está presente la moniliasis en Ghana?",
+          "answer": "La moniliasis (podredumbre por escarcha) es principalmente una preocupación en América Central y del Sur. Actualmente no está establecida en Ghana o África Occidental, pero es un riesgo de bioseguridad. Si ve crecimiento polvoso blanco en vainas, contacte inmediatamente a COCOBOD ya que esto puede ser una infección fúngica inusual que requiere evaluación de experto."
+        },
+        {
+          "question": "¿En qué se diferencia la moniliasis de la podredumbre negra de vaina por phytophthora?",
+          "answer": "La moniliasis produce una masa de esporas distintiva blanca o de color crema en la superficie de la vaina, dándole una apariencia 'escarchada' - de ahí el nombre podredumbre por escarcha. Phytophthora causa lesiones marrón oscuro a negro empapadas en agua sin el recubrimiento polvoso blanco. La moniliasis también causa podredumbre acuosa interna de habas en lugar del ennegrecimiento seco visto con phytophthora."
+        },
+        {
+          "question": "¿Qué debo hacer si sospecho moniliasis en mi granja?",
+          "answer": "No mueva ningún material vegetal fuera de la granja. Extirpe e inmediatamente queme todas las vainas sospechosas. Contacte inmediatamente a su oficial de extensión de COCOBOD para diagnóstico oficial. La contención temprana es crítica - las esporas de moniliasis pueden propagarse rápidamente por viento sobre varios kilómetros si no se controlan. Ponga en cuarentena el área afectada hasta que un experto pueda confirmar el diagnóstico."
+        }
+      ]
+    },
+    {
+      "id": "witches_broom",
+      "name": "Escoba de Bruja",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causado por el hongo Moniliophthora perniciosa. Produce crecimiento vegetativo anormal parecido a una escoba. Una enfermedad principal en cacao sudamericano pero una preocupación de bioseguridad para agricultores de África Occidental.",
+      "symptoms": [
+        "Crecimiento anormal de brotes parecido a una escoba - aglomeración densa de ramas pequeñas",
+        "Vainas hinchadas, partenocárpicas (sin semillas) con forma anormal",
+        "Las escobas verdes eventualmente se secan y se vuelven marrones",
+        "Escobas de cojín de flores - aglomeraciones de flores malformadas"
+      ],
+      "causes": [
+        "Patógeno fúngico Moniliophthora perniciosa",
+        "Se propaga a través de basidiosporas aéreos (producidos por estructuras de fructificación parecidas a hongos)",
+        "Infecta brotes, flores y vainas jóvenes en crecimiento activo",
+        "Las condiciones húmedas y la mala ventilación aumentan el riesgo"
+      ],
+      "treatments": [
+        "Podar y extirpar todas las escobas - vegetativas, cojín y vainas escoba - durante la estación seca",
+        "Cortar escobas al menos 15 cm por debajo del área hinchada en madera sana",
+        "Quemar o enterrar escobas extirpadas lejos de la plantación",
+        "Aplicar fungicidas a base de cobre para proteger heridas de poda"
+      ],
+      "prevention": [
+        "Conducir poda fitosanitaria 2-3 veces al año",
+        "Extirpar escobas antes de la estación lluviosa para prevenir liberación de esporas",
+        "Mantener sombra apropiada y espaciamiento entre árboles",
+        "Plantar clones de cacao resistentes o tolerantes donde estén disponibles",
+        "Monitorear formación de nuevas escobas mensualmente"
+      ],
+      "faq": [
+        {
+          "question": "¿Está presente la escoba de bruja en Ghana?",
+          "answer": "La escoba de bruja se encuentra principalmente en América del Sur y Central. Actualmente no está establecida en África Occidental. Si ve crecimiento anormal de brotes parecido a escoba, repórtelo inmediatamente a COCOBOD para identificación de experto."
+        },
+        {
+          "question": "¿Cómo reconozco los diferentes tipos de escobas?",
+          "answer": "Hay tres tipos: (1) Escobas vegetativas - aglomeraciones densas de brotes pequeños verde pálido creciendo desde ramas, parecido a una escoba o nido de pájaro. (2) Escobas de cojín - masas anormales de flores pequeñas en el tronco o ramas que no producen vainas normales. (3) Escobas de vaina - vainas hinchadas, mal formadas y partenocárpicas (sin semillas). Los tres tipos eventualmente se secan y se vuelven marrones, y deben ser podados y destruidos."
+        },
+        {
+          "question": "¿Cuándo es el mejor momento para podar escobas?",
+          "answer": "Pode escobas durante la estación seca (diciembre-febrero en África Occidental) antes de que comiencen las lluvias. Esto es crítico porque el hongo produce estructuras parecidas a hongos portadoras de esporas en escobas muertas durante condiciones húmedas. Al extirpar escobas durante la estación seca, previene el próximo ciclo de liberación de esporas. Corte al menos 15 cm por debajo del área hinchada en madera sana, y queme o entierre todo el material extirpado lejos de la granja."
+        }
+      ]
+    },
+    {
+      "id": "healthy",
+      "name": "Saludable",
+      "scan_type": "both",
+      "severity": "none",
+      "description": "No se detectan signos de enfermedad. Continúe con buenas prácticas agrícolas para mantener la salud de las plantas y vainas.",
+      "symptoms": [],
+      "causes": [],
+      "treatments": [
+        "No se requiere tratamiento - continúe con mantenimiento regular"
+      ],
+      "prevention": [
+        "Mantener gestión de sombra apropiada (40-60% de sombra)",
+        "Podar regularmente para mejorar la circulación del aire",
+        "Aplicar fertilización balanceada basada en pruebas de suelo",
+        "Extirpar rápidamente material vegetal muerto o enfermo",
+        "Cosechar vainas maduras dentro de 2-3 semanas de maduración",
+        "Mantener granja limpia - extirpar vainas caídas y escombros"
+      ],
+      "faq": [
+        {
+          "question": "¿Con qué frecuencia debo inspeccionar mi plantación de cacao para detectar enfermedades?",
+          "answer": "Inspeccione toda su granja al menos una vez por semana durante la estación lluviosa cuando la presión de enfermedad es más alta. Durante la estación seca, las inspecciones quincenales son generalmente suficientes. La detección temprana es la estrategia de gestión de enfermedades más efectiva."
+        },
+        {
+          "question": "¿Cuáles son los signos de una plantación de cacao saludable?",
+          "answer": "Los cacaos saludables tienen hojas verde uniforme sin manchas ni lesiones, vainas firmes sin decoloración, buen establecimiento de vainas en tallo y ramas principales, y sin patrones de crecimiento anormal. Las vainas saludables se sienten pesadas para su tamaño."
+        }
+      ]
+    }
+  ],
+  "general_farming": [
+    {
+      "topic": "Mejor momento para cosechar vainas de cacao",
+      "answer": "Cosecha vainas de cacao cuando cambian de color - típicamente de verde a amarillo u naranja según la variedad. No dejes vainas maduras en el árbol por más de 2-3 semanas ya que se vuelven susceptibles a enfermedades y su calidad declina. Cosecha cada 7-14 días durante la temporada de máximo."
+    },
+    {
+      "topic": "Cómo podar correctamente los árboles de cacao",
+      "answer": "Pode los árboles de cacao 2-3 veces al año. Extirpe ramas muertas, enfermas y cruzadas. Mantenga una altura de dosel de 4-5 metros para fácil manejo. La buena poda mejora la circulación del aire y reduce la presión de enfermedades. Pode después de la cosecha cuando los árboles están menos estresados."
+    },
+    {
+      "topic": "Recomendaciones de fertilizante para cacao",
+      "answer": "Aplique fertilizante NPK (por ejemplo, 15-15-15 o 12-12-17) dos veces al año - al inicio de la estación lluviosa y 4-6 meses después. Aplique 250-500g por árbol por aplicación dependiendo del tamaño del árbol y resultados de pruebas de suelo. Coloque fertilizante a 30-60cm de la base del árbol, no directamente tocando el tronco. Consulte a oficiales de extensión de COCOBOD para recomendaciones específicas del suelo."
+    },
+    {
+      "topic": "Gestión de árboles de sombra en plantaciones de cacao",
+      "answer": "Mantenga cobertura de sombra del 40-60% en plantaciones de cacao. Demasiada sombra reduce el rendimiento y aumenta enfermedad; muy poca aumenta estrés por calor. Adelgace gradualmente árboles de sombra sobre múltiples temporadas en lugar de extirpar todos a la vez. Plátanos y bananas son buenos árboles de sombra temporal durante la fase de establecimiento."
+    },
+    {
+      "topic": "Fermentación y secado de habas de cacao",
+      "answer": "Fermente habas de cacao recientemente cosechadas por 5-7 días en cajas de madera o montones de hojas de plátano, dándoles la vuelta cada 48 horas. Después de la fermentación, seque habas en plataformas elevadas bajo el sol por 7-14 días hasta que el contenido de humedad llegue a 7-8%. Habas apropiadamente fermentadas y secadas obtienen mejores precios en centros de compra de COCOBOD."
+    }
+  ],
+  "cocobod_resources": {
+    "description": "COCOBOD (Junta de Cacao de Ghana) es el cuerpo gubernamental responsable de regular la industria del cacao de Ghana.",
+    "when_to_contact": [
+      "Cuando sospeche infección por CSSVD en cualquier árbol",
+      "Cuando vea síntomas inusuales no reconocidos por esta aplicación",
+      "Cuando necesite acceso a plantas mejoradas o insumos",
+      "Cuando la enfermedad se propague rápidamente por su granja",
+      "Para acceder a servicios de asesoramiento de extensión gratuitos"
+    ],
+    "services": [
+      "Visitas de granja gratuitas de oficiales de extensión",
+      "Insumos subsidiados incluyendo fertilizantes y fungicidas",
+      "Prueba de CSSVD e indemnización por extirpación de árboles",
+      "Acceso a material de plantación certificado",
+      "Garantías de precio de mercado para habas correctamente secadas y fermentadas"
+    ]
+  }
+}

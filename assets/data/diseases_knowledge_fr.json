@@ -1,0 +1,346 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-04-02",
+  "diseases": [
+    {
+      "id": "anthracnose",
+      "name": "Anthracnose (Pourriture Noire)",
+      "scan_type": "leaf",
+      "severity": "moderate",
+      "description": "Une maladie fongique causée par Colletotrichum gloeosporioides. Se propage rapidement dans les conditions humides. Peut causer une perte de récolte de 30-40% si elle n'est pas traitée.",
+      "symptoms": [
+        "Lésions brun foncé à noires sur la surface de la cabosse ou de la feuille",
+        "Les lésions se propagent rapidement pendant les saisons humides",
+        "Les cabosses peuvent pourrir complètement si elles ne sont pas traitées",
+        "Les cabosses infectées tombent prématurément"
+      ],
+      "causes": [
+        "Pathogène fongique Colletotrichum gloeosporioides",
+        "L'humidité élevée et les précipitations favorisent la propagation",
+        "Les blessures sur les cabosses fournissent des points d'entrée",
+        "Une mauvaise ventilation de la canopée augmente le risque"
+      ],
+      "treatments": [
+        "Enlever et détruire immédiatement les cabosses infectées",
+        "Appliquer un fongicide à base de cuivre comme le mélange Bordelais",
+        "Améliorer l'aération de la canopée par élagage",
+        "Récolter les cabosses mûres rapidement pour réduire la propagation"
+      ],
+      "prevention": [
+        "Élaguer régulièrement les arbres pour améliorer la circulation d'air",
+        "Enlever tous les matériaux malades de la ferme",
+        "Éviter de blesser les cabosses pendant la récolte",
+        "Appliquer des pulvérisations de fongicide préventif avant la saison humide"
+      ],
+      "faq": [
+        {
+          "question": "Comment l'anthracnose se propage-t-elle?",
+          "answer": "L'anthracnose se propage par des spores fongiques transportées par les éclaboussures de pluie, le vent et les insectes. Elle se propage le plus rapidement pendant la saison des pluies lorsque l'humidité est élevée."
+        },
+        {
+          "question": "L'anthracnose peut-elle tuer mes cacaoyers?",
+          "answer": "L'anthracnose affecte principalement les cabosses et les feuilles, pas l'arbre lui-même. Cependant, les infections graves répétées affaiblissent l'arbre et réduisent considérablement le rendement au fil du temps."
+        },
+        {
+          "question": "Quel fongicide dois-je utiliser pour l'anthracnose?",
+          "answer": "Les fongicides à base de cuivre tels que le mélange Bordelais ou l'oxychlorure de cuivre sont les plus efficaces. Appliquer tous les 2-3 semaines pendant la saison des pluies. Consultez votre agent de vulgarisation COCOBOD pour connaître les produits approuvés."
+        }
+      ]
+    },
+    {
+      "id": "cssvd",
+      "name": "Maladie du Gonflement des Pousses du Cacao (CSSVD)",
+      "scan_type": "leaf",
+      "severity": "severe",
+      "description": "Une maladie virale grave transmise par les cochenilles. Provoque le gonflement des pousses, des pointes racinaires et des cabosses. Il n'existe pas de cure - les arbres infectés doivent être supprimés pour protéger les arbres voisins.",
+      "symptoms": [
+        "Gonflement des jeunes pousses et des tiges",
+        "Bandes rouges ou rougissement des jeunes feuilles",
+        "Les cabosses montrent des taches chlorotiques (jaunes) et une distorsion",
+        "Réduction sévère du rendement en cabosses",
+        "L'arbre finit par mourir au cours de plusieurs années"
+      ],
+      "causes": [
+        "Virus du Gonflement des Pousses du Cacao (CSSV)",
+        "Transmis par les insectes cochenilles se nourrissant sur les arbres infectés",
+        "Se propage des arbres infectés aux arbres sains lorsque les cochenilles migrent",
+        "Aucune cure n'existe - la gestion se fait par suppression"
+      ],
+      "treatments": [
+        "Enlever les arbres infectés et les arbres voisins immédiats (arbres de contact)",
+        "Signaler immédiatement à l'agent de vulgarisation COCOBOD local",
+        "Ne pas replanter immédiatement - laisser le champ au repos",
+        "Replanter avec des variétés de cacao tolérantes ou résistantes à la CSSVD",
+        "Contrôler les populations de cochenilles vecteurs avec des insecticides approuvés sur les arbres restants"
+      ],
+      "prevention": [
+        "Planter des variétés de cacao tolérantes ou résistantes à la CSSVD",
+        "Contrôler régulièrement les populations de cochenilles à l'aide d'insecticides approuvés",
+        "Surveiller la ferme chaque semaine pour détecter les premiers symptômes de la CSSVD",
+        "Signaler les cas suspects à COCOBOD rapidement pour confirmation officielle",
+        "Maintenir une bonne hygiène de la ferme et enlever les mauvaises herbes qui abritent les cochenilles"
+      ],
+      "faq": [
+        {
+          "question": "La CSSVD est-elle curable?",
+          "answer": "Non. Il n'existe pas de remède pour la CSSVD. Une fois qu'un arbre est infecté, il doit être supprimé ainsi que les arbres qui ont été en contact direct avec lui. L'objectif est d'arrêter la propagation aux arbres sains."
+        },
+        {
+          "question": "Quand dois-je signaler la CSSVD à COCOBOD?",
+          "answer": "Signalez immédiatement lorsque vous voyez des arbres montrant des pousses gonflées, un banding des feuilles rouges ou des cabosses distordues. Un signalement précoce permet à COCOBOD de contenir l'épidémie avant qu'elle ne se propage davantage sur votre ferme."
+        },
+        {
+          "question": "Puis-je replanter après avoir supprimé les arbres infectés par la CSSVD?",
+          "answer": "Oui, mais attendez que la population de cochenilles soit contrôlée et utilisez des variétés tolérantes à la CSSVD. Votre agent de vulgarisation COCOBOD peut conseiller sur le matériel de plantation approuvé."
+        }
+      ]
+    },
+    {
+      "id": "phytophthora",
+      "name": "Phytophthora (Pourriture Noire de la Cabosse)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "La pourriture noire de la cabosse causée par Phytophthora palmivora et P. megakarya. La maladie de cacao la plus répandue au monde, responsable d'une perte de récolte annuelle de 20-30% dans le monde. Se propage très rapidement dans les conditions humides.",
+      "symptoms": [
+        "Lésions brun foncé à noires commençant à la pointe ou à la base de la cabosse",
+        "Les lésions se propagent rapidement pour couvrir toute la cabosse en 10-14 jours",
+        "Des sporanges blancs (structures porteuses de spores) peuvent apparaître à la surface des lésions",
+        "Les fèves à l'intérieur deviennent noires et inutilisables"
+      ],
+      "causes": [
+        "Pathogènes oomycètes Phytophthora palmivora et P. megakarya",
+        "Se propage par les éclaboussures de pluie des cabosses infectées et du sol",
+        "L'humidité élevée et les précipitations favorisent fortement la propagation",
+        "Les cabosses infectées laissées sur le sol contaminent le sol"
+      ],
+      "treatments": [
+        "Enlever les cabosses infectées immédiatement et les enterrer loin de la plantation",
+        "Appliquer des fongicides à base de cuivre comme le mélange Bordelais tous les 2-3 semaines pendant la saison humide",
+        "Pulvériser des fongicides protecteurs avant le début de la saison des pluies",
+        "Traiter le sol autour de la base de l'arbre si le chancre du tronc est également présent"
+      ],
+      "prevention": [
+        "Améliorer le drainage pour réduire l'humidité du sol autour des arbres",
+        "Élaguer les arbres et la canopée d'ombrage pour augmenter la circulation d'air",
+        "Éviter de blesser les cabosses pendant la récolte (les blessures permettent l'entrée des spores)",
+        "Enlever toutes les cabosses momifiées restantes des saisons précédentes",
+        "Planter des variétés de cacao résistantes où disponibles"
+      ],
+      "faq": [
+        {
+          "question": "À quelle vitesse la pourriture noire de la cabosse se propage-t-elle?",
+          "answer": "Très rapidement. Dans les conditions chaudes et humides, une seule cabosse infectée peut propager la maladie aux cabosses voisines dans 3-5 jours par éclaboussures de pluie. C'est pourquoi l'enlèvement immédiat des cabosses infectées est crucial."
+        },
+        {
+          "question": "Quelle est la différence entre phytophthora et anthracnose?",
+          "answer": "Phytophthora (pourriture noire de la cabosse) se propage beaucoup plus rapidement, commence par une lésion brune imbibée d'eau généralement à la pointe ou au pédicelle de la cabosse, et peut détruire une cabosse entière en 10-14 jours. Les lésions d'anthracnose sont plus sèches et plus sombres dès le départ. Phytophthora est généralement plus grave."
+        }
+      ]
+    },
+    {
+      "id": "carmenta",
+      "name": "Carmenta (Foreur de Cabosse de Cacao)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causé par le papillon foreur de cabosse de cacao (Carmenta foraseminis). Les larves percent les cabosses et endommagent les fèves en interne. Un ravageur majeur en Afrique de l'Ouest.",
+      "symptoms": [
+        "Petits trous d'entrée à la surface de la cabosse",
+        "Maturation prématurée ou coloration inégale de la cabosse",
+        "Dommages internes aux fèves avec des fèces (déchets d'insectes) visibles à l'ouverture de la cabosse",
+        "Les cabosses se sentent plus légères que les saines"
+      ],
+      "causes": [
+        "Larves du papillon Carmenta foraseminis",
+        "Les papillons adultes pondent des œufs à la surface de la cabosse",
+        "Les larves creusent à l'intérieur et se nourrissent des fèves",
+        "Les calendriers de récolte irréguliers permettent à plus de cabosses de devenir infestées"
+      ],
+      "treatments": [
+        "Enlever et détruire immédiatement toutes les cabosses infestées",
+        "Récolter les cabosses fréquemment - tous les 7-10 jours - pour réduire le temps d'exposition",
+        "Appliquer des insecticides approuvés ciblant les papillons adultes pendant les périodes de vol de pointe",
+        "Utiliser des pièges à phéromones pour surveiller et réduire les populations de papillons"
+      ],
+      "prevention": [
+        "Maintenir un calendrier de récolte régulier (tous les 7-10 jours)",
+        "Enlever toutes les enveloppes de cabosse restantes du sol de la plantation",
+        "Élaguer les arbres pour améliorer la circulation d'air et réduire les endroits abrités",
+        "Surveiller régulièrement les cabosses pour détecter les premiers signes d'infestation"
+      ],
+      "faq": [
+        {
+          "question": "Comment puis-je dire si une cabosse a des foreurs sans l'ouvrir?",
+          "answer": "Cherchez de petits trous circulaires à la surface de la cabosse, d'environ 2-3 mm de large. Les cabosses infestées peuvent également montrer des changements de couleur prématurés (jaunissement ou rougissement) et se sentir plus légères qu'elles ne devraient l'être. Lorsque vous secouez la cabosse, vous pouvez entendre les fèves qui sonnent mal."
+        },
+        {
+          "question": "Quand est la saison de pointe pour les papillons foreurs de cabosses de cacao?",
+          "answer": "L'activité des papillons foreurs de cabosses culmine pendant la saison de récolte principale lorsque les cabosses mûres sont les plus abondantes. En Afrique de l'Ouest, c'est généralement octobre-décembre. Surveillez les pièges et inspectez les cabosses plus fréquemment pendant ces mois. La récolte tous les 7-10 jours pendant la saison de pointe réduit considérablement les taux d'infestation."
+        },
+        {
+          "question": "Puis-je utiliser la lutte biologique contre les foreurs de cabosses Carmenta?",
+          "answer": "Oui. Les ennemis naturels tels que les guêpes parasitoïdes (espèces de Trichogramma) et les fourmis prédatrices peuvent aider à contrôler les populations de foreurs de cabosses. Maintenir la biodiversité sur la ferme en préservant les arbres d'ombrage et en évitant les insecticides à large spectre soutient les populations de prédateurs naturels. Les pièges à phéromones sont également utiles pour surveiller et capturer en masse les papillons adultes."
+        }
+      ]
+    },
+    {
+      "id": "moniliasis",
+      "name": "Moniliose (Pourriture Givrée)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causée par le champignon Moniliophthora roreri. L'une des maladies de cacao les plus destructrices dans les Amériques, causant jusqu'à 80% de perte de récolte si elle n'est pas traitée. Pas encore répandue en Afrique de l'Ouest mais préoccupation de biosécurité.",
+      "symptoms": [
+        "Taches ou lésions sombres irrégulières à la surface de la cabosse",
+        "Masse de spores blanche ou couleur crème couvrant la cabosse",
+        "Pourriture interne - les fèves deviennent aqueuses et inutilisables",
+        "Chute prématurée de la cabosse"
+      ],
+      "causes": [
+        "Pathogène fongique Moniliophthora roreri",
+        "Se propage par les spores aériens et les éclaboussures de pluie",
+        "L'humidité élevée et la canopée dense favorisent l'infection",
+        "Les cabosses infectées laissées sur les arbres ou le sol deviennent des sources de spores"
+      ],
+      "treatments": [
+        "Enlever et enterrer ou brûler immédiatement toutes les cabosses infectées - ne pas laisser sur le sol",
+        "Récolter fréquemment (tous les 7 jours) pour enlever les cabosses avant la production de spores",
+        "Appliquer des fongicides à base de cuivre à titre préventif pendant les saisons humides",
+        "Assurer que les matériaux infectés sont éliminés loin de la plantation"
+      ],
+      "prevention": [
+        "Élaguer la canopée pour réduire l'humidité et améliorer le flux d'air",
+        "Maintenir un drainage approprié dans la plantation",
+        "Récolter les cabosses au bon stade de maturité - ne pas laisser les cabosses mûres sur les arbres",
+        "Surveiller chaque semaine pendant la saison des pluies lorsque le risque d'infection est plus élevé"
+      ],
+      "faq": [
+        {
+          "question": "La moniliose est-elle présente au Ghana?",
+          "answer": "La moniliose (pourriture givrée) est principalement une préoccupation en Amérique centrale et du Sud. Elle n'est actuellement pas établie au Ghana ou en Afrique de l'Ouest, mais c'est un risque de biosécurité. Si vous voyez une croissance poudreuse blanche sur les cabosses, contactez immédiatement COCOBOD car cela peut être une infection fongique inhabituelle nécessitant une évaluation d'expert."
+        },
+        {
+          "question": "En quoi la moniliose diffère-t-elle de la pourriture noire de la cabosse à phytophthora?",
+          "answer": "La moniliose produit une masse de spores blanche ou couleur crème distinctive à la surface de la cabosse, lui donnant une apparence 'givrée' - d'où le nom pourriture givrée. Phytophthora provoque des lésions brun foncé à noir imbibées d'eau sans le revêtement poudreuse blanc. La moniliose provoque également une pourriture aqueuse interne des fèves plutôt que le noircissement sec observé avec phytophthora."
+        },
+        {
+          "question": "Que dois-je faire si je soupçonne la moniliose sur ma ferme?",
+          "answer": "Ne déplacez aucun matériel végétal hors de la ferme. Enlever et brûler immédiatement toutes les cabosses suspectes. Contactez immédiatement votre agent de vulgarisation COCOBOD pour un diagnostic officiel. L'endiguement précoce est critique - les spores de moniliose peuvent se propager rapidement par le vent sur plusieurs kilomètres si elles ne sont pas contrôlées. Mettez en quarantaine la zone affectée jusqu'à ce qu'un expert puisse confirmer le diagnostic."
+        }
+      ]
+    },
+    {
+      "id": "witches_broom",
+      "name": "Balai de Sorcière",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Causée par le champignon Moniliophthora perniciosa. Produit une croissance végétative anormale ressemblant à un balai. Une maladie majeure du cacao sud-américain mais une préoccupation de biosécurité pour les agriculteurs d'Afrique de l'Ouest.",
+      "symptoms": [
+        "Croissance anormale des pousses ressemblant à un balai - grappe dense de petites branches",
+        "Cabosses gonflées, parthénocarpiques (sans graines) avec forme anormale",
+        "Les balais verts finissent par se dessécher et devenir bruns",
+        "Balais de coussin floral - grappes de fleurs malformées"
+      ],
+      "causes": [
+        "Pathogène fongique Moniliophthora perniciosa",
+        "Se propage par les basidiospores aériens (produits par des corps de fructification ressemblant à des champignons)",
+        "Infecte les pousses, fleurs et jeunes cabosses en croissance active",
+        "Les conditions humides et la mauvaise ventilation augmentent le risque"
+      ],
+      "treatments": [
+        "Élaguer et enlever tous les balais - végétatifs, coussin et cabosses balai - pendant la saison sèche",
+        "Couper les balais au moins 15 cm au-dessous de la zone gonflée dans le bois sain",
+        "Brûler ou enterrer les balais enlevés loin de la plantation",
+        "Appliquer des fongicides à base de cuivre pour protéger les plaies d'élagage"
+      ],
+      "prevention": [
+        "Conduire un élagage phytosanitaire 2-3 fois par an",
+        "Enlever les balais avant la saison des pluies pour prévenir la libération de spores",
+        "Maintenir l'ombrage approprié et l'espacement entre les arbres",
+        "Planter des clones de cacao résistants ou tolérants où disponibles",
+        "Surveiller la formation de nouveaux balais mensuellement"
+      ],
+      "faq": [
+        {
+          "question": "Le balai de sorcière est-il présent au Ghana?",
+          "answer": "Le balai de sorcière se trouve principalement en Amérique du Sud et centrale. Il n'est actuellement pas établi en Afrique de l'Ouest. Si vous voyez une croissance anormale de pousses ressemblant à un balai, signalez-la immédiatement à COCOBOD pour une identification d'expert."
+        },
+        {
+          "question": "Comment reconnaître les différents types de balais?",
+          "answer": "Il existe trois types: (1) Balais végétatifs - grappes denses de petites pousses vert pâle poussant à partir de branches, ressemblant à un balai ou à un nid d'oiseau. (2) Balais coussin - masses anormales de petites fleurs sur le tronc ou les branches qui ne produisent pas de cabosses normales. (3) Balais de cabosses - cabosses gonflées, mal formées et parthénocarpiques (sans graines). Les trois types finissent par se dessécher et devenir bruns, et doivent être élaguées et détruites."
+        },
+        {
+          "question": "Quel est le meilleur moment pour élaguer les balais?",
+          "answer": "Élaguez les balais pendant la saison sèche (décembre-février en Afrique de l'Ouest) avant le début des pluies. C'est critique car le champignon produit des structures ressemblant à des champignons porteuses de spores sur les balais morts pendant les conditions humides. En enlevant les balais pendant la saison sèche, vous empêchez le prochain cycle de libération de spores. Coupez au moins 15 cm au-dessous de la zone gonflée dans le bois sain, et brûlez ou enterrez tous les matériaux enlevés loin de la ferme."
+        }
+      ]
+    },
+    {
+      "id": "healthy",
+      "name": "Sain",
+      "scan_type": "both",
+      "severity": "none",
+      "description": "Aucun signe de maladie détecté. Continuez les bonnes pratiques agricoles pour maintenir la santé de la plante et de la cabosse.",
+      "symptoms": [],
+      "causes": [],
+      "treatments": [
+        "Aucun traitement nécessaire - continuer l'entretien régulier"
+      ],
+      "prevention": [
+        "Maintenir une gestion appropriée de l'ombrage (40-60% d'ombrage)",
+        "Élaguer régulièrement pour améliorer la circulation d'air",
+        "Appliquer une fertilisation équilibrée basée sur les tests de sol",
+        "Enlever rapidement le matériel végétal mort ou malade",
+        "Récolter les cabosses mûres dans les 2-3 semaines suivant la maturation",
+        "Garder la ferme propre - enlever les cabosses tombées et les débris"
+      ],
+      "faq": [
+        {
+          "question": "À quelle fréquence dois-je inspecter ma ferme de cacao pour détecter les maladies?",
+          "answer": "Inspectez toute votre ferme au moins une fois par semaine pendant la saison des pluies lorsque la pression des maladies est la plus élevée. Pendant la saison sèche, les inspections bihebdomadaires sont généralement suffisantes. La détection précoce est la stratégie de gestion des maladies la plus efficace."
+        },
+        {
+          "question": "Quels sont les signes d'une ferme de cacao saine?",
+          "answer": "Les cacaoyers sains ont des feuilles vert uniforme sans taches ni lésions, des cabosses fermes sans décoloration, un bon ensemble de cabosses sur les tiges et les branches principales, et aucun motif de croissance anormal. Les cabosses saines se sentent lourdes pour leur taille."
+        }
+      ]
+    }
+  ],
+  "general_farming": [
+    {
+      "topic": "Meilleur moment pour récolter les cabosses de cacao",
+      "answer": "Récoltez les cabosses de cacao lorsqu'elles changent de couleur - généralement du vert au jaune ou à l'orange selon la variété. Ne laissez pas les cabosses mûres sur l'arbre plus de 2-3 semaines car elles deviennent susceptibles à la maladie et leur qualité décline. Récoltez tous les 7-14 jours pendant la saison de pointe."
+    },
+    {
+      "topic": "Comment élaguer correctement les cacaoyers",
+      "answer": "Élaguez les cacaoyers 2-3 fois par an. Enlever les branches mortes, malades et croisées. Maintenir une hauteur de canopée de 4-5 mètres pour une gestion facile. Un bon élagage améliore la circulation d'air et réduit la pression des maladies. Élaguez après la récolte lorsque les arbres sont les moins stressés."
+    },
+    {
+      "topic": "Recommandations de fertilisation pour le cacao",
+      "answer": "Appliquez un engrais NPK (par exemple, 15-15-15 ou 12-12-17) deux fois par an - au début de la saison des pluies et 4-6 mois plus tard. Appliquer 250-500g par arbre par application selon la taille de l'arbre et les résultats des tests de sol. Placer l'engrais à 30-60cm de la base de l'arbre, pas directement en contact avec le tronc. Consultez les agents de vulgarisation COCOBOD pour les recommandations spécifiques au sol."
+    },
+    {
+      "topic": "Gestion des arbres d'ombrage sur les fermes de cacao",
+      "answer": "Maintenir 40-60% de couverture d'ombrage sur les fermes de cacao. Trop d'ombrage réduit le rendement et augmente la maladie; trop peu augmente le stress thermique. Affiner graduellement les arbres d'ombrage sur plusieurs saisons plutôt que de tous les enlever à la fois. Les bananiers à plantain et les bananes sont de bons arbres d'ombrage temporaire pendant la phase d'établissement."
+    },
+    {
+      "topic": "Fermentation et séchage des fèves de cacao",
+      "answer": "Fermentez les fèves de cacao fraîchement récoltées pendant 5-7 jours dans des boîtes en bois ou des tas de feuilles de banane, en retournant tous les 48 heures. Après la fermentation, séchez les fèves sur des plateformes surélevées au soleil pendant 7-14 jours jusqu'à ce que la teneur en humidité atteigne 7-8%. Les fèves correctement fermentées et séchées atteignent de meilleurs prix aux centres d'achat COCOBOD."
+    }
+  ],
+  "cocobod_resources": {
+    "description": "COCOBOD (Ghana Cocoa Board) est l'organisme gouvernemental responsable de la réglementation de l'industrie du cacao au Ghana.",
+    "when_to_contact": [
+      "Lorsque vous soupçonnez une infection à la CSSVD sur un arbre",
+      "Lorsque vous voyez des symptômes inhabituels non reconnus par cette application",
+      "Lorsque vous avez besoin d'accéder à des plants améliorés ou des intrants",
+      "Lorsque la maladie se propage rapidement sur votre ferme",
+      "Pour accéder aux services consultatifs de vulgarisation gratuits"
+    ],
+    "services": [
+      "Visites de ferme gratuites d'agents de vulgarisation",
+      "Intrants subventionnés y compris les engrais et les fongicides",
+      "Test de CSSVD et indemnisation pour l'enlèvement d'arbres",
+      "Accès au matériel de plantation certifié",
+      "Garanties de prix du marché pour les fèves correctement séchées et fermentées"
+    ]
+  }
+}

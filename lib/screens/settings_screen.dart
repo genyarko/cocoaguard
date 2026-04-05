@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/history_provider.dart';
+import '../providers/language_provider.dart';
 import '../providers/qa_provider.dart';
+import '../services/knowledge_service.dart';
 import '../utils/app_colors.dart';
 import 'help_screen.dart';
 import 'privacy_policy_screen.dart';
@@ -25,6 +27,73 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
+          // Language Section
+          _buildSection(
+            'Language',
+            [
+              Consumer<LanguageProvider>(
+                builder: (context, langProvider, _) {
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    elevation: 0,
+                    color: AppColors.lightGray,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.language,
+                                  color: AppColors.chartreuse),
+                              const SizedBox(width: 12),
+                              const Text(
+                                'Offline Library Language',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          Wrap(
+                            spacing: 8,
+                            children: [
+                              for (final lang in AppLanguage.values)
+                                FilterChip(
+                                  label: Text(lang.displayName),
+                                  selected:
+                                      langProvider.language == lang,
+                                  onSelected: (selected) {
+                                    if (selected) {
+                                      langProvider.setLanguage(lang);
+                                    }
+                                  },
+                                  selectedColor:
+                                      AppColors.chartreuse.withValues(
+                                          alpha: 0.3),
+                                  labelStyle: TextStyle(
+                                    color: langProvider.language == lang
+                                        ? AppColors.chartreuse
+                                        : Colors.grey[700],
+                                    fontWeight:
+                                        langProvider.language == lang
+                                            ? FontWeight.w600
+                                            : FontWeight.w500,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          const Divider(),
           // Data Management Section
           _buildSection(
             'Data Management',

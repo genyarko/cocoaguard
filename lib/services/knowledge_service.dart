@@ -2,25 +2,56 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 
-/// Offline knowledge base loaded from assets/data/diseases_knowledge.json.
+/// Supported languages for the offline knowledge base.
+enum AppLanguage { english, french, spanish }
+
+extension AppLanguageExt on AppLanguage {
+  String get code {
+    switch (this) {
+      case AppLanguage.english:
+        return 'en';
+      case AppLanguage.french:
+        return 'fr';
+      case AppLanguage.spanish:
+        return 'es';
+    }
+  }
+
+  String get displayName {
+    switch (this) {
+      case AppLanguage.english:
+        return 'English';
+      case AppLanguage.french:
+        return 'Français';
+      case AppLanguage.spanish:
+        return 'Español';
+    }
+  }
+}
+
+/// Offline knowledge base loaded from assets/data/diseases_knowledge*.json.
 ///
 /// Provides keyword-based search over diseases, farming tips, and COCOBOD
-/// resources so the app can answer questions without internet.
+/// resources in English, French, or Spanish. Supports no-internet operation.
 class KnowledgeService {
   List<DiseaseEntry> _diseases = [];
   List<GeneralTip> _generalTips = [];
   CocobodInfo? _cocobod;
+  AppLanguage _currentLanguage = AppLanguage.english;
 
   bool get isLoaded => _diseases.isNotEmpty;
 
   List<DiseaseEntry> get diseases => _diseases;
   List<GeneralTip> get generalTips => _generalTips;
   CocobodInfo? get cocobod => _cocobod;
+  AppLanguage get currentLanguage => _currentLanguage;
 
-  /// Load the JSON knowledge base from assets. Call once at app startup.
-  Future<void> init() async {
-    final raw =
-        await rootBundle.loadString('assets/data/diseases_knowledge.json');
+  /// Load the JSON knowledge base from assets. Defaults to English.
+  /// Call with [language] to load a specific language translation.
+  Future<void> init({AppLanguage language = AppLanguage.english}) async {
+    _currentLanguage = language;
+    final filename = _getFilename(language);
+    final raw = await rootBundle.loadString('assets/data/$filename');
     final data = jsonDecode(raw) as Map<String, dynamic>;
 
     _diseases = (data['diseases'] as List)
@@ -198,6 +229,24 @@ class KnowledgeService {
     buf.writeln();
     buf.write('Connect to the internet for a more detailed answer from Gemma 4.');
     return buf.toString().trim();
+  }
+
+  /// Get the filename for the given language.
+  static String _getFilename(AppLanguage language) {
+    switch (language) {
+      case AppLanguage.english:
+        return 'diseases_knowledge.json';
+      case AppLanguage.french:
+        return 'diseases_knowledge_fr.json';
+      case AppLanguage.spanish:
+        return 'diseases_knowledge_es.json';
+    }
+  }
+
+  /// Change the language dynamically. Reloads the knowledge base.
+  Future<void> setLanguage(AppLanguage language) async {
+    if (language == _currentLanguage) return;
+    await init(language: language);
   }
 }
 

@@ -14,7 +14,10 @@
       "Bash(git:*)",
       "Bash(du:*)",
       "Bash(flutter build:*)",
-      "Bash(flutter devices:*)"
+      "Bash(flutter devices:*)",
+      "Bash(identify C:/Users/genya/Downloads/g4n/cocoaguard_logo.png)",
+      "Bash(python3 -c \"from PIL import Image; img=Image.open\\('C:/Users/genya/Downloads/g4n/cocoaguard_logo.png'\\); print\\(img.size\\)\")",
+      "Bash(dart run:*)"
     ]
   }
 }
