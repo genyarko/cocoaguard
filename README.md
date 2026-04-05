@@ -20,6 +20,7 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 - ✅ **100% Offline Scanning** — All ML inference runs on-device; no photos sent anywhere
 - ✅ **Offline Knowledge Base** — Browse disease info, treatments, and prevention tips anytime
 - ✅ **Cached Q&A** — Previous answers available offline; new questions use Gemma 4 when connected
+- ✅ **Multilingual** — Available in English, French, Spanish, and Twi
 
 ### Smart Features
 - **Image Quality Checks** — Warns if photo is blurry, too dark, or overexposed
@@ -106,6 +107,12 @@ CocoaGuard is a Flutter mobile app that helps Ghanaian cocoa farmers detect plan
 ### Browsing Offline
 - Tap **Library** to explore diseases, farming tips, and COCOBOD resources
 - No internet required
+
+### Changing Language
+- Tap **Settings** → **Language**
+- Choose from **English**, **Français** (French), **Español** (Spanish), or **Twi** (Asante Twi)
+- App saves your preference and restarts with the new language
+- All offline content, farming tips, and help text translate instantly
 
 ---
 

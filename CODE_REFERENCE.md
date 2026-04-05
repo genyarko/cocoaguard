@@ -199,6 +199,26 @@ await histProv.clearHistory();
 List<ScanRecord> records  // all saved scans
 ```
 
+### `LanguageProvider` (Multilingual Support)
+**Manages**: App language preference, persistence, and knowledge base reloading
+
+```dart
+// Usage
+final langProv = context.read<LanguageProvider>();
+await langProv.setLanguage(AppLanguage.french);
+// → reloads knowledge base in French
+// → notifies listeners (LibraryScreen rebuilds)
+// → persists choice in Hive
+
+// State properties
+AppLanguage language           // current language
+```
+
+**Persistence:**
+- Language preference saved in Hive `app_settings` box under key `'app_language'`
+- Restored on app startup in `main.dart`
+- Passed to `KnowledgeService.init(language: savedLanguage)` during initialization
+
 ---
 
 ## Services & Business Logic
@@ -285,25 +305,45 @@ class Gemma4Service {
 - Key: normalized question (lowercased, punctuation stripped)
 - Reuse cache for identical/similar questions offline
 
-### Offline Knowledge Base
+### Offline Knowledge Base & Multilingual Support
 
 **`knowledge_service.dart`**
 
 ```dart
+enum AppLanguage { english, french, spanish, twi }
+
 class KnowledgeService {
-  Future<void> init()            // load JSON from assets
-  String search(String question) // keyword-based Q&A
+  Future<void> init({AppLanguage language = AppLanguage.english})  // load JSON
+  String search(String question)      // keyword-based Q&A
+  Future<void> setLanguage(AppLanguage lang)  // switch language
+  String sectionTitle(String key)     // translate UI labels
 }
 ```
 
-**Search algorithm:**
+**Supported Languages:**
+- 🇺🇸 **English** — default
+- 🇫🇷 **Français** (French)
+- 🇪🇸 **Español** (Spanish)
+- 🇬🇭 **Twi** (Asante Twi)
+
+**Asset files:**
+- `diseases_knowledge.json` — English
+- `diseases_knowledge_fr.json` — French
+- `diseases_knowledge_es.json` — Spanish
+- `diseases_knowledge_tw.json` — Twi
+
+**Search algorithm (language-aware):**
 1. Tokenize question (lowercase, no punctuation)
-2. For each disease in `diseases_knowledge.json`:
+2. For each disease in the current language's JSON:
    - Score disease name/id match (+5)
    - Score token overlap in symptoms/causes/treatments (+1 per match)
    - Score FAQ match (if ≥2 tokens overlap: +2)
-3. Return best match (score ≥2) or general farming tip
-4. Format answer with symptoms/causes/treatment/prevention based on keywords in question
+3. Return best match (score ≥2) with multilingual formatting
+4. Format answer with translated section headers (Symptoms, Causes, Treatment, Prevention)
+5. Multilingual keyword matching: detect user intent (treatment/prevention/cause/symptom) in any supported language
+
+**UI Label Translation:**
+All static labels (section headers, button text, etc.) are stored in `_allLabels` map keyed by `AppLanguage`. Use `sectionTitle(key)` to fetch translated labels for the Library screen.
 
 ### Image Processing
 
@@ -355,10 +395,11 @@ class StorageService {
 }
 ```
 
-**Three Hive boxes:**
+**Four Hive boxes:**
 1. `scan_records` — `ScanRecord` (leaf & pod scans)
 2. `chat_messages` — `ChatMessage` (Q&A history)
 3. `response_cache` — String→String (question → Gemma4 answer)
+4. `app_settings` — String→dynamic (app preferences, e.g., language choice)
 
 ---
 
@@ -534,7 +575,10 @@ assets/
 │   ├── leaf_labels.json               ({"class_names": ["anthracnose", "cssvd", "healthy"]})
 │   └── pod_labels.json                ({"class_names": [...], "display_names": {...}})
 ├── data/
-│   ├── diseases_knowledge.json        (Offline Q&A database)
+│   ├── diseases_knowledge.json        (Offline Q&A database — English)
+│   ├── diseases_knowledge_fr.json     (French translation)
+│   ├── diseases_knowledge_es.json     (Spanish translation)
+│   ├── diseases_knowledge_tw.json     (Twi/Asante Twi translation)
 │   ├── emergency_protocols.json       (Emergency response guides)
 │   ├── leaf_treatments.json           (Treatment lookup)
 │   └── pod_treatments.json
@@ -620,9 +664,48 @@ Process:
 3. Update `pubspec.yaml` asset list
 4. Run `flutter pub get`
 
+### Adding a New Language
+1. **Add to enum**: `AppLanguage` in `knowledge_service.dart`
+   ```dart
+   enum AppLanguage { english, french, spanish, twi, portuguese }  // example
+   ```
+
+2. **Add code mapping**: in `AppLanguageExt` (required for API/storage)
+   ```dart
+   case AppLanguage.portuguese:
+     return 'pt';
+   ```
+
+3. **Add display name**: in `AppLanguageExt.displayName` (for UI FilterChips)
+   ```dart
+   case AppLanguage.portuguese:
+     return 'Português';
+   ```
+
+4. **Create knowledge base JSON**: `assets/data/diseases_knowledge_<code>.json`
+   - Structure: same as English version (diseases, general_farming, cocobod_resources)
+   - Translate all disease names, descriptions, symptoms, causes, treatments, prevention, FAQ
+
+5. **Add UI labels**: add language entry to `_allLabels` static map
+   - Keys: diseaseGuide, farmingTips, cocobodResources, offlineNote, severity, causes, symptoms, prevention, treatment, faq, cocobodOffers, contactWhen, connectPrompt, noAnswer, diseases, tips, ghanaCocoaBoard, whenToContact, servicesAvailable
+
+6. **Add filename mapping**: update `_getFilename()` switch
+   ```dart
+   case AppLanguage.portuguese:
+     return 'diseases_knowledge_pt.json';
+   ```
+
+7. **Add search keywords**: add language keywords to `_formatDiseaseAnswer()` multilingual lists (askTreatment, askPrevention, askCause, askSymptom)
+
+8. **Add COCOBOD keywords** (optional): extend `cocobodKeywords` list if language has unique terms
+
 ### Adding Offline Data
-1. Create/edit JSON in `assets/data/`
-2. Update `KnowledgeService` if new search-able content
+1. Create/edit JSON in `assets/data/` (English version)
+2. If multilingual: create translations for each `AppLanguage` (FR, ES, Twi)
+3. Add entries to `_allLabels` map in `KnowledgeService` if new UI labels needed
+4. Update `_getFilename()` if new languages added
+5. Update multilingual keyword lists in `_formatDiseaseAnswer()` for new languages
+6. Update `KnowledgeService` if new search-able content
 3. Load in `TreatmentSection` if new treatment category
 4. Update Library screen if new browseable content
 

@@ -1,0 +1,348 @@
+{
+  "version": "1.0",
+  "last_updated": "2026-04-05",
+  "language": "tw",
+  "language_name": "Asante Twi",
+  "diseases": [
+    {
+      "id": "anthracnose",
+      "name": "Anthracnose (Kookoo Aba Tuntum Yareɛ)",
+      "scan_type": "leaf",
+      "severity": "moderate",
+      "description": "Yareɛ yi fi fungi a wɔfrɛ no Colletotrichum gloeosporioides. Ɛtrɛw ntɛm wɔ berɛ a nsu tɔ ne berɛ a ɛhyew wɔ wim. Sɛ woanya no ntɛm a, ɛbɛtumi ama wo ahwene mu dodoɔ no aguan te sɛ 30–40%.",
+      "symptoms": [
+        "Nsɛnkyerɛnneɛ tuntum anaa kɔkɔɔ tuntum bɛba aba anaa ahahan no so",
+        "Nsɛnkyerɛnneɛ no trɛw ntɛm wɔ osuberɛ mu",
+        "Aba no bɛtumi aporɔw koraa sɛ woanya no ntɛm",
+        "Aba a yareɛ aka no bɛtɔ ase ansa na aboro"
+      ],
+      "causes": [
+        "Fungi a wɔfrɛ no Colletotrichum gloeosporioides",
+        "Wim a ɛhyew ne nsu a ɛtɔ pii ma ɛtrɛw",
+        "Aba no so akuru ma yareɛ no kwan a ɛbɛfa akɔ mu",
+        "Sɛ mframa ntumi nfa dua no nhahan mu a, na ɛma yareɛ no ba"
+      ],
+      "treatments": [
+        "Yi aba a yareɛ aka no na sɛe no ntɛm ara",
+        "Fa copper-based fungicide te sɛ Bordeaux mixture petew so",
+        "Twitwa nnua no nhahan na mframa afa mu",
+        "Twa aba a aboro no ntɛm na amma yareɛ no antrɛw"
+      ],
+      "prevention": [
+        "Twitwa nnua no daa na mframa afa mu yie",
+        "Yi biribiara a yareɛ aka no firi afuo no mu",
+        "Mfa akuro mma aba no so berɛ a woretwa",
+        "Petew fungicide ansa na osuberɛ no aba"
+      ],
+      "faq": [
+        {
+          "question": "Ɛyɛ dɛn na anthracnose trɛw?",
+          "answer": "Anthracnose trɛw denam fungi aba a nsu, mframa, ne nnoboa de kɔ baabiara. Ɛtrɛw ntɛm paa wɔ osuberɛ mu berɛ a wim hyew."
+        },
+        {
+          "question": "Anthracnose bɛtumi akum me kookoo nnua?",
+          "answer": "Anthracnose ka aba ne ahahan na ɛnka dua no ankasa. Nanso sɛ ɛba daa a, ɛma dua no tumi sua na aba a ɛsow nso sua berɛ bi akyi."
+        },
+        {
+          "question": "Fungicide bɛn na menfa mma anthracnose?",
+          "answer": "Copper-based fungicides te sɛ Bordeaux mixture anaa copper oxychloride na ɛyɛ adwuma paa. Petew no nnawɔtwe 2–3 biara mu wɔ osuberɛ mu. Bisa wo COCOBOD extension officer adeɛ a wɔapene so."
+        }
+      ]
+    },
+    {
+      "id": "cssvd",
+      "name": "CSSVD (Kookoo Dua Honhom Yareɛ)",
+      "scan_type": "leaf",
+      "severity": "severe",
+      "description": "Virus yareɛ a ɛyɛ hu a mealybugs de ba. Ɛma dua no mman ne ne ntiaseɛ honhom. Ayaresa biara nni ho — ɛsɛ sɛ wotu dua a yareɛ aka no na ɛbɔ nnua a ɛbɛn ho no ho ban.",
+      "symptoms": [
+        "Dua no mman foforɔ ne ne dua nketewa honhom",
+        "Ahahan foforɔ yɛ kɔkɔɔ anaa ɛwɔ kɔkɔɔ nsensenee",
+        "Aba no yɛ akɔmɔden anaa ɛwɔ nsɛnkyerɛnneɛ momono",
+        "Aba a dua no sow sua paa",
+        "Dua no bɛwu mfeɛ kakra bi akyi"
+      ],
+      "causes": [
+        "Cocoa Swollen Shoot Virus (CSSV)",
+        "Mealybugs de ba berɛ a wɔdidi wɔ dua a yareɛ aka no so",
+        "Ɛtrɛw firi dua a yareɛ aka no kɔ nnua a ho tɛ no so berɛ a mealybugs tu kɔ",
+        "Ayaresa biara nni ho — woyi dua no na ɛyɛ adeɛ a ɛsɛ sɛ woyɛ"
+      ],
+      "treatments": [
+        "Tu dua a yareɛ aka no ne nnua a ɛbɛn ho no nyinaa",
+        "Ka kyerɛ wo COCOBOD extension officer ntɛm ara",
+        "Mfa dua foforɔ nnua ntɛm — ma asase no nhome kakra",
+        "Dua kookoo nhyehyɛeɛ a ɛtumi gyina CSSVD ano",
+        "Fa insecticides a wɔapene so kum mealybugs wɔ nnua a aka no so"
+      ],
+      "prevention": [
+        "Dua kookoo nhyehyɛeɛ a ɛtumi gyina CSSVD ano",
+        "Kum mealybugs daa denam insecticides a wɔapene so so",
+        "Hwɛ wo afuo mu nnawɔtwe biara mu hunu nsɛnkyerɛnneɛ ntɛm",
+        "Ka CSSVD a wususuw ho kyerɛ COCOBOD ntɛm na wɔapene so",
+        "Hwɛ afuo no yie na yi wura a mealybugs bɛtumi atena mu"
+      ],
+      "faq": [
+        {
+          "question": "Wɔbɛtumi asa CSSVD yareɛ?",
+          "answer": "Dabi. Ayaresa biara nni ma CSSVD. Sɛ yareɛ no aka dua bi a, ɛsɛ sɛ wotu no ne nnua a ɛbɛn ho no. Botaeɛ ne sɛ wobɛsianka na yareɛ no ankɔ nnua a ho tɛ no so."
+        },
+        {
+          "question": "Da bɛn na mɛka CSSVD akyerɛ COCOBOD?",
+          "answer": "Ka ntɛm ara berɛ a wohunu dua biara a ne mman ahonhom, ahahan a ayɛ kɔkɔɔ, anaa aba a ne su asesa. Sɛ woka ntɛm a, COCOBOD bɛtumi asianka na yareɛ no antrɛw ankɔ wo afuo no nyinaa mu."
+        },
+        {
+          "question": "Sɛ mitu nnua a CSSVD aka no a, metumi adua foforɔ?",
+          "answer": "Aane, nanso twɛn kɔsi sɛ mealybugs no asua ansa na fa kookoo nhyehyɛeɛ a ɛtumi gyina CSSVD ano adua. Wo COCOBOD extension officer bɛtumi akyerɛ wo nnua a wɔapene so."
+        }
+      ]
+    },
+    {
+      "id": "phytophthora",
+      "name": "Phytophthora (Kookoo Aba Kɔkɔɔ Tuntum Porɔeɛ)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Kookoo aba porɔeɛ a Phytophthora palmivora ne P. megakarya de ba. Kookoo yareɛ a ɛtrɛw wɔ wiase nyinaa, na ɛma ahwene mu dodoɔ gu 20–30% afe biara. Ɛtrɛw ntɛm paa berɛ a nsu retɔ.",
+      "symptoms": [
+        "Nsɛnkyerɛnneɛ tuntum bi fi aba no ti anaa ne ntiaseɛ",
+        "Nsɛnkyerɛnneɛ no trɛw ntɛm de ka aba no nyinaa wɔ nnafua 10–14 mu",
+        "Fungi fitaa (sporangia) bɛtumi aba nsɛnkyerɛnneɛ no so",
+        "Ahwene a ɛwɔ aba no mu yɛ tuntum na wonntumi nnye adwuma"
+      ],
+      "causes": [
+        "Oomycete a wɔfrɛ no Phytophthora palmivora ne P. megakarya",
+        "Nsu a ɛpete firi aba a yareɛ aka no ne asase so de trɛw",
+        "Wim a ɛhyew ne nsu a ɛtɔ pii ma ɛtrɛw",
+        "Aba a yareɛ aka no a wɔagyaw no asase so gu asase no ho fi"
+      ],
+      "treatments": [
+        "Yi aba a yareɛ aka no ntɛm na kɔsie no akyirikyiri firi afuo no ho",
+        "Petew copper-based fungicides te sɛ Bordeaux mixture nnawɔtwe 2–3 biara mu wɔ osuberɛ mu",
+        "Petew fungicide a ɛbɔ ho ban ansa na osuberɛ aba",
+        "Sɛ dua no kuruwa nso wɔ yareɛ a, sa asase a ɛbɛn dua no ase no nso"
+      ],
+      "prevention": [
+        "Yɛ nsu akwan yie na asase no so nsuo ansua",
+        "Twitwa nnua no ne sunsuma nnua no na mframa afa mu",
+        "Mfa akuro mma aba no so berɛ a woretwa (akuru ma fungi kɔ mu)",
+        "Yi aba a aboro kɔ a wɔagyaw no firi bere a atwam no nyinaa",
+        "Dua kookoo nhyehyɛeɛ a ɛtumi gyina yareɛ no ano"
+      ],
+      "faq": [
+        {
+          "question": "Ɛyɛ dɛn na kookoo aba porɔeɛ trɛw ntɛm?",
+          "answer": "Ntɛm paa. Sɛ ɛhyew na nsu retɔ a, aba baako a yareɛ aka no bɛtumi de yareɛ no akɔ aba a ɛbɛn ho no so wɔ nnafua 3–5 mu denam nsu a ɛpete so. Ɛno nti na ɛho hia sɛ woyi aba a yareɛ aka no ntɛm."
+        },
+        {
+          "question": "Nsonsonoeɛ bɛn na ɛda phytophthora ne anthracnose ntam?",
+          "answer": "Phytophthora (kookoo aba porɔeɛ) trɛw ntɛm paa, na ɛfi ase sɛ nsuo nsɛnkyerɛnneɛ kɔkɔɔ a ɛfiri aba no ti anaa ne dua, na ɛbɛtumi asɛe aba no nyinaa wɔ nnafua 10–14 mu. Anthracnose nsɛnkyerɛnneɛ no yɛ wewu na ɛyɛ tuntum firi aseɛ. Phytophthora yɛ den paa."
+        }
+      ]
+    },
+    {
+      "id": "carmenta",
+      "name": "Carmenta (Kookoo Aba Mu Wowu)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Kookoo aba mu wowu a Carmenta foraseminis de ba. Ɛno mma no tu kɔ aba no mu na ɛsɛe ahwene no. Ɔhaw kɛseɛ wɔ West Africa kookoo afuo so.",
+      "symptoms": [
+        "Tokuro nketewa wɔ aba no so",
+        "Aba no bɔ mmɔborɔ ansa na ne berɛ adu anaa ne kɔlɔ nsesae",
+        "Sɛ wobua aba no a, wohunu sɛ ahwene no asɛe na wowu no efi wɔ mu",
+        "Aba no yɛ hare sene deɛ ɛyɛ apɔ mu dɛ"
+      ],
+      "causes": [
+        "Carmenta foraseminis wowu no mma",
+        "Wowu mpɛn no to nkosua wɔ aba no so",
+        "Ɛno mma no tu kɔ mu na wɔdidi wɔ ahwene no so",
+        "Sɛ wonntwa aba no bere ne bere a, na ɛma wowu no nya kwan sɛe no"
+      ],
+      "treatments": [
+        "Yi aba a wowu aka no na sɛe no ntɛm ara",
+        "Twa aba no daa — nnafua 7–10 biara mu — na wowu no annya berɛ",
+        "Fa insecticides a wɔapene so kum wowu mpɛn no berɛ a wɔdi mu pii",
+        "Fa pheromone traps sua wowu mpɛn no dodoɔ na kum wɔn"
+      ],
+      "prevention": [
+        "Twa aba no bere ne bere (nnafua 7–10 biara mu)",
+        "Yi aba atɔ a ɛwɔ afuo no mu asase so no nyinaa",
+        "Twitwa nnua no na mframa afa mu na wowu no annya baabi akotra",
+        "Hwɛ aba no bere ne bere hunu nsɛnkyerɛnneɛ ntɛm"
+      ],
+      "faq": [
+        {
+          "question": "Ɛyɛ dɛn na mehu sɛ aba no mu wɔ wowu a mennyae mu?",
+          "answer": "Hwɛ tokuro nketewa kurukuruwa a ɛwɔ aba no so, ne kɛseɛ yɛ te sɛ 2–3mm. Aba a wowu wɔ mu no bɛtumi asesa ne kɔlɔ ntɛm (ayɛ akɔmɔden anaa kɔkɔɔ) na ɛyɛ hare sene deɛ ɛsɛ. Sɛ wowoso aba no a, wubetie ahwene a ɛwoso wɔ mu."
+        },
+        {
+          "question": "Da bɛn na kookoo aba mu wowu mpɛn no pii?",
+          "answer": "Wowu mpɛn no di pii wɔ aboaberɛ kɛseɛ no mu berɛ a aba a aboro wɔ hɔ pii. Wɔ West Africa no, saa berɛ no yɛ October–December. Hwɛ aba no ne wo traps yie wɔ saa berɛ yi mu. Sɛ wotwa aba nnafua 7–10 biara mu wɔ saa berɛ yi mu a, ɛbɛboa paa."
+        },
+        {
+          "question": "Metumi de aboa ahoɔden atia Carmenta wowu?",
+          "answer": "Aane. Aboa te sɛ parasitoid wasps (Trichogramma) ne ntetea bɛtumi aboa akum wowu no. Sɛ woma nnua ahodoɔ wɔ wo afuo so na woamfa insecticide a ɛkum biribiara a, ɛboaboa saa mmoa yi. Pheromone traps nso yɛ adeɛ pa ma ɛhwɛ ne kyekyere wowu mpɛn no."
+        }
+      ]
+    },
+    {
+      "id": "moniliasis",
+      "name": "Moniliasis (Kookoo Aba Awɔ Fitaa Porɔeɛ)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Fungi a wɔfrɛ no Moniliophthora roreri de ba. Kookoo yareɛ a ɛsɛe paa wɔ Americas man ahorow mu, ɛbɛtumi ama ahwene mu dodoɔ gu kɔsi 80% sɛ woanya no ntɛm. Ɛntrɛw kɔ West Africa so ɛnnɛ, nanso ɛho hia sɛ yɛhwɛ yie.",
+      "symptoms": [
+        "Nsɛnkyerɛnneɛ tuntum a ɛwɔ aba no so a ɛntɛɛ",
+        "Fungi fitaa anaa ɛhann a ɛkata aba no so",
+        "Aba no mu porɔw — ahwene no yɛ nsuo na wonntumi nnye adwuma",
+        "Aba no tɔ ase ansa na ne berɛ adu"
+      ],
+      "causes": [
+        "Fungi a wɔfrɛ no Moniliophthora roreri",
+        "Ɛtrɛw denam fungi aba a mframa ne nsu de kɔ baabiara",
+        "Wim a ɛhyew ne nhahan a ɛpɛpɛɛpɛ ma yareɛ no ba",
+        "Aba a yareɛ aka no a wɔagyaw no dua no so anaa asase so bɛyɛ fungi aba adeɛkoraeɛ"
+      ],
+      "treatments": [
+        "Yi aba a yareɛ aka no na sie no anaa hyew no ntɛm — mfa nngyaw asase so",
+        "Twa aba no daa (nnafua 7 biara mu) na amba fungi aba",
+        "Petew copper-based fungicides wɔ osuberɛ mu bɔ ho ban",
+        "Hwɛ sɛ aba a yareɛ aka no kɔ akyirikyiri firi afuo no ho"
+      ],
+      "prevention": [
+        "Twitwa nhahan no na wim hyeweɛ ne mframa afa mu",
+        "Yɛ nsu akwan yie wɔ afuo no mu",
+        "Twa aba no berɛ a aboro — mfa nngyaw dua no so",
+        "Hwɛ afuo no mu nnawɔtwe biara mu wɔ osuberɛ mu berɛ a yareɛ bɛba pii"
+      ],
+      "faq": [
+        {
+          "question": "Moniliasis wɔ Ghana?",
+          "answer": "Moniliasis (kookoo aba awɔ fitaa porɔeɛ) wɔ Central ne South America paa. Ɛnni Ghana anaa West Africa ɛnnɛ, nanso ɛyɛ adeɛ a ɛsɛ sɛ yɛhwɛ yie. Sɛ wohunu fungi fitaa wɔ aba so a, ka kyerɛ COCOBOD ntɛm efiri sɛ ɛbɛyɛ fungi yareɛ bi a ɛho hia sɛ obi a ɔnim hwɛ no."
+        },
+        {
+          "question": "Ɛyɛ dɛn na moniliasis ne phytophthora kookoo aba tuntum yɛ soronko?",
+          "answer": "Moniliasis ma fungi fitaa anaa ɛhann a ɛyɛ sɛ asradeɛ kata aba no so — ɛno nti na wɔfrɛ no 'frosty pod rot'. Phytophthora de, nsɛnkyerɛnneɛ tuntum a ɛyɛ sɛ nsuo na ɛwɔ aba no so a fitaa biara nka ho. Moniliasis ma aba no mu yɛ nsuo na phytophthora de yɛ aba no mu tuntum wewu."
+        },
+        {
+          "question": "Sɛ mesusuw sɛ moniliasis wɔ me afuo so a, dɛn na menyɛ?",
+          "answer": "Mfa afudeɛ biara mfiri afuo no so. Yi aba a wususuw ho no nyinaa hyew no ntɛm. Frɛ wo COCOBOD extension officer ntɛm na wɔapene so. Sɛ wode sianka ntɛm a, ɛyɛ adeɛ pa efiri sɛ moniliasis fungi aba bɛtumi atrɛw denam mframa so akɔ akyirikyiri sɛ woanya no ntɛm. Twe wo ho firi baabi a ɛwɔ no kɔsi sɛ obi a ɔnim aba ahwɛ."
+        }
+      ]
+    },
+    {
+      "id": "witches_broom",
+      "name": "Witches' Broom (Kookoo Dua Praeprae Yareɛ)",
+      "scan_type": "pod",
+      "severity": "high",
+      "description": "Fungi a wɔfrɛ no Moniliophthora perniciosa de ba. Ɛma dua no mman yɛ sɛ praeprae — mman nketewa pii bom. Yareɛ kɛseɛ wɔ South America kookoo mu, nanso ɛho hia sɛ West Africa okuafoɔ hwɛ yie.",
+      "symptoms": [
+        "Mman a ɛnyɛ deɛ ɛsɛ a ɛyɛ sɛ praeprae — mman nketewa pii bom",
+        "Aba a ahonhom na ɛwɔ ahwene wɔ mu na ne su asesa",
+        "Praeprae ahabammono no wu na ayɛ kɔkɔɔ tuntum",
+        "Nhwiren a ɛnyɛ deɛ ɛsɛ bom wɔ dua no so"
+      ],
+      "causes": [
+        "Fungi a wɔfrɛ no Moniliophthora perniciosa",
+        "Ɛtrɛw denam fungi aba a mframa de kɔ baabiara (basidiospores)",
+        "Ɛka mman foforɔ a ɛrenyini, nhwiren, ne aba nketenkete",
+        "Berɛ a ɛfɔɔ ne mframa a ɛnfa mu yie ma yareɛ no ba"
+      ],
+      "treatments": [
+        "Twitwa praeprae no nyinaa — mman, nhwiren, ne aba praeprae — wɔ ɔpɛberɛ mu",
+        "Twa praeprae no wɔ 15 cm aase firi baabi a ahonhom no wɔ kɔsi dua a ho tɛ mu",
+        "Hyew anaa sie praeprae a woatwitwa no akyirikyiri firi afuo no ho",
+        "Petew copper-based fungicides wɔ baabi a woatwitwa no bɔ ho ban"
+      ],
+      "prevention": [
+        "Twitwa praeprae no mpɛn 2–3 afe biara mu",
+        "Yi praeprae no ansa na osuberɛ aba na fungi aba no antrɛw",
+        "Hwɛ sɛ sunsuma ne dua no ntam kwan sesɛw",
+        "Dua kookoo nhyehyɛeɛ a ɛtumi gyina yareɛ no ano",
+        "Hwɛ sɛ praeprae foforɔ aba ɔsram biara mu"
+      ],
+      "faq": [
+        {
+          "question": "Witches' broom wɔ Ghana?",
+          "answer": "Witches' broom wɔ South ne Central America paa. Ɛnni West Africa ɛnnɛ. Sɛ wohunu mman a ɛyɛ sɛ praeprae wɔ wo nnua so a, ka kyerɛ COCOBOD ntɛm na wɔahwɛ."
+        },
+        {
+          "question": "Ɛyɛ dɛn na mehu praeprae ahodoɔ no?",
+          "answer": "Ɛwɔ ahorow mmiɛnsa: (1) Mman praeprae — mman nketewa fitaa-ahabammono pii a ebom wɔ dua no mman so, ɛyɛ sɛ praeprae anaa anoma berebuw. (2) Nhwiren praeprae — nhwiren a ɛnyɛ deɛ ɛsɛ wɔ dua no ho a ɛntumi mmɛyɛ aba pa. (3) Aba praeprae — aba a ahonhom ne ne su asesa a ahwene nni mu. Saa ahorow mmiɛnsa yi nyinaa wu na ayɛ kɔkɔɔ tuntum, na ɛsɛ sɛ wotwitwa na wosɛe no nyinaa."
+        },
+        {
+          "question": "Da bɛn na ɛyɛ sɛ metwitwa praeprae no?",
+          "answer": "Twitwa praeprae no wɔ ɔpɛberɛ mu (December–February wɔ West Africa) ansa na osu aba. Ɛho hia paa efiri sɛ fungi no ma fungi aba firi praeprae a awu no so berɛ a ɛfɔɔ. Sɛ woyi praeprae no wɔ ɔpɛberɛ mu a, wobɛsianka na fungi aba foforɔ antrɛw. Twa wɔ 15 cm aase firi baabi a ahonhom no wɔ kɔsi dua a ho tɛ mu, na hyew anaa sie adeɛ a woatwitwa no nyinaa akyirikyiri firi afuo no ho."
+        }
+      ]
+    },
+    {
+      "id": "healthy",
+      "name": "Apɔ Mu Dɛ (Yareɛ Biara Nni Ho)",
+      "scan_type": "both",
+      "severity": "none",
+      "description": "Yareɛ nsɛnkyerɛnneɛ biara nni hɔ. Kɔ so yɛ afuoyɛ pa na wo nnua ne wo aba anya nkwa pa.",
+      "symptoms": [],
+      "causes": [],
+      "treatments": [
+        "Ayaresa biara ho nhia — kɔ so hwɛ wo afuo mu bere ne bere"
+      ],
+      "prevention": [
+        "Hwɛ sunsuma yie (40–60% sunsuma)",
+        "Twitwa nnua no bere ne bere na mframa afa mu",
+        "Fa fertilizer a ɛfata gu denam asase nhwehwɛmu so",
+        "Yi adeɛ a awu anaa yareɛ aka no firi afuo no mu ntɛm",
+        "Twa aba a aboro no wɔ nnawɔtwe 2–3 mu",
+        "Hwɛ afuo no mu yie — yi aba a atɔ ase ne nwura"
+      ],
+      "faq": [
+        {
+          "question": "Mpɛn ahe na ɛsɛ sɛ mehwɛ me kookoo afuo mu yareɛ?",
+          "answer": "Hwɛ wo afuo no nyinaa mu pen biara wɔ nnawɔtwe biara mu wɔ osuberɛ mu berɛ a yareɛ bɛba pii. Wɔ ɔpɛberɛ mu no, nnawɔtwe mmienu biara mu sesɛw. Sɛ wohunu yareɛ ntɛm a, ɛno na ɛyɛ kwan pa a ɛsene biara."
+        },
+        {
+          "question": "Nsɛnkyerɛnneɛ bɛn na ɛkyerɛ sɛ kookoo afuo yɛ apɔ mu dɛ?",
+          "answer": "Kookoo nnua a ho tɛ wɔ ahahan ahabammono a ɛyɛ pɛ a nsɛnkyerɛnneɛ biara nni so, aba a ɛyɛ den a ne kɔlɔ nsesae, aba pii wɔ dua no ho ne ne mman so, na mman no nyinaa yɛ deɛ ɛsɛ. Aba a ho tɛ yɛ duru sɛ woso no."
+        }
+      ]
+    }
+  ],
+  "general_farming": [
+    {
+      "topic": "Berɛ a ɛsɛ sɛ wotwa kookoo aba",
+      "answer": "Twa kookoo aba berɛ a ne kɔlɔ sesa — ɛfiri ahabammono kɔ akɔmɔden anaa ɔsan-kɔkɔɔ sɛdeɛ nhyehyɛeɛ no te. Mfa aba a aboro nngyaw dua no so nkyɛn nnawɔtwe 2–3 efiri sɛ yareɛ bɛka no na ne su bɛsua. Twa aba nnafua 7–14 biara mu wɔ aboaberɛ mu."
+    },
+    {
+      "topic": "Ɛyɛ dɛn na wotwitwa kookoo nnua yie",
+      "answer": "Twitwa kookoo nnua mpɛn 2–3 afe biara mu. Yi mman a awu, yareɛ aka, ne deɛ ɛtwere so. Ma dua no sorokɔ nyɛ meters 4–5 na woatumi ahwɛ no yie. Twitwa pa ma mframa fa mu na ɛtew yareɛ so. Twitwa wɔ aboa akyi berɛ a dua no ho nteɛ."
+    },
+    {
+      "topic": "Fertilizer a ɛfata kookoo",
+      "answer": "Fa NPK fertilizer (sɛ ɛyɛ 15-15-15 anaa 12-12-17) gu mpɛn mmienu afe biara mu — osuberɛ no mfitiaseɛ ne abosome 4–6 akyiri. Fa grams 250–500 gu dua biara so sɛdeɛ dua no su ne asase nhwehwɛmu kyerɛ. Fa gu 30–60cm firi dua no ase, mfa nka dua no ankasa. Bisa COCOBOD extension officers sɛdeɛ asase no pɛ."
+    },
+    {
+      "topic": "Sunsuma nnua a ɛwɔ kookoo afuo so",
+      "answer": "Ma sunsuma nyɛ 40–60% wɔ kookoo afuo so. Sɛ sunsuma no dɔɔso a, aba a dua no sow sua na yareɛ ba; sɛ ɛsua dodo a, owia hyew nnua no. Tew sunsuma nnua no kakra kakra, ɛnyɛ sɛ wubetu no nyinaa prɛko. Brɔdeɛ ne kwadu yɛ sunsuma nnua pa a ɛboa wɔ mfitiaseɛ no."
+    },
+    {
+      "topic": "Kookoo ahwene fermentation ne awiɛ",
+      "answer": "Fa kookoo ahwene foforɔ hyɛ adaka mu anaa brɔdeɛ ahahan mu nkyerɛ nnafua 5–7, dane no nnɔnhwerew 48 biara akyi. Fermentation akyi no, bɔ ahwene no trɛtɛ wɔ owia mu nnafua 7–14 kɔsi sɛ nsuo a ɛwɔ mu no bɛyɛ 7–8%. Ahwene a wɔayɛ fermentation ne awiɛ yie no, wɔtɔ no boɔ pa wɔ COCOBOD nneɛma tɔ bea."
+    }
+  ],
+  "cocobod_resources": {
+    "description": "COCOBOD (Ghana Cocoa Board) yɛ aban adwumakuo a ɛhwɛ Ghana kookoo adwuma so.",
+    "when_to_contact": [
+      "Berɛ a wususuw sɛ CSSVD yareɛ aka wo dua biara",
+      "Berɛ a wohunu nsɛnkyerɛnneɛ bi a app yi nnim",
+      "Berɛ a wohia kookoo aba foforɔ anaa nneɛma",
+      "Berɛ a yareɛ retrɛw ntɛm wɔ wo afuo so",
+      "Sɛ wopɛ sɛ extension officers ba wo nkyɛn a"
+    ],
+    "services": [
+      "Extension officers ba wo afuo so hwɛ wo kwa",
+      "Fertilizers ne fungicides a aban aboa ama ne boɔ asua",
+      "CSSVD nhwehwɛmu ne sika a wɔtua ma dua a wɔtu no",
+      "Kookoo aba a wɔapene so a wobɛdua",
+      "Boɔ a aban akyerɛ ma ahwene a wɔayɛ fermentation ne awiɛ yie"
+    ]
+  }
+}

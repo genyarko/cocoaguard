@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 /// Supported languages for the offline knowledge base.
-enum AppLanguage { english, french, spanish }
+enum AppLanguage { english, french, spanish, twi }
 
 extension AppLanguageExt on AppLanguage {
   String get code {
@@ -14,6 +14,8 @@ extension AppLanguageExt on AppLanguage {
         return 'fr';
       case AppLanguage.spanish:
         return 'es';
+      case AppLanguage.twi:
+        return 'tw';
     }
   }
 
@@ -25,6 +27,8 @@ extension AppLanguageExt on AppLanguage {
         return 'Français';
       case AppLanguage.spanish:
         return 'Español';
+      case AppLanguage.twi:
+        return 'Twi';
     }
   }
 }
@@ -135,19 +139,17 @@ class KnowledgeService {
     }
 
     // ── COCOBOD query ─────────────────────────────────────────────────────
-    if (q.contains('cocobod') || q.contains('extension') || q.contains('report')) {
+    final cocobodKeywords = ['cocobod', 'extension', 'report', 'signaler', 'vulgarisation', 'reportar', 'extensión', 'bɔ amanneɛ', 'nkɔso'];
+    if (cocobodKeywords.any((k) => q.contains(k))) {
       if (_cocobod != null) {
-        return 'COCOBOD (Ghana Cocoa Board) offers: '
+        final l = _labels;
+        return '${l['cocobodOffers']}'
             '${_cocobod!.services.take(3).join("; ")}. '
-            'Contact them when: ${_cocobod!.whenToContact.first}.';
+            '${l['contactWhen']}${_cocobod!.whenToContact.first}.';
       }
     }
 
-    return "I don't have a specific answer for that question in my offline "
-        "library. Try asking about a specific disease (anthracnose, CSSVD, "
-        "phytophthora, carmenta, moniliasis, witches' broom) or a farming "
-        "topic (pruning, fertilizer, shade, harvesting). "
-        "Connect to the internet for AI-powered answers from Gemma 4.";
+    return _labels['noAnswer']!;
   }
 
   /// Find a disease entry by its id (e.g. 'anthracnose').
@@ -171,55 +173,62 @@ class KnowledgeService {
 
   String _formatDiseaseAnswer(DiseaseEntry d, String query) {
     final buf = StringBuffer();
+    final l = _labels;
 
-    // Decide which aspect the user is asking about
-    final askTreatment = query.contains('treat') ||
-        query.contains('cure') ||
-        query.contains('fix') ||
-        query.contains('spray') ||
-        query.contains('fungicid');
-    final askPrevention = query.contains('prevent') ||
-        query.contains('avoid') ||
-        query.contains('protect') ||
-        query.contains('stop');
-    final askCause = query.contains('cause') ||
-        query.contains('why') ||
-        query.contains('reason') ||
-        query.contains('how does');
-    final askSymptom = query.contains('symptom') ||
-        query.contains('sign') ||
-        query.contains('look like') ||
-        query.contains('identify');
+    // Multilingual keyword sets for intent detection
+    final askTreatment = _matchesAny(query, [
+      'treat', 'cure', 'fix', 'spray', 'fungicid',         // en
+      'traiter', 'soigner', 'guérir', 'pulvéris', 'fongicid', // fr
+      'tratar', 'curar', 'arreglar', 'fumigar', 'fungicida',  // es
+      'sa', 'ayaresa', 'aduro', 'pete',                      // tw
+    ]);
+    final askPrevention = _matchesAny(query, [
+      'prevent', 'avoid', 'protect', 'stop',                // en
+      'prévenir', 'éviter', 'protéger', 'arrêter',          // fr
+      'prevenir', 'evitar', 'proteger', 'detener',           // es
+      'bɔ ho ban', 'sianka', 'twe ho',                       // tw
+    ]);
+    final askCause = _matchesAny(query, [
+      'cause', 'why', 'reason', 'how does',                 // en
+      'cause', 'pourquoi', 'raison', 'comment',              // fr
+      'causa', 'por qué', 'razón', 'cómo',                   // es
+      'dɛn nti', 'nea ɛde ba', 'botae',                      // tw
+    ]);
+    final askSymptom = _matchesAny(query, [
+      'symptom', 'sign', 'look like', 'identify',           // en
+      'symptôme', 'signe', 'ressemble', 'identifier',        // fr
+      'síntoma', 'señal', 'parece', 'identificar',           // es
+      'nsɛnkyerɛnne', 'agyirae', 'sɛn na', 'hu',            // tw
+    ]);
 
-    buf.writeln('${d.name} (severity: ${d.severity})');
+    buf.writeln('${d.name} (${l['severity']}: ${d.severity})');
     buf.writeln();
 
     if (askCause && d.causes.isNotEmpty) {
-      buf.writeln('Causes:');
+      buf.writeln('${l['causes']}:');
       for (final c in d.causes) {
         buf.writeln('• $c');
       }
     } else if (askSymptom && d.symptoms.isNotEmpty) {
-      buf.writeln('Symptoms:');
+      buf.writeln('${l['symptoms']}:');
       for (final s in d.symptoms) {
         buf.writeln('• $s');
       }
     } else if (askPrevention && d.prevention.isNotEmpty) {
-      buf.writeln('Prevention:');
+      buf.writeln('${l['prevention']}:');
       for (final p in d.prevention) {
         buf.writeln('• $p');
       }
     } else if (askTreatment && d.treatments.isNotEmpty) {
-      buf.writeln('Treatment:');
+      buf.writeln('${l['treatment']}:');
       for (final t in d.treatments) {
         buf.writeln('• $t');
       }
     } else {
-      // General overview
       buf.writeln(d.description);
       if (d.treatments.isNotEmpty) {
         buf.writeln();
-        buf.writeln('Treatment:');
+        buf.writeln('${l['treatment']}:');
         for (final t in d.treatments) {
           buf.writeln('• $t');
         }
@@ -227,9 +236,128 @@ class KnowledgeService {
     }
 
     buf.writeln();
-    buf.write('Connect to the internet for a more detailed answer from Gemma 4.');
+    buf.write(l['connectPrompt']!);
     return buf.toString().trim();
   }
+
+  bool _matchesAny(String query, List<String> keywords) {
+    return keywords.any((k) => query.contains(k));
+  }
+
+  /// Translated UI labels used by search responses and the library screen.
+  Map<String, String> get _labels => _allLabels[_currentLanguage]!;
+
+  /// Section titles for the library screen in the current language.
+  String sectionTitle(String key) => _labels[key] ?? key;
+
+  static const _allLabels = <AppLanguage, Map<String, String>>{
+    AppLanguage.english: {
+      'diseaseGuide': 'Disease Guide',
+      'farmingTips': 'Farming Best Practices',
+      'cocobodResources': 'COCOBOD Resources',
+      'offlineNote': 'All content available offline — no internet needed',
+      'severity': 'severity',
+      'causes': 'Causes',
+      'symptoms': 'Symptoms',
+      'prevention': 'Prevention',
+      'treatment': 'Treatment',
+      'faq': 'Frequently Asked',
+      'cocobodOffers': 'COCOBOD (Ghana Cocoa Board) offers: ',
+      'contactWhen': 'Contact them when: ',
+      'connectPrompt': 'Connect to the internet for a more detailed answer from Gemma 4.',
+      'noAnswer':
+          "I don't have a specific answer for that question in my offline "
+          "library. Try asking about a specific disease (anthracnose, CSSVD, "
+          "phytophthora, carmenta, moniliasis, witches' broom) or a farming "
+          "topic (pruning, fertilizer, shade, harvesting). "
+          "Connect to the internet for AI-powered answers from Gemma 4.",
+      'diseases': 'diseases',
+      'tips': 'tips',
+      'ghanaCocoaBoard': 'Ghana Cocoa Board',
+      'whenToContact': 'When to Contact COCOBOD',
+      'servicesAvailable': 'Services Available',
+    },
+    AppLanguage.french: {
+      'diseaseGuide': 'Guide des Maladies',
+      'farmingTips': 'Bonnes Pratiques Agricoles',
+      'cocobodResources': 'Ressources COCOBOD',
+      'offlineNote': 'Tout le contenu disponible hors ligne — pas besoin d\'internet',
+      'severity': 'gravité',
+      'causes': 'Causes',
+      'symptoms': 'Symptômes',
+      'prevention': 'Prévention',
+      'treatment': 'Traitement',
+      'faq': 'Questions Fréquentes',
+      'cocobodOffers': 'COCOBOD (Office du Cacao du Ghana) propose : ',
+      'contactWhen': 'Contactez-les lorsque : ',
+      'connectPrompt': 'Connectez-vous à Internet pour une réponse plus détaillée de Gemma 4.',
+      'noAnswer':
+          "Je n'ai pas de réponse spécifique à cette question dans ma "
+          "bibliothèque hors ligne. Essayez de poser une question sur une "
+          "maladie spécifique (anthracnose, CSSVD, phytophthora, carmenta, "
+          "moniliasis, balai de sorcière) ou un sujet agricole (élagage, "
+          "engrais, ombrage, récolte). "
+          "Connectez-vous à Internet pour des réponses IA de Gemma 4.",
+      'diseases': 'maladies',
+      'tips': 'conseils',
+      'ghanaCocoaBoard': 'Office du Cacao du Ghana',
+      'whenToContact': 'Quand contacter COCOBOD',
+      'servicesAvailable': 'Services Disponibles',
+    },
+    AppLanguage.spanish: {
+      'diseaseGuide': 'Guía de Enfermedades',
+      'farmingTips': 'Buenas Prácticas Agrícolas',
+      'cocobodResources': 'Recursos COCOBOD',
+      'offlineNote': 'Todo el contenido disponible sin conexión — no necesita internet',
+      'severity': 'gravedad',
+      'causes': 'Causas',
+      'symptoms': 'Síntomas',
+      'prevention': 'Prevención',
+      'treatment': 'Tratamiento',
+      'faq': 'Preguntas Frecuentes',
+      'cocobodOffers': 'COCOBOD (Junta de Cacao de Ghana) ofrece: ',
+      'contactWhen': 'Contáctelos cuando: ',
+      'connectPrompt': 'Conéctese a Internet para una respuesta más detallada de Gemma 4.',
+      'noAnswer':
+          "No tengo una respuesta específica para esa pregunta en mi "
+          "biblioteca sin conexión. Intente preguntar sobre una enfermedad "
+          "específica (antracnosis, CSSVD, phytophthora, carmenta, "
+          "moniliasis, escoba de bruja) o un tema agrícola (poda, "
+          "fertilizante, sombra, cosecha). "
+          "Conéctese a Internet para respuestas de IA de Gemma 4.",
+      'diseases': 'enfermedades',
+      'tips': 'consejos',
+      'ghanaCocoaBoard': 'Junta de Cacao de Ghana',
+      'whenToContact': 'Cuándo contactar a COCOBOD',
+      'servicesAvailable': 'Servicios Disponibles',
+    },
+    AppLanguage.twi: {
+      'diseaseGuide': 'Nyarewa Nkyerɛwde',
+      'farmingTips': 'Afuom Adwuma Pa',
+      'cocobodResources': 'COCOBOD Nhyehyɛe',
+      'offlineNote': 'Nsɛm nyinaa wɔ ha a internet nhia',
+      'severity': 'ahoɔden',
+      'causes': 'Nea ɛde ba',
+      'symptoms': 'Nsɛnkyerɛnne',
+      'prevention': 'Ɛkwan a yɛbɔ ho ban',
+      'treatment': 'Ayaresa',
+      'faq': 'Nsɛm a wobisa mpɛn pii',
+      'cocobodOffers': 'COCOBOD (Ghana Koko Board) de eyi ma: ',
+      'contactWhen': 'Frɛ wɔn sɛ: ',
+      'connectPrompt': 'Fa internet so na nya mmuae a emu dɔ firi Gemma 4.',
+      'noAnswer':
+          "Menni mmuae pɔtee mma saa asɛmmisa yi wɔ me offline nhoma korabea mu. "
+          "Bisa nyarewa bi ho asɛm (anthracnose, CSSVD, phytophthora, carmenta, "
+          "moniliasis, witches' broom) anaasɛ afuom adwuma bi ho (twatwa, "
+          "nnoboa, nwunu, twabere). "
+          "Fa internet so na nya AI mmuae firi Gemma 4.",
+      'diseases': 'nyarewa',
+      'tips': 'afotu',
+      'ghanaCocoaBoard': 'Ghana Koko Board',
+      'whenToContact': 'Bere a wobɛfrɛ COCOBOD',
+      'servicesAvailable': 'Dwumadie a Wɔwɔ',
+    },
+  };
 
   /// Get the filename for the given language.
   static String _getFilename(AppLanguage language) {
@@ -240,6 +368,8 @@ class KnowledgeService {
         return 'diseases_knowledge_fr.json';
       case AppLanguage.spanish:
         return 'diseases_knowledge_es.json';
+      case AppLanguage.twi:
+        return 'diseases_knowledge_tw.json';
     }
   }
 
