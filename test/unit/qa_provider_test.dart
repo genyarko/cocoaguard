@@ -139,8 +139,8 @@ void main() {
     });
 
     test('network failure with cached response → returns cached', () async {
-      // First, populate cache
-      cacheBox.put('what is anthracnose', 'Previously cached Gemma 4 answer.');
+      // First, populate cache (key format: '<langCode>:<normalized question>')
+      cacheBox.put('en:what is anthracnose', 'Previously cached Gemma 4 answer.');
 
       final provider = QaProvider(
         gemma4: _makeFailingGemma4(),
@@ -170,7 +170,7 @@ void main() {
     });
 
     test('no API key + cached response → returns cached', () async {
-      cacheBox.put('tell me about anthracnose', 'Cached from before.');
+      cacheBox.put('en:tell me about anthracnose', 'Cached from before.');
 
       final provider = QaProvider(
         gemma4: null,
