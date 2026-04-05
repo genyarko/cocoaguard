@@ -9,7 +9,12 @@
       "Bash(ls:*)",
       "Bash(grep -r \"Future\\\\|async\\\\|await\" /c/Users/genya/Downloads/g4n/lib/providers/*.dart)",
       "Bash(flutter run:*)",
-      "Bash(flutter logs:*)"
+      "Bash(flutter logs:*)",
+      "Bash(grep -v \"//.*debugPrint\")",
+      "Bash(git:*)",
+      "Bash(du:*)",
+      "Bash(flutter build:*)",
+      "Bash(flutter devices:*)"
     ]
   }
 }

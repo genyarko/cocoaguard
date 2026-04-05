@@ -6,6 +6,8 @@
 
 ---
 *** Sometimes crashes after detecting too many pods
+*** look into options to speed inference up (e.g. enabling GPU/NNAPI delegate, or
+quantizing models to int8)? not working after doing this.
 
 ## What We Have Right Now
 

@@ -98,6 +98,12 @@ class PodScanProvider extends ChangeNotifier {
 
     try {
       final bytes = _currentImageBytes!;
+
+      // Defer heavy work to next event loop cycle to allow UI to render spinner.
+      // Without this delay, the blocking ML inference can start before the spinner
+      // has a chance to render, making the app appear frozen.
+      await Future.delayed(const Duration(milliseconds: 100));
+
       final decoded = img.decodeImage(bytes);
       if (decoded == null) throw Exception('Could not decode image.');
 

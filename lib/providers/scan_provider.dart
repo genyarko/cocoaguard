@@ -112,7 +112,9 @@ class ScanProvider extends ChangeNotifier {
       });
       _currentResult = result;
     } on UnsupportedError {
-      // compute() may not work with Interpreter — fall back to main thread
+      // compute() may not work with Interpreter — fall back to main thread.
+      // Defer work to next event loop to allow spinner to render first.
+      await Future.delayed(const Duration(milliseconds: 100));
       try {
         final result = _classifier.classify(imageFile);
         _currentResult = result;
@@ -120,6 +122,8 @@ class ScanProvider extends ChangeNotifier {
         _error = _friendlyError(e);
       }
     } catch (e) {
+      // Defer work to next event loop to allow spinner to render first.
+      await Future.delayed(const Duration(milliseconds: 100));
       try {
         final result = _classifier.classify(imageFile);
         _currentResult = result;
