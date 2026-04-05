@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../models/conversation.dart';
 import '../services/gemma4_service.dart';
 import '../services/knowledge_service.dart';
+import '../services/translation_service.dart';
 import '../utils/prompt_templates.dart';
 
 /// Manages Q&A state: sends questions to Gemma 4, falls back to the local
@@ -13,6 +14,7 @@ import '../utils/prompt_templates.dart';
 class QaProvider extends ChangeNotifier {
   final Gemma4Service? _gemma4;
   final KnowledgeService _knowledge;
+  final TranslationService? _translation;
   final Box<ChatMessage> _chatBox;
   final Box _cacheBox; // String→String: normalized question → cached answer
   final Uuid _uuid = const Uuid();
@@ -20,10 +22,12 @@ class QaProvider extends ChangeNotifier {
   QaProvider({
     Gemma4Service? gemma4,
     required KnowledgeService knowledge,
+    TranslationService? translation,
     required Box<ChatMessage> chatBox,
     required Box cacheBox,
   })  : _gemma4 = gemma4,
         _knowledge = knowledge,
+        _translation = translation,
         _chatBox = chatBox,
         _cacheBox = cacheBox;
 
@@ -31,6 +35,9 @@ class QaProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  bool _isTranslating = false;
+  bool get isTranslating => _isTranslating;
 
   String? _error;
   String? get error => _error;
@@ -67,6 +74,12 @@ class QaProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Whether the current language needs translation bridging for Gemma.
+  bool get _needsTranslation =>
+      _translation != null &&
+      _gemma4 != null &&
+      _knowledge.currentLanguage == AppLanguage.twi;
+
   /// Ask a question. Resolution order:
   /// 1. Gemma 4 API (if key configured + online)
   /// 2. Cached Gemma 4 response (if same/similar question was asked before)
@@ -82,15 +95,39 @@ class QaProvider extends ChangeNotifier {
     String answer;
     String source;
 
+    // Language-tag the cache key so switching languages doesn't serve stale answers
+    final langCode = _knowledge.currentLanguage.code;
+    final cacheKey = '$langCode:${_normalizeForCache(trimmed)}';
+
+    // If Twi → translate the question to English for Gemma
+    String promptQuestion = trimmed;
+    if (_needsTranslation) {
+      _isTranslating = true;
+      notifyListeners();
+
+      final translated = await _translation!.translate(
+        text: trimmed,
+        from: 'tw',
+        to: 'en',
+      );
+      if (translated != null) {
+        promptQuestion = translated;
+      }
+      // If translation fails, send original text (best-effort)
+
+      _isTranslating = false;
+      notifyListeners();
+    }
+
     // Build prompt
     final prompt = _scanContext != null
         ? PromptTemplates.questionAfterScan(
-            userQuestion: trimmed,
+            userQuestion: promptQuestion,
             disease: _scanContext!.disease,
             confidence: _scanContext!.confidence,
             scanType: _scanContext!.scanType,
           )
-        : PromptTemplates.question(trimmed);
+        : PromptTemplates.question(promptQuestion);
 
     if (_gemma4 != null) {
       // ── Try Gemma 4 API ──────────────────────────────────────────────
@@ -98,23 +135,40 @@ class QaProvider extends ChangeNotifier {
         answer = await _gemma4.generate(prompt);
         source = 'gemma4';
 
-        // Cache the response for future offline use
-        final cacheKey = _normalizeForCache(trimmed);
+        // If Twi → translate the English response back to Twi
+        if (_needsTranslation) {
+          _isTranslating = true;
+          notifyListeners();
+
+          final translatedAnswer = await _translation!.translate(
+            text: answer,
+            from: 'en',
+            to: 'tw',
+          );
+          if (translatedAnswer != null) {
+            answer = translatedAnswer;
+          }
+
+          _isTranslating = false;
+          notifyListeners();
+        }
+
+        // Cache the (possibly translated) response for future offline use
         await _cacheBox.put(cacheKey, answer);
       } on Gemma4Exception catch (e) {
         if (e.isAuth) {
           _error = e.message;
           answer = _fallback(trimmed);
-          source = answer.startsWith("I don't have") ? 'knowledge_base' : 'knowledge_base';
+          source = 'knowledge_base';
         } else {
           // Network / timeout / other → try cache then knowledge base
-          answer = _cachedOrKnowledge(trimmed);
+          answer = _cachedOrKnowledge(trimmed, cacheKey);
           source = _lastSource;
         }
       }
     } else {
       // No API key → cache then knowledge base
-      answer = _cachedOrKnowledge(trimmed);
+      answer = _cachedOrKnowledge(trimmed, cacheKey);
       source = _lastSource;
     }
 
@@ -130,6 +184,7 @@ class QaProvider extends ChangeNotifier {
     await _chatBox.put(msg.id, msg);
 
     _isLoading = false;
+    _isTranslating = false;
     notifyListeners();
   }
 
@@ -156,8 +211,7 @@ class QaProvider extends ChangeNotifier {
   String _lastSource = 'knowledge_base';
 
   /// Try cached Gemma 4 response first, then local knowledge base.
-  String _cachedOrKnowledge(String question) {
-    final cacheKey = _normalizeForCache(question);
+  String _cachedOrKnowledge(String question, String cacheKey) {
     final cached = _cacheBox.get(cacheKey) as String?;
     if (cached != null) {
       _lastSource = 'cached';

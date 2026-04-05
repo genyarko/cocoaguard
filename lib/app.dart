@@ -6,6 +6,7 @@ import 'providers/language_provider.dart';
 import 'providers/pod_scan_provider.dart';
 import 'providers/qa_provider.dart';
 import 'providers/scan_provider.dart';
+import 'screens/onboarding_screen.dart';
 import 'screens/unified_screen.dart';
 import 'screens/history_screen.dart';
 import 'screens/library_screen.dart';
@@ -14,6 +15,7 @@ import 'services/knowledge_service.dart';
 import 'services/leaf_classifier_service.dart';
 import 'services/pod_classifier_service.dart';
 import 'services/storage_service.dart';
+import 'services/translation_service.dart';
 import 'utils/app_colors.dart';
 
 class CocoaGuardApp extends StatelessWidget {
@@ -22,6 +24,7 @@ class CocoaGuardApp extends StatelessWidget {
   final StorageService storageService;
   final KnowledgeService knowledgeService;
   final Gemma4Service? gemma4Service;
+  final TranslationService? translationService;
   final String? initError;
 
   const CocoaGuardApp({
@@ -31,6 +34,7 @@ class CocoaGuardApp extends StatelessWidget {
     required this.storageService,
     required this.knowledgeService,
     this.gemma4Service,
+    this.translationService,
     this.initError,
   });
 
@@ -64,6 +68,7 @@ class CocoaGuardApp extends StatelessWidget {
           create: (_) => QaProvider(
             gemma4: gemma4Service,
             knowledge: knowledgeService,
+            translation: translationService,
             chatBox: storageService.chatBox,
             cacheBox: storageService.responseCacheBox,
           ),
@@ -116,6 +121,7 @@ class CocoaGuardApp extends StatelessWidget {
         home: _AppShell(
           initError: initError,
           knowledgeService: knowledgeService,
+          storageService: storageService,
         ),
       ),
     );
@@ -125,8 +131,13 @@ class CocoaGuardApp extends StatelessWidget {
 class _AppShell extends StatefulWidget {
   final String? initError;
   final KnowledgeService knowledgeService;
+  final StorageService storageService;
 
-  const _AppShell({this.initError, required this.knowledgeService});
+  const _AppShell({
+    this.initError,
+    required this.knowledgeService,
+    required this.storageService,
+  });
 
   @override
   State<_AppShell> createState() => _AppShellState();
@@ -134,10 +145,13 @@ class _AppShell extends StatefulWidget {
 
 class _AppShellState extends State<_AppShell> {
   int _currentIndex = 0;
+  late bool _showOnboarding;
 
   @override
   void initState() {
     super.initState();
+    _showOnboarding =
+        widget.storageService.settingsBox.get('onboarding_complete') != true;
     if (widget.initError != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -151,6 +165,11 @@ class _AppShellState extends State<_AppShell> {
     }
   }
 
+  void _completeOnboarding() {
+    widget.storageService.settingsBox.put('onboarding_complete', true);
+    setState(() => _showOnboarding = false);
+  }
+
   void _onNavigate(int index) {
     setState(() => _currentIndex = index);
   }
@@ -159,6 +178,10 @@ class _AppShellState extends State<_AppShell> {
   Widget build(BuildContext context) {
     // LibraryScreen rebuilds when LanguageProvider notifies (language switch).
     // Consumer ensures it gets a fresh build with the newly loaded data.
+    if (_showOnboarding) {
+      return OnboardingScreen(onComplete: _completeOnboarding);
+    }
+
     return Consumer<LanguageProvider>(
       builder: (context, langProvider, _) {
     return Scaffold(

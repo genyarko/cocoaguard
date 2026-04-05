@@ -345,6 +345,9 @@ class _TypingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final qa = context.watch<QaProvider>();
+    final label = qa.isTranslating ? 'Translating...' : 'Thinking...';
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Align(
@@ -372,7 +375,7 @@ class _TypingIndicator extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                'Thinking...',
+                label,
                 style: TextStyle(
                   fontSize: 13,
                   color: Colors.grey[600],

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../models/detected_pod.dart';
 import '../models/scan_record.dart';
 import '../providers/history_provider.dart';
+import '../providers/language_provider.dart';
 import '../providers/pod_scan_provider.dart';
 import '../providers/qa_provider.dart';
 import '../utils/constants.dart';
@@ -55,6 +56,8 @@ class PodResultsScreen extends StatelessWidget {
   // ── History replay ──────────────────────────────────────────────────────────
 
   Widget _buildFromRecord(BuildContext context, ScanRecord record) {
+    final lang = context.watch<LanguageProvider>();
+    final ks = lang.knowledgeService;
     final imageFile = File(record.imagePath);
     const classNames = [
       'carmenta',
@@ -72,7 +75,7 @@ class PodResultsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pod Scan Result'),
+        title: Text('Pod ${ks.sectionTitle('resultTitle')}'),
         backgroundColor: color.withValues(alpha: 0.1),
       ),
       body: SingleChildScrollView(
@@ -100,7 +103,7 @@ class PodResultsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Class Scores',
+                    ks.sectionTitle('classScores'),
                     style: Theme.of(context)
                         .textTheme
                         .titleSmall
@@ -108,7 +111,7 @@ class PodResultsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   ...scoreMap.entries.map((e) => ConfidenceBar(
-                        label: e.key,
+                        label: DiagnosisCard.translatedDiagnosisName(e.key, ks),
                         score: e.value,
                         color: AppConstants.colorForDiagnosis(e.key),
                       )),
@@ -133,13 +136,16 @@ class PodResultsScreen extends StatelessWidget {
     required File imageFile,
     List<String> qualityWarnings = const [],
   }) {
+    final lang = context.watch<LanguageProvider>();
+    final ks = lang.knowledgeService;
+    final l = ks.sectionTitle;
     final diseasedCount = result.diseasedPods.length;
     final totalCount = result.pods.length;
     final summaryColor =
         diseasedCount > 0 ? Colors.red[700]! : Colors.green[700]!;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Pod Detection Result')),
+      appBar: AppBar(title: Text('Pod ${l('resultTitle')}')),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -173,9 +179,9 @@ class PodResultsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Image Quality Issues',
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.orange),
+                          Text(
+                            l('imageQualityIssues'),
+                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.orange),
                           ),
                           const SizedBox(height: 2),
                           ...qualityWarnings.map((w) => Text(
@@ -216,9 +222,8 @@ class PodResultsScreen extends StatelessWidget {
                         Expanded(
                           child: Text(
                             diseasedCount > 0
-                                ? '$diseasedCount of $totalCount pod${totalCount > 1 ? 's' : ''} '
-                                    'show disease signs'
-                                : 'All $totalCount pod${totalCount > 1 ? 's look' : ' looks'} healthy',
+                                ? '$diseasedCount / $totalCount pods — ${l('potentiallyInfected')}'
+                                : '$totalCount pods — ${l('diseaseHealthy')}',
                             style: TextStyle(
                               color: summaryColor,
                               fontWeight: FontWeight.w600,
@@ -229,7 +234,7 @@ class PodResultsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // Low-confidence warning for uncertain pods (Phase 6.2)
+                  // Low-confidence warning for uncertain pods
                   if (result.pods.any((p) => p.diagnosis.confidence < 0.55)) ...[
                     const SizedBox(height: 12),
                     Container(
@@ -247,14 +252,13 @@ class PodResultsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Low Confidence Detection',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber),
+                                Text(
+                                  l('lowConfidenceResult'),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Some pods have uncertain results. '
-                                  'Consider retaking the photo with better lighting and focus.',
+                                  l('lowConfidenceHint'),
                                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                                 ),
                               ],
@@ -277,7 +281,7 @@ class PodResultsScreen extends StatelessWidget {
                             Navigator.of(context).pop();
                           },
                           icon: const Icon(Icons.camera_alt),
-                          label: const Text('Scan Again'),
+                          label: Text(l('scanAnother')),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -290,12 +294,11 @@ class PodResultsScreen extends StatelessWidget {
                             await podProv.saveCurrentResult();
                             histProv.loadHistory();
                             messenger.showSnackBar(
-                              const SnackBar(
-                                  content: Text('Result saved!')),
+                              SnackBar(content: Text(l('resultSaved'))),
                             );
                           },
                           icon: const Icon(Icons.save),
-                          label: const Text('Save Result'),
+                          label: Text(l('saveResult')),
                         ),
                       ),
                     ],
@@ -338,7 +341,7 @@ class PodResultsScreen extends StatelessWidget {
                         );
                       },
                       icon: const Icon(Icons.smart_toy_outlined),
-                      label: const Text('Ask about this disease'),
+                      label: Text(l('askAboutDisease')),
                       style: OutlinedButton.styleFrom(
                         minimumSize:
                             const Size(double.infinity, 44),
@@ -474,6 +477,7 @@ class _PodDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ks = context.watch<LanguageProvider>().knowledgeService;
     final diag = pod.diagnosis;
     final color = AppConstants.colorForDiagnosis(diag.className);
     final isDiseased = diag.className != 'healthy';
@@ -531,14 +535,15 @@ class _PodDetailCard extends StatelessWidget {
                                 size: 14, color: Colors.amber),
                             const SizedBox(width: 4),
                             Text(
-                              'Low confidence',
+                              ks.sectionTitle('lowConfidenceTip'),
                               style: TextStyle(fontSize: 10, color: Colors.amber[700]),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ],
                         ],
                       ),
                       Text(
-                        diag.displayName,
+                        DiagnosisCard.translatedDiagnosisName(diag.className, ks),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -546,7 +551,7 @@ class _PodDetailCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '${(diag.confidence * 100).toStringAsFixed(1)}% confidence',
+                        '${(diag.confidence * 100).toStringAsFixed(1)}% ${ks.sectionTitle('confidence')}',
                         style: TextStyle(
                             fontSize: 12, color: Colors.grey[600]),
                       ),
@@ -565,7 +570,7 @@ class _PodDetailCard extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               color: Colors.amber[50],
               child: Text(
-                'Also consider: ${diag.alternative!.displayName} '
+                '${DiagnosisCard.translatedDiagnosisName(diag.alternative!.className, ks)} '
                 '(${(diag.alternative!.confidence * 100).toStringAsFixed(1)}%)',
                 style: const TextStyle(
                     fontSize: 12, color: Colors.amber),
@@ -589,17 +594,24 @@ class _TreatmentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final info = podTreatments[diagnosis] ?? leafTreatments[diagnosis];
+    final lang = context.watch<LanguageProvider>();
+    final ks = lang.knowledgeService;
+    final currentLang = lang.language;
+
+    final info = getPodTreatment(diagnosis, currentLang) ??
+        getLeafTreatment(diagnosis, currentLang);
     if (info == null) return const SizedBox.shrink();
 
     final severity = info['severity'] as String;
     final recommendations = info['recommendations'] as List;
     final color = AppConstants.colorForDiagnosis(diagnosis);
+    final isNone = severity == 'none' || severity == 'aucune' ||
+        severity == 'ninguna' || severity == 'hwee';
 
     return ExpansionTile(
       tilePadding: const EdgeInsets.symmetric(horizontal: 12),
       title: Text(
-        'Treatment & Recommendations',
+        ks.sectionTitle('treatmentTitle'),
         style: Theme.of(context)
             .textTheme
             .titleSmall
@@ -613,7 +625,7 @@ class _TreatmentSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (severity != 'none') ...[
+              if (!isNone) ...[
                 Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 6),
@@ -623,7 +635,7 @@ class _TreatmentSection extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(
-                    'Severity: ${severity[0].toUpperCase()}${severity.substring(1)}',
+                    '${ks.sectionTitle('severityLabel')}: ${severity[0].toUpperCase()}${severity.substring(1)}',
                     style: TextStyle(
                         color: color, fontWeight: FontWeight.w600),
                   ),

@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../models/scan_record.dart';
+import '../providers/language_provider.dart';
 import '../utils/constants.dart';
 import 'diagnosis_card.dart';
 
@@ -19,6 +21,7 @@ class ScanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ks = context.watch<LanguageProvider>().knowledgeService;
     final color = AppConstants.colorForDiagnosis(record.diagnosis);
     final dateStr = DateFormat('MMM d, yyyy – h:mm a').format(record.scannedAt);
     final confidence = (record.confidence * 100).toStringAsFixed(1);
@@ -50,7 +53,7 @@ class ScanCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            DiagnosisCard.displayNameForDiagnosis(record.diagnosis),
+                            DiagnosisCard.translatedDiagnosisName(record.diagnosis, ks),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 15,
@@ -73,7 +76,7 @@ class ScanCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '$confidence% confidence',
+                      '$confidence% ${ks.sectionTitle('confidence')}',
                       style: TextStyle(color: Colors.grey[600], fontSize: 13),
                     ),
                     const SizedBox(height: 2),

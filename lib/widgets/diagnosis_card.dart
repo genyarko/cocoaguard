@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/language_provider.dart';
+import '../services/knowledge_service.dart';
 import '../utils/constants.dart';
 
 class DiagnosisCard extends StatelessWidget {
@@ -14,6 +17,8 @@ class DiagnosisCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<LanguageProvider>();
+    final ks = lang.knowledgeService;
     final color = AppConstants.colorForDiagnosis(diagnosis);
     final isDiseased = diagnosis != 'healthy';
     // Disease names always red for visibility; healthy stays green
@@ -33,7 +38,7 @@ class DiagnosisCard extends StatelessWidget {
             Icon(_iconForDiagnosis(diagnosis), size: 48, color: nameColor),
             const SizedBox(height: 12),
             Text(
-              displayNameForDiagnosis(diagnosis),
+              translatedDiagnosisName(diagnosis, ks),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 22,
@@ -43,7 +48,7 @@ class DiagnosisCard extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              '${(confidence * 100).toStringAsFixed(1)}% confidence',
+              '${(confidence * 100).toStringAsFixed(1)}% ${ks.sectionTitle('confidence')}',
               style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
             if (isLowConfidence) ...[
@@ -55,15 +60,15 @@ class DiagnosisCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.amber),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 20),
-                    SizedBox(width: 8),
+                    const Icon(Icons.warning_amber_rounded, color: Colors.amber, size: 20),
+                    const SizedBox(width: 8),
                     Flexible(
                       child: Text(
-                        'Low confidence — try a clearer photo',
-                        style: TextStyle(color: Colors.amber, fontSize: 13),
+                        ks.sectionTitle('lowConfidenceTip'),
+                        style: const TextStyle(color: Colors.amber, fontSize: 13),
                       ),
                     ),
                   ],
@@ -87,6 +92,26 @@ class DiagnosisCard extends StatelessWidget {
     }
   }
 
+  /// Map disease id to its label key in KnowledgeService.
+  static const _diagnosisLabelKeys = {
+    'anthracnose': 'diseaseAnthracnose',
+    'cssvd': 'diseaseCssvd',
+    'healthy': 'diseaseHealthy',
+    'phytophthora': 'diseasePhytophthora',
+    'carmenta': 'diseaseCarmenta',
+    'moniliasis': 'diseaseMoniliasis',
+    'witches_broom': 'diseaseWitchesBroom',
+  };
+
+  /// Get the translated disease display name from KnowledgeService labels.
+  static String translatedDiagnosisName(
+      String diagnosis, KnowledgeService ks) {
+    final key = _diagnosisLabelKeys[diagnosis];
+    if (key == null) return diagnosis;
+    return ks.sectionTitle(key);
+  }
+
+  /// Legacy helper for contexts without KnowledgeService (English only).
   static String displayNameForDiagnosis(String diagnosis) {
     switch (diagnosis) {
       case 'anthracnose':

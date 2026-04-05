@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 
 import '../models/scan_record.dart';
 import '../providers/history_provider.dart';
+import '../providers/language_provider.dart';
 import '../providers/qa_provider.dart';
 import '../providers/scan_provider.dart';
+import '../services/knowledge_service.dart';
 import '../utils/constants.dart';
 import '../utils/treatment_data.dart';
 import '../widgets/confidence_bar.dart';
@@ -98,12 +100,28 @@ class ResultsScreen extends StatelessWidget {
     List<String> qualityWarnings = const [],
     bool isPotentiallyInfected = false,
   }) {
-    final treatmentInfo = leafTreatments[diagnosis] ?? podTreatments[diagnosis];
+    final lang = context.watch<LanguageProvider>();
+    final ks = lang.knowledgeService;
+    final currentLang = lang.language;
+    final l = ks.sectionTitle;
+
+    // Get translated treatment info based on scan type and language
+    final treatmentInfo = scanType == 'pod'
+        ? getPodTreatment(diagnosis, currentLang)
+        : getLeafTreatment(diagnosis, currentLang);
     final diagColor = AppConstants.colorForDiagnosis(diagnosis);
+
+    // Translated disease name for confidence bars
+    final translatedScoreMap = scoreMap.map((key, value) =>
+        MapEntry(DiagnosisCard.translatedDiagnosisName(key, ks), value));
+    // Keep original keys for color lookup
+    final scoreColorMap = scoreMap.map((key, value) =>
+        MapEntry(DiagnosisCard.translatedDiagnosisName(key, ks),
+            AppConstants.colorForDiagnosis(key)));
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('${scanType[0].toUpperCase()}${scanType.substring(1)} Result'),
+        title: Text('${scanType[0].toUpperCase()}${scanType.substring(1)} ${l('resultTitle')}'),
         backgroundColor: diagColor.withValues(alpha: 0.1),
       ),
       body: SingleChildScrollView(
@@ -131,9 +149,9 @@ class ResultsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Image Quality Issues',
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.orange),
+                          Text(
+                            l('imageQualityIssues'),
+                            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.orange),
                           ),
                           const SizedBox(height: 2),
                           ...qualityWarnings.map((w) => Text(
@@ -172,15 +190,13 @@ class ResultsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Potentially Infected',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
+                                Text(
+                                  l('potentiallyInfected'),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.red),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'CSSVD detected at ${(confidence * 100).toStringAsFixed(1)}%. '
-                                  'Although not the highest-scoring class, this level warrants '
-                                  'further inspection by an expert.',
+                                  'CSSVD: ${(confidence * 100).toStringAsFixed(1)}%',
                                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                                 ),
                               ],
@@ -191,7 +207,7 @@ class ResultsScreen extends StatelessWidget {
                     ),
                   ],
 
-                  // Low-confidence warning (Phase 6.2)
+                  // Low-confidence warning
                   if (confidence < 0.55) ...[
                     const SizedBox(height: 12),
                     Container(
@@ -209,14 +225,13 @@ class ResultsScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Low Confidence Result',
-                                  style: TextStyle(fontWeight: FontWeight.bold, color: Colors.amber),
+                                Text(
+                                  l('lowConfidenceResult'),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'This result is uncertain (${(confidence * 100).toStringAsFixed(1)}%). '
-                                  'Consider retaking the photo with better lighting and focus.',
+                                  '${(confidence * 100).toStringAsFixed(1)}% — ${l('lowConfidenceHint')}',
                                   style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                                 ),
                               ],
@@ -231,17 +246,17 @@ class ResultsScreen extends StatelessWidget {
 
                   // Confidence bars
                   Text(
-                    'Class Scores',
+                    l('classScores'),
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  ...scoreMap.entries.map((e) => ConfidenceBar(
+                  ...translatedScoreMap.entries.map((e) => ConfidenceBar(
                         label: e.key,
                         score: e.value,
-                        color: AppConstants.colorForDiagnosis(e.key),
+                        color: scoreColorMap[e.key] ?? Colors.grey,
                       )),
 
                   // Action buttons
@@ -256,7 +271,7 @@ class ResultsScreen extends StatelessWidget {
                               Navigator.of(context).pop();
                             },
                             icon: const Icon(Icons.camera_alt),
-                            label: const Text('Scan Another'),
+                            label: Text(l('scanAnother')),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -269,11 +284,11 @@ class ResultsScreen extends StatelessWidget {
                               await scanProv.saveCurrentResult();
                               histProv.loadHistory();
                               messenger.showSnackBar(
-                                const SnackBar(content: Text('Result saved!')),
+                                SnackBar(content: Text(l('resultSaved'))),
                               );
                             },
                             icon: const Icon(Icons.save),
-                            label: const Text('Save Result'),
+                            label: Text(l('saveResult')),
                           ),
                         ),
                       ],
@@ -303,7 +318,7 @@ class ResultsScreen extends StatelessWidget {
                         );
                       },
                       icon: const Icon(Icons.smart_toy_outlined),
-                      label: const Text('Ask about this disease'),
+                      label: Text(l('askAboutDisease')),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 44),
                       ),
@@ -316,6 +331,7 @@ class ResultsScreen extends StatelessWidget {
                     _TreatmentSection(
                       diagnosis: diagnosis,
                       treatmentInfo: treatmentInfo,
+                      ks: ks,
                     ),
                   ],
 
@@ -333,10 +349,12 @@ class ResultsScreen extends StatelessWidget {
 class _TreatmentSection extends StatelessWidget {
   final String diagnosis;
   final Map<String, dynamic> treatmentInfo;
+  final KnowledgeService ks;
 
   const _TreatmentSection({
     required this.diagnosis,
     required this.treatmentInfo,
+    required this.ks,
   });
 
   @override
@@ -349,14 +367,14 @@ class _TreatmentSection extends StatelessWidget {
       initiallyExpanded: true,
       tilePadding: EdgeInsets.zero,
       title: Text(
-        'Treatment & Recommendations',
+        ks.sectionTitle('treatmentTitle'),
         style: Theme.of(context)
             .textTheme
             .titleMedium
             ?.copyWith(fontWeight: FontWeight.bold),
       ),
       children: [
-        if (severity != 'none')
+        if (severity != 'none' && severity != 'aucune' && severity != 'ninguna' && severity != 'hwee')
           Container(
             width: double.infinity,
             margin: const EdgeInsets.only(bottom: 12),
@@ -366,7 +384,7 @@ class _TreatmentSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              'Severity: ${severity[0].toUpperCase()}${severity.substring(1)}',
+              '${ks.sectionTitle('severityLabel')}: ${severity[0].toUpperCase()}${severity.substring(1)}',
               style: TextStyle(color: color, fontWeight: FontWeight.w600),
             ),
           ),

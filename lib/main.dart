@@ -7,6 +7,7 @@ import 'services/knowledge_service.dart';
 import 'services/leaf_classifier_service.dart';
 import 'services/pod_classifier_service.dart';
 import 'services/storage_service.dart';
+import 'services/translation_service.dart';
 
 void main() async {
   final startupTimer = Stopwatch()..start();
@@ -41,9 +42,12 @@ void main() async {
   // Gemma 4 API — reads key from .env file.
   // If no key is set, the service is null and Q&A falls back to knowledge base.
   Gemma4Service? gemma4;
+  TranslationService? translationService;
   final apiKey = dotenv.env['GEMMA4_API_KEY'] ?? '';
   if (apiKey.isNotEmpty) {
     gemma4 = Gemma4Service(apiKey: apiKey);
+    // Translation service reuses the same API key for Google Cloud Translation.
+    translationService = TranslationService(apiKey: apiKey);
   }
 
   startupTimer.stop();
@@ -55,6 +59,7 @@ void main() async {
     storageService: storageService,
     knowledgeService: knowledgeService,
     gemma4Service: gemma4,
+    translationService: translationService,
     initError: initError,
   ));
 }
