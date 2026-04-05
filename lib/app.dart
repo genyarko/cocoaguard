@@ -41,6 +41,7 @@ class CocoaGuardApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => LanguageProvider(
             knowledgeService: knowledgeService,
+            settingsBox: storageService.settingsBox,
           ),
         ),
         ChangeNotifierProvider(
@@ -134,16 +135,9 @@ class _AppShell extends StatefulWidget {
 class _AppShellState extends State<_AppShell> {
   int _currentIndex = 0;
 
-  late final List<Widget> _screens;
-
   @override
   void initState() {
     super.initState();
-    _screens = [
-      UnifiedScreen(onNavigate: _onNavigate),
-      const HistoryScreen(),
-      LibraryScreen(knowledgeService: widget.knowledgeService),
-    ];
     if (widget.initError != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -163,10 +157,18 @@ class _AppShellState extends State<_AppShell> {
 
   @override
   Widget build(BuildContext context) {
+    // LibraryScreen rebuilds when LanguageProvider notifies (language switch).
+    // Consumer ensures it gets a fresh build with the newly loaded data.
+    return Consumer<LanguageProvider>(
+      builder: (context, langProvider, _) {
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
-        children: _screens,
+        children: [
+          UnifiedScreen(onNavigate: _onNavigate),
+          const HistoryScreen(),
+          LibraryScreen(knowledgeService: widget.knowledgeService),
+        ],
       ),
       // Only show app navigation bar for History and Library screens
       bottomNavigationBar: _currentIndex == 0
@@ -197,6 +199,8 @@ class _AppShellState extends State<_AppShell> {
                 ),
               ],
             ),
+    );
+      },
     );
   }
 }

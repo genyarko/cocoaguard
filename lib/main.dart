@@ -23,9 +23,17 @@ void main() async {
   final storageService = StorageService();
 
   // Knowledge base — loads disease data from assets for offline Q&A.
+  // Restore persisted language preference, then load the right translation.
   final knowledgeService = KnowledgeService();
+  final savedLang = storageService.settingsBox.get('app_language') as String?;
+  final startLang = savedLang != null
+      ? AppLanguage.values.firstWhere(
+          (l) => l.code == savedLang,
+          orElse: () => AppLanguage.english,
+        )
+      : AppLanguage.english;
   try {
-    await knowledgeService.init();
+    await knowledgeService.init(language: startLang);
   } catch (e) {
     initError = '${initError ?? ''} Knowledge base failed: $e';
   }

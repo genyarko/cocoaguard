@@ -32,7 +32,7 @@ class LibraryScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              'All content available offline — no internet needed',
+              knowledgeService.sectionTitle('offlineNote'),
               style: TextStyle(fontSize: 11, color: Colors.grey[600]),
             ),
           ),
@@ -44,19 +44,19 @@ class LibraryScreen extends StatelessWidget {
           // ── Disease guide ──────────────────────────────────────────
           _SectionHeader(
             icon: Icons.bug_report,
-            title: 'Disease Guide',
-            subtitle: '${diseases.length} diseases',
+            title: knowledgeService.sectionTitle('diseaseGuide'),
+            subtitle: '${diseases.length} ${knowledgeService.sectionTitle('diseases')}',
           ),
           const SizedBox(height: 8),
-          ...diseases.map((d) => _DiseaseCard(disease: d)),
+          ...diseases.map((d) => _DiseaseCard(disease: d, knowledgeService: knowledgeService)),
 
           const SizedBox(height: 24),
 
           // ── Farming best practices ─────────────────────────────────
           _SectionHeader(
             icon: Icons.agriculture,
-            title: 'Farming Best Practices',
-            subtitle: '${tips.length} tips',
+            title: knowledgeService.sectionTitle('farmingTips'),
+            subtitle: '${tips.length} ${knowledgeService.sectionTitle('tips')}',
           ),
           const SizedBox(height: 8),
           ...tips.map((t) => _TipCard(tip: t)),
@@ -64,13 +64,13 @@ class LibraryScreen extends StatelessWidget {
           // ── COCOBOD resources ──────────────────────────────────────
           if (cocobod != null) ...[
             const SizedBox(height: 24),
-            const _SectionHeader(
+            _SectionHeader(
               icon: Icons.account_balance,
-              title: 'COCOBOD Resources',
-              subtitle: 'Ghana Cocoa Board',
+              title: knowledgeService.sectionTitle('cocobodResources'),
+              subtitle: knowledgeService.sectionTitle('ghanaCocoaBoard'),
             ),
             const SizedBox(height: 8),
-            _CocobodCard(info: cocobod),
+            _CocobodCard(info: cocobod, knowledgeService: knowledgeService),
           ],
 
           const SizedBox(height: 32),
@@ -135,8 +135,9 @@ class _SectionHeader extends StatelessWidget {
 
 class _DiseaseCard extends StatelessWidget {
   final DiseaseEntry disease;
+  final KnowledgeService knowledgeService;
 
-  const _DiseaseCard({required this.disease});
+  const _DiseaseCard({required this.disease, required this.knowledgeService});
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +235,7 @@ class _DiseaseCard extends StatelessWidget {
                 if (disease.faq.isNotEmpty) ...[
                   const SizedBox(height: 14),
                   Text(
-                    'Frequently Asked',
+                    knowledgeService.sectionTitle('faq'),
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 13,
@@ -410,8 +411,9 @@ class _TipCard extends StatelessWidget {
 
 class _CocobodCard extends StatelessWidget {
   final CocobodInfo info;
+  final KnowledgeService knowledgeService;
 
-  const _CocobodCard({required this.info});
+  const _CocobodCard({required this.info, required this.knowledgeService});
 
   @override
   Widget build(BuildContext context) {
@@ -432,7 +434,7 @@ class _CocobodCard extends StatelessWidget {
             const SizedBox(height: 14),
 
             Text(
-              'When to Contact COCOBOD',
+              knowledgeService.sectionTitle('whenToContact'),
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
@@ -460,7 +462,7 @@ class _CocobodCard extends StatelessWidget {
             const SizedBox(height: 12),
 
             Text(
-              'Services Available',
+              knowledgeService.sectionTitle('servicesAvailable'),
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 13,
