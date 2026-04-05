@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -99,16 +100,14 @@ class PodScanProvider extends ChangeNotifier {
     try {
       final bytes = _currentImageBytes!;
 
-      // Defer heavy work to next event loop cycle to allow UI to render spinner.
-      // Without this delay, the blocking ML inference can start before the spinner
-      // has a chance to render, making the app appear frozen.
-      await Future.delayed(const Duration(milliseconds: 100));
+      // Wait for the current frame to finish painting so the spinner is
+      // actually visible before we block the main thread with inference.
+      await SchedulerBinding.instance.endOfFrame;
 
-      final decoded = img.decodeImage(bytes);
-      if (decoded == null) throw Exception('Could not decode image.');
-
-      // Downscale large camera images before detection to save memory/time
-      final constrained = ImageUtils.constrainSize(decoded);
+      // Decode + resize on a background isolate — this is pure Dart work
+      // (no FFI handles) so it transfers cleanly across isolates.
+      final constrained = await compute(_decodeAndResize, bytes);
+      if (constrained == null) throw Exception('Could not decode image.');
 
       final result = await _service.detectAndClassify(constrained, originalBytes: bytes);
 
@@ -174,4 +173,12 @@ class PodScanProvider extends ChangeNotifier {
     }
     return 'Detection failed. Try a clearer photo with pods clearly visible.';
   }
+}
+
+/// Top-level function for compute() — decodes and resizes the image off the
+/// main thread so the UI stays responsive during the ~250ms decode step.
+img.Image? _decodeAndResize(Uint8List bytes) {
+  final decoded = img.decodeImage(bytes);
+  if (decoded == null) return null;
+  return ImageUtils.constrainSize(decoded);
 }

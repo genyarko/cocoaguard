@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
@@ -104,32 +105,15 @@ class ScanProvider extends ChangeNotifier {
       }
     }
 
+    // Wait for the current frame to finish painting so the spinner is
+    // actually on screen before we block the main thread with inference.
+    await SchedulerBinding.instance.endOfFrame;
+
     try {
-      // Run inference on a background isolate to keep UI responsive
-      final result = await compute(_classifyInBackground, {
-        'imagePath': imageFile.path,
-        'classifier': _classifier,
-      });
+      final result = _classifier.classify(imageFile);
       _currentResult = result;
-    } on UnsupportedError {
-      // compute() may not work with Interpreter — fall back to main thread.
-      // Defer work to next event loop to allow spinner to render first.
-      await Future.delayed(const Duration(milliseconds: 100));
-      try {
-        final result = _classifier.classify(imageFile);
-        _currentResult = result;
-      } catch (e) {
-        _error = _friendlyError(e);
-      }
     } catch (e) {
-      // Defer work to next event loop to allow spinner to render first.
-      await Future.delayed(const Duration(milliseconds: 100));
-      try {
-        final result = _classifier.classify(imageFile);
-        _currentResult = result;
-      } catch (e2) {
-        _error = _friendlyError(e2);
-      }
+      _error = _friendlyError(e);
     }
 
     _isLoading = false;
@@ -179,11 +163,4 @@ class ScanProvider extends ChangeNotifier {
     }
     return 'Classification failed. Please try again with a clearer photo.';
   }
-}
-
-// Top-level function for compute() isolate
-LeafClassificationResult _classifyInBackground(Map<String, dynamic> params) {
-  final classifier = params['classifier'] as LeafClassifierService;
-  final file = File(params['imagePath'] as String);
-  return classifier.classify(file);
 }

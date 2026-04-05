@@ -86,6 +86,12 @@ class PodClassifierService extends ChangeNotifier {
       final pods = <DetectedPod>[];
       final podTimer = Stopwatch()..start();
       for (int i = 0; i < boxes.length; i++) {
+        // Yield to the event loop between pods so the UI can process frames
+        // (spinner animation, touch events). Each pod takes ~500ms, so without
+        // this the main thread would be blocked for boxes.length * 500ms straight.
+        if (i > 0) {
+          await Future.delayed(Duration.zero);
+        }
         final crop = ImageCropper.crop(image, boxes[i]);
         final diagnosis = _classifyAndBlend(crop, boxes[i]);
         if (diagnosis != null) {
